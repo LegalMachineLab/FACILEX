@@ -1,4 +1,4 @@
-:- set_prolog_flag(unknown, warning).
+:- include('../utils.pl').
 
 %% REGULATION (EU) 2018/1805 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 November 2018 on the mutual recognition of freezing orders and confiscation orders
 

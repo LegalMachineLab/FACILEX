@@ -1,4 +1,4 @@
-:- set_prolog_flag(unknown, warning).
+:- include('../utils.pl').
 
 %% Закон за екстрадицията и Европейската заповед за арест
 %% Extradition and European Arrest Warrant Act
@@ -63,7 +63,7 @@ optional_refusal(article40_1_1a, MemberState, europeanArrestWarrant):-
     person_role(PersonId, subject_eaw),
     (
 %        proceeding_status(Offence, MemberState, no_prosecution)
-    ;   proceeding_status(Offence, MemberState, halted)
+       proceeding_status(Offence, MemberState, halted)
 %    ;   person_event(PersonId, irrevocably_convicted, Offence)
     ).
 % TODO - Has been terminated? = halted?
@@ -104,7 +104,7 @@ optional_refusal(article40_1_4, MemberState, europeanArrestWarrant):-
     ;   proceeding_status(Offence, MemberState, execution_detention_order)
     ),
     (   
-    ;   person_nationality(PersonId, MemberState)
+       person_nationality(PersonId, MemberState)
     ;   person_residence(PersonId, _, MemberState, _)
     ;   person_residence(PersonId, person_claim_residence, MemberState, _)
     ).

@@ -1,4 +1,4 @@
-:- set_prolog_flag(unknown, warning).
+:- include('../utils.pl').
 
 %% Ustawa z dnia 6 czerwca 1997 r. - Kodeks postępowania karnego
 % Law of 6 June 1997 - Code of Criminal Procedure

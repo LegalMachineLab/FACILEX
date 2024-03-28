@@ -1,4 +1,4 @@
-:- set_prolog_flag(unknown, warning).
+:- include('../utils.pl').
 
 %% Regime Jurídico do Mandado de Detenção Europeu (Lei n.º 65/2003, de 23 de Agosto)
 %% Law on the European Arrest Warrant (Law no. 65/2003, of 23 August)

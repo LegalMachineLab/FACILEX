@@ -1,4 +1,4 @@
-:- set_prolog_flag(unknown, warning).
+:- include('../utils.pl').
 
 %%Decision 2002/584
 %%Council Framework Decision of 13 June 2002 on the European arrest warrant and the surrender procedures between Member States (2002/584/JHA)
