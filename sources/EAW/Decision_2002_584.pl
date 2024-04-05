@@ -8,7 +8,10 @@
 
 %The judicial authority of the Member State of execution (hereinafter ‘executing judicial authority’) shall refuse to execute the European arrest warrant in the following cases:
 
-%1. if the offence on which the arrest warrant is based is covered by amnesty in the executing Member State, where that State had jurisdiction to prosecute the offence under its own criminal law;
+%1. if the offence on which the arrest warrant is based[proceeding_matter(PersonId, Offence, MemberState)] is covered by amnesty in the executing Member State, where that State had jurisdiction to prosecute the offence under its own criminal law;
+
+%[proceeding_matter(PersonId, Offence, MemberState)]= if the offence on which the arrest warrant is based
+%amnesty(Offence, MemberState),executing_member_state(PersonId, MemberState)=is covered by amnesty in the executing Member State
 
 mandatory_refusal(article3_1, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
