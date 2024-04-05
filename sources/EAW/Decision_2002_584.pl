@@ -3,6 +3,16 @@
 %%Decision 2002/584
 %%Council Framework Decision of 13 June 2002 on the European arrest warrant and the surrender procedures between Member States (2002/584/JHA)
 
+%%Article 1
+
+eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState):-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    (
+        executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
+    )
+
 %%Article 3
 %Grounds for mandatory non-execution of the European arrest warrant
 
