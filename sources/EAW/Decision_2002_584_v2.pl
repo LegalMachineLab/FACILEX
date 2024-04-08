@@ -3,16 +3,21 @@
 %%Decision 2002/584
 %%Council Framework Decision of 13 June 2002 on the European arrest warrant and the surrender procedures between Member States (2002/584/JHA)
 
-%%Article 1
+%%Articles 1-2
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState):-
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    punishable_by_law()
+    %punishable_by_law(IssuingMemberState, Offence),
+    %art2applies(Offence),
+    (
+        art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
     (
         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
-    )
+    ).
 
 %%Article 3
 %Grounds for mandatory non-execution of the European arrest warrant
@@ -33,17 +38,17 @@ mandatory_refusal(article3_1, ExecutingMemberState, europeanArrestWarrant):-
 %2. if the executing judicial authority is informed that the requested person has been finally judged by a Member State in respect of the same acts provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the sentencing Member State;
 
 %[executing_proceeding(ExecutingMemberState, PersonId, _)]= if the executing judicial authority is informed
-%[person_event(PersonId, finally_judged, Offence, ExecutingMemberState)] = the requested person has been finally judged by a Member State 
+%[person_event(PersonId, finally_judged, Offence)] = the requested person has been finally judged by a Member State 
 %[issuing_proceeding(IssuingMemberState, PersonId, Offence)] = in respect of the same acts
 %[sentence_served(PersonId, ExecutingMemberState); sentence_being_served(PersonId, ExecutingMemberState); sentence_execution_impossible(PersonId, ExecutingMemberState)]= provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the sentencing Member State;
 mandatory_refusal(article3_2, ExecutingMemberState, europeanArrestWarrant):-
     executing_proceeding(ExecutingMemberState, PersonId, _),
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    person_event(PersonId, finally_judged, Offence, MemberState),
+    person_event(PersonId, finally_judged, Offence),
     (
-        sentence_served(PersonId, MemberState)
-    ;   sentence_being_served(PersonId, MemberState)
-    ;   sentence_execution_impossible(PersonId, MemberState) 
+        sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId) 
     ).
 
 %3. if the person who is the subject of the European arrest warrant may not, owing to his age, be held criminally responsible for the acts on which the arrest warrant is based under the law of the executing State.
@@ -72,7 +77,7 @@ optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
 optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant):-
     executing_proceeding(ExecutingMemberState, PersonId, _),,
     issuing_proceeding(_, PersonId, Offence),
-    person_event(PersonId, under_prosecution, Offence, ExecutingMemberState). %proceeding_status(Offence, ExecutingMemberState, ongoing)
+    person_event(PersonId, under_prosecution_by_executing_state, Offence). %proceeding_status(Offence, ExecutingMemberState, ongoing)
 
 %3. where the judicial authorities of the executing Member State have decided either not to prosecute for the offence on which the European arrest warrant is based or to halt proceedings, or where a final judgment has been passed upon the requested person in a Member State, in respect of the same acts, which prevents further proceedings;
 
@@ -82,7 +87,7 @@ optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
     (
         executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
     ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
-    ;   person_event(PersonId, irrevocably_convicted, Offence, _)  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
+    ;   person_event(PersonId, irrevocably_convicted_in_ms, Offence)  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
     ).
 
 %4. where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State and the acts fall within the jurisdiction of that Member State under its own criminal law;
@@ -97,12 +102,12 @@ optional_refusal(article4_4, ExecutingMemberState, europeanArrestWarrant):-
 optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
     issuing_proceeding(_, PersonId, Offence),
     executing_proceeding(ExecutingMemberState, PersonId, _),
-    person_event(PersonId, irrevocably_convicted, Offence, ThirdState),
-    ExecutingMemberState \= ThirdState,
+    person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
+    %ExecutingMemberState \= ThirdState,
     (
-        sentence_served(PersonId, ThirdState)
-    ;   sentence_being_served(PersonId, ThirdState)
-    ;   sentence_execution_impossible(PersonId, ThirdState) 
+        sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
     ).
 
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
