@@ -61,82 +61,78 @@ mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant):-
     
 %1. if, in one of the cases referred to in Article 2(4), the act on which the European arrest warrant is based does not constitute an offence under the law of the executing Member State; however, in relation to taxes or duties, customs and exchange, execution of the European arrest warrant shall not be refused on the ground that the law of the executing Member State does not impose the same kind of tax or duty or does not contain the same type of rules as regards taxes, duties and customs and exchange regulations as the law of the issuing Member State;
 
-optional_refusal(article4_1, MemberState, europeanArrestWarrant):-
-    art2_4applies(MemberState),
-    proceeding_matter(_, Offence, MemberState),
-    national_law_not_offence(Offence, MemberState).
+optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
+    art2_4applies(Offence),
+    issuing_proceeding(_, PersonId, Offence),
+    national_law_not_offence(Offence, ExecutingMemberState).
 
 %2. where the person who is the subject of the European arrest warrant is being prosecuted in the executing Member State for the same act as that on which the European arrest warrant is based;
 
-optional_refusal(article4_2, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    person_event(PersonId, under_prosecution, Offence). %proceeding_status(Offence, MemberState, ongoing)
+optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant):-
+    executing_proceeding(ExecutingMemberState, PersonId, _),,
+    issuing_proceeding(_, PersonId, Offence),
+    person_event(PersonId, under_prosecution, Offence, ExecutingMemberState). %proceeding_status(Offence, MemberState, ongoing)
 
 %3. where the judicial authorities of the executing Member State have decided either not to prosecute for the offence on which the European arrest warrant is based or to halt proceedings, or where a final judgment has been passed upon the requested person in a Member State, in respect of the same acts, which prevents further proceedings;
 
-optional_refusal(article4_3, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
+optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
     (
-        proceeding_status(Offence, MemberState, no_prosecution)
-    ;   proceeding_status(Offence, MemberState, halted)
-    ;   person_event(PersonId, irrevocably_convicted, Offence)  %proceeding_status(Offence, MemberState, final_judgement),
+        executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
+    ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
+    ;   person_event(PersonId, irrevocably_convicted, Offence, _)  %proceeding_status(Offence, MemberState, final_judgement),
     ).
 
 %4. where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State and the acts fall within the jurisdiction of that Member State under its own criminal law;
 
-optional_refusal(article4_4, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    proceeding_status(Offence, MemberState, statute_barred).
+optional_refusal(article4_4, ExecutingMemberState, europeanArrestWarrant):-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    executing_proceeding_status(Offence, ExecutingMemberState, statute_barred).
 
 %5. if the executing judicial authority is informed that the requested person has been finally judged by a third State in respect of the same acts provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the sentencing country;
 
-optional_refusal(article4_5, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    proceeding_status(Offence, ThirdState, final_judgement),
-    MemberState \= ThirdState,
-    person_event(PersonId, irrevocably_convicted, Offence),
+optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    person_event(PersonId, irrevocably_convicted, Offence, ThirdState),
+    ExecutingMemberState \= ThirdState,
     (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId) 
+        sentence_served(PersonId, ThirdState)
+    ;   sentence_being_served(PersonId, ThirdState)
+    ;   sentence_execution_impossible(PersonId, ThirdState) 
     ).
 
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
 
-optional_refusal(article4_6, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
+optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant):-
+    issuing_proceeding(_, PersonId, Offence),
     (
-        proceeding_status(Offence, MemberState, execution_custodial_sentence)
-    ;   proceeding_status(Offence, MemberState, execution_detention_order)
+        executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
     ),
     (   
 %        person_staying_in(PersonId, MemberState)
-       person_nationality(PersonId, MemberState)
-    ;   person_residence(PersonId, _, MemberState, _)
+        person_nationality(PersonId, ExecutingMemberState)
+    ;   person_residence(PersonId, _, ExecutingMemberState, _)
     ).
 
 %7. where the European arrest warrant relates to offences which:
 %(a) are regarded by the law of the executing Member State as having been committed in whole or in part in the territory of the executing Member State or in a place treated as such; or
 
-optional_refusal(article4_7_a, MemberState, europeanArrestWarrant):-
-    executing_member_state(PersonId, MemberState),
-    proceeding_matter(PersonId, Offence, MemberState),
-    proceeding_status(Offence, MemberState, committed_inside_territory).
+optional_refusal(article4_7_a, ExecutingMemberState, europeanArrestWarrant):-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    executing_proceeding_status(Offence, ExecutingMemberState, committed_inside_territory).
 
 %(b) have been committed outside the territory of the issuing Member State and the law of the executing Member State does not allow prosecution for the same offences when committed outside its territory.
 
 optional_refusal(article4_7_b, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    issuing_member_state(PersonId, IssuingMemberState),
-    proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
-    proceeding_status(Offence, MemberState, no_prosecution).
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    issuing_proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
+    proceeding_status(Offence, ExecutingMemberState, no_prosecution).
 
 %%Article 4a
 %Decisions rendered following a trial at which the person did not appear in person
