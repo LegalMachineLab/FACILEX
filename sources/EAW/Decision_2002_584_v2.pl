@@ -3,6 +3,16 @@
 %%Decision 2002/584
 %%Council Framework Decision of 13 June 2002 on the European arrest warrant and the surrender procedures between Member States (2002/584/JHA)
 
+%%Article 1
+
+eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState):-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    (
+        executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
+    )
+
 %%Article 3
 %Grounds for mandatory non-execution of the European arrest warrant
 
@@ -10,32 +20,39 @@
 
 %1. if the offence on which the arrest warrant is based[proceeding_matter(PersonId, Offence, MemberState)] is covered by amnesty in the executing Member State, where that State had jurisdiction to prosecute the offence under its own criminal law;
 
-%[proceeding_matter(PersonId, Offence, MemberState)]= if the offence on which the arrest warrant is based
+%[issuing_proceeding(IssuingMemberState, PersonId, Offence)]= if the offence on which the arrest warrant is based
 %amnesty(Offence, MemberState),executing_member_state(PersonId, MemberState)=is covered by amnesty in the executing Member State
 
-mandatory_refusal(article3_1, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    amnesty(Offence, MemberState),
-    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article3_1, ExecutingMemberState, europeanArrestWarrant):-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    amnesty(Offence, ExecutingMemberState),
+    executing_proceeding(ExecutingMemberState, PersonId, _).
+
 
 %2. if the executing judicial authority is informed that the requested person has been finally judged by a Member State in respect of the same acts provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the sentencing Member State;
 
-mandatory_refusal(article3_2, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    person_event(PersonId, irrevocably_convicted, Offence),
+%[executing_proceeding(ExecutingMemberState, PersonId, _)]= if the executing judicial authority is informed
+%[person_event(PersonId, finally_judged, Offence, MemberState)] = the requested person has been finally judged by a Member State 
+%[issuing_proceeding(IssuingMemberState, PersonId, Offence)] = in respect of the same acts
+%[sentence_served(PersonId, MemberState); sentence_being_served(PersonId, MemberState); sentence_execution_impossible(PersonId, MemberState)]= provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the sentencing Member State;
+mandatory_refusal(article3_2, ExecutingMemberState, europeanArrestWarrant):-
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    person_event(PersonId, finally_judged, Offence, MemberState),
     (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId) 
+        sentence_served(PersonId, MemberState)
+    ;   sentence_being_served(PersonId, MemberState)
+    ;   sentence_execution_impossible(PersonId, MemberState) 
     ).
 
 %3. if the person who is the subject of the European arrest warrant may not, owing to his age, be held criminally responsible for the acts on which the arrest warrant is based under the law of the executing State.
 
-mandatory_refusal(article3_3, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    person_status(PersonId, under_age),
-    executing_member_state(PersonId, MemberState).
+%[executing_proceeding(ExecutingMemberState, PersonId, _)] = if the person who is the subject of the European arrest warrant
+%[person_status(PersonId, under_age, ExecutingMemberState)] = may not, owing to his age, be held criminally responsible [..] under the law of the executing State
+
+mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant):-
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    person_status(PersonId, under_age, ExecutingMemberState).
 
 %%Article 4
 %Grounds for optional non-execution of the European arrest warrant
