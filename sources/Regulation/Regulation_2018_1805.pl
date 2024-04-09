@@ -91,7 +91,7 @@ proceeding_status(Offence, MemberState, limitation_criminal_liability):-
 %%(c) the confiscation certificate is incomplete or manifestly incorrect and has not been completed following the consultation referred to in paragraph 2;
 
 optional_refusal(article19_1_c, MemberState, europeanConfiscationOrder):-
-    proceeding_status(Offence, MemberState, certificate_incomplete_manifestly_incorrect).
+   proceeding_status(Offence, MemberState, certificate_incomplete_manifestly_incorrect).
 
 %%(d) the confiscation order relates to a criminal offence committed, wholly or partially, outside the territory of the issuing State and, wholly or partially, in the territory of the executing State and the conduct in connection with which the confiscation order was issued does not constitute a criminal offence under the law of the executing State;
 
