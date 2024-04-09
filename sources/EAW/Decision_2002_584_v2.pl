@@ -44,11 +44,11 @@ mandatory_refusal(article3_1, ExecutingMemberState, europeanArrestWarrant):-
 mandatory_refusal(article3_2, ExecutingMemberState, europeanArrestWarrant):-
     executing_proceeding(ExecutingMemberState, PersonId, _),
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    person_event(PersonId, finally_judged, Offence),
+    person_event(PersonId, finally_judged_in_ms, Offence),
     (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId) 
+        sentence_served_in_ms(PersonId)
+    ;   sentence_being_served_in_ms(PersonId)
+    ;   sentence_execution_impossible_in_ms(PersonId) 
     ).
 
 %3. if the person who is the subject of the European arrest warrant may not, owing to his age, be held criminally responsible for the acts on which the arrest warrant is based under the law of the executing State.
@@ -105,9 +105,9 @@ optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
     %ExecutingMemberState \= ThirdState,
     (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
+        sentence_served_in_third_state(PersonId)
+    ;   sentence_being_served_in_third_state(PersonId)
+    ;   sentence_execution_impossible_in_third_state(PersonId)
     ).
 
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
@@ -172,7 +172,7 @@ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWa
 %(i) expressly stated that he or she does not contest the decision;
 
 exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_i):-
-    issuing_proceeding_event(PersonId, Offence,informed_of_right_retrial_appeal, Offence),
+    issuing_proceeding_event(PersonId, Offence,informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, does_not_contest_decision).
 
 %(ii) did not request a retrial or appeal within the applicable time frame;
