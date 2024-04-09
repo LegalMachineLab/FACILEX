@@ -4,6 +4,7 @@
 %%Council Framework Decision of 13 June 2002 on the European arrest warrant and the surrender procedures between Member States (2002/584/JHA)
 
 %%Articles 1-2
+%1. The European arrest warrant is a judicial decision issued by a Member State with a view to the arrest and surrender by another Member State of a requested person, for the purposes of conducting a criminal prosecution or executing a custodial sentence or detention order.
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState):-
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
