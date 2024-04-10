@@ -107,16 +107,6 @@ optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
     ;   sentence_execution_impossible_in_third_state(PersonId)
     ).
 
-
-sentence_served_in_third_state(mario).
-person_event(mario, irrevocably_convicted_in_third_state, murder).
-issuing_proceeding(italy, mario, murder).
-art2_2applies(murder).
-executing_proceeding(france, mario, execution_custodial_sentence).
-
-
-
-
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
 
 optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant):-
