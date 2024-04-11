@@ -121,3 +121,98 @@ optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant):-
     ;   person_residence(PersonId, _, ExecutingMemberState, _)
     ).
 
+
+%7. where the European arrest warrant relates to offences which:
+%(a) are regarded by the law of the executing Member State as having been committed in whole or in part in the territory of the executing Member State or in a place treated as such; or
+
+optional_refusal(article4_7_a, ExecutingMemberState, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
+    executing_proceeding_status(Offence, ExecutingMemberState, committed_inside_territory).
+
+
+%(b) have been committed outside the territory of the issuing Member State and the law of the executing Member State does not allow prosecution for the same offences when committed outside its territory.
+
+optional_refusal(article4_7_b, ExecutingMemberState, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
+    issuing_proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
+    prosecution_not_allowed(Offence, ExecutingMemberState).
+
+
+%%Article 4a
+%Decisions rendered following a trial at which the person did not appear in person
+
+%1. The executing judicial authority may also refuse to execute the European arrest warrant issued for the purpose of executing a custodial sentence or a detention order if the person did not appear in person at the trial resulting in the decision, unless the European arrest warrant states that the person, in accordance with further procedural requirements defined in the national law of the issuing Member State:
+
+optional_refusal(article4a_1, ExecutingMemberState, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
+    (
+        executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
+    ),
+    issuing_proceeding_status(Offence, IssuingMemberState, trial_in_absentia),
+    \+ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), _)
+
+
+%(a) in due time:
+%(i) either was summoned in person and thereby informed of the scheduled date and place of the trial which resulted in the decision, or by other means actually received official information of the scheduled date and place of that trial in such a manner that it was unequivocally established that he or she was aware of the scheduled trial;
+%(ii) was informed that a decision may be handed down if he or she does not appear for the trial;
+    
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_a):-
+    issuing_proceeding_event(PersonId, Offence, aware_trial),
+    issuing_proceeding_event(PersonId, Offence, informed_of_potential_decision).
+%person_event(PersonId, aware_trial, Offence) IF informed date and place or summoned in person?
+
+%(b) being aware of the scheduled trial, had given a mandate to a legal counsellor, who was either appointed by the person concerned or by the State, to defend him or her at the trial, and was indeed defended by that counsellor at the trial;
+
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_b):-
+    issuing_proceeding_event(PersonId, Offence, mandated_legal_defence).
+
+%(c) after being served with the decision and being expressly informed about the right to a retrial, or an appeal, in which the person has the right to participate and which allows the merits of the case, including fresh evidence, to be re-examined, and which may lead to the original decision being reversed:
+%(i) expressly stated that he or she does not contest the decision;
+
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_i):-
+    issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId, Offence, does_not_contest_decision).
+
+%(ii) did not request a retrial or appeal within the applicable time frame;
+
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii):-
+    issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId, Offence, does_not_request_retrial_appeal).
+
+%(d) was not personally served with the decision but:
+%(i) will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, in which the person has the right to participate and which allows the merits of the case, including fresh evidence, to be re-examined, and which may lead to the original decision being reversed;
+%and
+%(ii) will be informed of the time frame within which he or she has to request such a retrial or appeal, as mentioned in the relevant European arrest warrant.
+
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii):-
+    issuing_proceeding_event(PersonId, Offence, not_personally_served_decision),
+    issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId, Offence, informed_of_timeframe_retrial_appeal).
+
+%2. In case the European arrest warrant is issued for the purpose of executing a custodial sentence or detention order under the conditions of paragraph 1(d) and the person concerned has not previously received any official information about the existence of the criminal proceedings against him or her, he or she may, when being informed about the content of the European arrest warrant, request to receive a copy of the judgment before being surrendered. Immediately after having been informed about the request, the issuing authority shall provide the copy of the judgment via the executing authority to the person sought. The request of the person sought shall neither delay the surrender procedure nor delay the decision to execute the European arrest warrant. The provision of the judgment to the person concerned is for information purposes only; it shall neither be regarded as a formal service of the judgment nor actuate any time limits applicable for requesting a retrial or appeal.
+
+%3. In case a person is surrendered under the conditions of paragraph (1)(d) and he or she has requested a retrial or appeal, the detention of that person awaiting such retrial or appeal shall, until these proceedings are finalised, be reviewed in accordance with the law of the issuing Member State, either on a regular basis or upon request of the person concerned. Such a review shall in particular include the possibility of suspension or interruption of the detention. The retrial or appeal shall begin within due time after the surrender.
+
+%%Article 5
+%Guarantees to be given by the issuing Member State in particular cases
+%The execution of the European arrest warrant by the executing judicial authority may, by the law of the executing Member State, be subject to the following conditions:
+
+%2. if the offence on the basis of which the European arrest warrant has been issued is punishable by custodial life sentence or life-time detention order, the execution of the said arrest warrant may be subject to the condition that the issuing Member State has provisions in its legal system for a review of the penalty or measure imposed, on request or at the latest after 20 years, or for the application of measures of clemency to which the person is entitled to apply for under the law or practice of the issuing Member State, aiming at a non-execution of such penalty or measure;
+
+optional_refusal(article5_2, ExecutingMemberState, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
+    punishable_by_life_sentence(Offence, IssuingMemberState)
+    \+ guarantee(IssuingMemberState, review_clemency_right).
+
+
+%3. where a person who is the subject of a European arrest warrant for the purposes of prosecution is a national or resident of the executing Member State, surrender may be subject to the condition that the person, after being heard, is returned to the executing Member State in order to serve there the custodial sentence or detention order passed against him in the issuing Member State.
+
+optional_refusal(article5_3, ExecutingMemberState, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution),
+    (   
+    ;   person_nationality(PersonId, ExecutingMemberState)
+    ;   person_residence(PersonId, ExecutingMemberState)
+    ),
+    \+ guarantee(PersonId, Offence, return_to_executing_state).
