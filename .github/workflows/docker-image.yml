@@ -32,7 +32,7 @@ jobs:
         docker push ghcr.io/legalmachinelab/facilex
     - name: Install kompose
       run: |
-        curl -L https://github.com/kubernetes/kompose/releases/download/v1.28.0/kompose-linux-amd64 -o kompose
+        curl -L https://github.com/kubernetes/kompose/releases/download/v1.32.0/kompose-linux-amd64 -o kompose
         chmod +x kompose
     - name: Run kompose
       run: | 
