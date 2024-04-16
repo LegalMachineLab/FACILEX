@@ -1,0 +1,1390 @@
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_bg.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_fr.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_it.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_pl.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_pt.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_v2.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EAW/Decision_2002_584_v3.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EIO/Directive_2014_41.pl
+/home/galileo/Documents/Projects/FACILEX/sources/EIO/Directive_2014_41_v2.pl
+/home/galileo/Documents/Projects/FACILEX/sources/Regulation/Regulation_2018_1805.pl
+
+get_answers(_{mandatory:MDictList, optional:ODictList}) :-
+    findall(MDict, get_answer(mandatory, MDict), MDictList),
+    findall(ODict, get_answer(optional, ODict), ODictList).
+
+:- dynamic person_age/2.
+
+
+:- dynamic term_expansion/2.
+:- multifile term_expansion/2.
+
+
+person_residence(PersonId, lawful_effective_residence, MemberState, Time) :-
+    person_residence_time(Time),
+    proceeding_event(PersonId, social_reintegration, article18_2bis).
+
+main :-
+    consult_all,
+    server(8000).
+
+consult_all :-
+    all_sources(sources, Files),
+    forall(member(File, Files),
+           ( writeln(File),
+             consult(File)
+           )).
+
+:- dynamic expand_query/4.
+:- multifile expand_query/4.
+
+
+right_property(IssuingMemberState, review_clemency) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    proceeding_status(Offence, MemberState, punishable_life),
+    issuing_member_state(PersonId, IssuingMemberState).
+
+:- dynamic library_directory/1.
+:- multifile library_directory/1.
+
+
+:- dynamic person_event/3.
+
+person_event(PersonId, Offence, guarantee_return_to_executing_state) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, _),
+    person_residence(PersonId,
+                     lawful_effective_residence,
+                     MemberState,
+                     Time),
+    Time>=5.
+
+:- dynamic term_expansion/4.
+:- multifile term_expansion/4.
+
+
+eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState) :-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    (   art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
+    (   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             criminal_prosecution)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_detention_order)
+    ).
+
+solve((A, B), Result) :-
+    !,
+    solve(A, ARes),
+    solve(B, BRes),
+    append(ARes, BRes, Result).
+solve((A;_), Result) :-
+    solve(A, Result).
+solve((_;B), Result) :-
+    !,
+    solve(B, Result).
+solve(member(A, B), [system_predicate]) :-
+    !,
+    call(member(A, B)).
+solve(\+A, [not(A)]) :-
+    !,
+    call(\+A).
+solve(A\=B, [doNotUnify(A, B)]) :-
+    !,
+    call(A\=B).
+solve(A, [system_predicate]) :-
+    predicate_property(A, built_in),
+    !,
+    call(A).
+solve(A, [A, Res]) :-
+    clause(A, B),
+    solve(B, Res).
+
+:- dynamic goal_expansion/4.
+:- multifile goal_expansion/4.
+
+
+:- multifile prolog_clause_name/2.
+
+
+all_sources(Directory, Files) :-
+    working_directory(CWD, CWD),
+    atom_concat(CWD, Directory, CWDSub),
+    atom_concat(CWDSub, '/**/*.pl', Wildcard),
+    expand_file_name(Wildcard, Files).
+
+:- dynamic file_search_path/2.
+:- multifile file_search_path/2.
+
+file_search_path(pack, '/home/galileo/.local/share/swi-prolog/pack').
+file_search_path(library, Dir) :-
+    library_directory(Dir).
+file_search_path(swi, A) :-
+    system:current_prolog_flag(home, A).
+file_search_path(swi, A) :-
+    system:current_prolog_flag(shared_home, A).
+file_search_path(library, app_config(lib)).
+file_search_path(library, swi(library)).
+file_search_path(library, swi(library/clp)).
+file_search_path(library, A) :-
+    system:'$ext_library_directory'(A).
+file_search_path(foreign, swi(A)) :-
+    system:
+    (   current_prolog_flag(apple_universal_binary, true),
+        A='lib/fat-darwin'
+    ).
+file_search_path(path, A) :-
+    system:
+    (   getenv('PATH', B),
+        current_prolog_flag(path_sep, C),
+        atomic_list_concat(D, C, B),
+        '$member'(A, D)
+    ).
+file_search_path(user_app_data, A) :-
+    system:'$xdg_prolog_directory'(data, A).
+file_search_path(common_app_data, A) :-
+    system:'$xdg_prolog_directory'(common_data, A).
+file_search_path(user_app_config, A) :-
+    system:'$xdg_prolog_directory'(config, A).
+file_search_path(common_app_config, A) :-
+    system:'$xdg_prolog_directory'(common_config, A).
+file_search_path(app_data, user_app_data('.')).
+file_search_path(app_data, common_app_data('.')).
+file_search_path(app_config, user_app_config('.')).
+file_search_path(app_config, common_app_config('.')).
+file_search_path(app_preferences, user_app_config('.')).
+file_search_path(user_profile, app_preferences('.')).
+file_search_path(app, swi(app)).
+file_search_path(app, app_data(app)).
+file_search_path(autoload, swi(library)).
+file_search_path(autoload, pce(prolog/lib)).
+file_search_path(autoload, app_config(lib)).
+file_search_path(autoload, Dir) :-
+    '$autoload':'$ext_library_directory'(Dir).
+file_search_path(pack, app_data(pack)).
+file_search_path(library, PackLib) :-
+    '$pack':pack_dir(_Name, prolog, PackLib).
+file_search_path(foreign, PackLib) :-
+    '$pack':pack_dir(_Name, foreign, PackLib).
+file_search_path(app, AppDir) :-
+    '$pack':pack_dir(_Name, app, AppDir).
+file_search_path(pce, PceHome) :-
+    link_xpce:
+    (   current_prolog_flag(xpce, true),
+        pcehome_(PceHome)
+    ).
+file_search_path(library, pce('prolog/lib')).
+file_search_path(foreign, pce(ArchLib)) :-
+    link_xpce:
+    (   current_prolog_flag(arch, Arch),
+        atom_concat('lib/', Arch, ArchLib)
+    ).
+file_search_path(foreign, swi(ArchLib)) :-
+    shlib:
+    (   current_prolog_flag(arch, Arch),
+        atom_concat('lib/', Arch, ArchLib)
+    ).
+file_search_path(foreign, swi(SoLib)) :-
+    shlib:
+    (   (   current_prolog_flag(windows, true)
+        ->  SoLib=bin
+        ;   SoLib=lib
+        )
+    ).
+
+:- multifile mandatory_refusal/3.
+
+mandatory_refusal(article39_1, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    amnesty(Offence, MemberState),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article39_2, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+mandatory_refusal(article39_3, MemberState, europeanArrestWarrant) :-
+    person_status(PersonId, under_age),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article695_22_1, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    amnesty(Offence, MemberState),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article695_22_2, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+mandatory_refusal(article695_22_3, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    person_status(PersonId, under_age),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article18_1_a, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    amnesty(Offence, MemberState),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article18_1_b, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    (   person_event(PersonId, irrevocably_convicted, Offence)
+    ;   person_event(PersonId, decree_of_conviction, Offence)
+    ;   person_event(PersonId,
+                     judgement_no_grounds_to_proceed,
+                     Offence)
+    ).
+mandatory_refusal(article18_1_b, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    MemberState\=MemberState,
+    person_role(PersonId, subject_eaw),
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+mandatory_refusal(article18_1_c, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    person_status(PersonId, under_age),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article607p_1_1, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    amnesty(Offence, MemberState),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article607p_1_2, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+mandatory_refusal(article607p_1_4, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    person_status(PersonId, under_age),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article607p_1_5, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    (   proceeding_status(Offence, MemberState, danger_human_rights)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          no_violence_political_reasons)
+    ).
+mandatory_refusal(article607p_2, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    person_nationality(PersonId, polish),
+    national_law_not_offence(Offence, polish).
+mandatory_refusal(article607s_1, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    person_event(PersonId, no_consent_surrender),
+    proceeding_status(Offence, MemberState, execution),
+    (   person_nationality(PersonId, polish)
+    ;   person_event(PersonId, asylum)
+    ).
+mandatory_refusal(article11_a, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    amnesty(Offence, MemberState),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article11_b, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+mandatory_refusal(article11_c, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    person_status(PersonId, under_age),
+    executing_member_state(PersonId, MemberState).
+mandatory_refusal(article3_1, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    amnesty(Offence, ExecutingMemberState),
+    executing_proceeding(ExecutingMemberState, PersonId, _).
+mandatory_refusal(article3_2, ExecutingMemberState, europeanArrestWarrant) :-
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    person_event(PersonId, finally_judged_in_ms, Offence),
+    (   sentence_served_in_ms(PersonId)
+    ;   sentence_being_served_in_ms(PersonId)
+    ;   sentence_execution_impossible_in_ms(PersonId)
+    ).
+mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant) :-
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    person_status(PersonId, under_age, ExecutingMemberState).
+mandatory_refusal(article3_1, ExecutingMemberState, europeanArrestWarrant) :-
+    amnesty(Offence, ExecutingMemberState),
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence).
+mandatory_refusal(article3_2, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    person_event(PersonId, finally_judged, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    person_status(PersonId, under_age, ExecutingMemberState).
+
+eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence) :-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    (   art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
+    (   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             criminal_prosecution)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_detention_order)
+    ).
+
+:- multifile prolog_list_goal/1.
+
+
+:- multifile optional_refusal/3.
+
+optional_refusal(article36_2, MemberState, europeanArrestWarrant) :-
+    art2_4applies(MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState).
+optional_refusal(article40_1_1, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_event(PersonId, under_prosecution, Offence).
+optional_refusal(article40_1_1a, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    proceeding_status(Offence, MemberState, halted).
+optional_refusal(article40_1_2, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    proceeding_status(Offence, MemberState, statute_barred).
+optional_refusal(article40_1_3, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    proceeding_status(Offence, ThirdState, final_judgement),
+    MemberState\=ThirdState,
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+optional_refusal(article40_1_4, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    (   person_nationality(PersonId, MemberState)
+    ;   person_residence(PersonId, _, MemberState, _)
+    ;   person_residence(PersonId,
+                         person_claim_residence,
+                         MemberState,
+                         _)
+    ).
+optional_refusal(article40_1_5, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    proceeding_matter(PersonId, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory).
+optional_refusal(article40_1_6, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    issuing_member_state(PersonId, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, no_prosecution).
+optional_refusal(article40_2, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      trial_in_absentia),
+    issuing_member_state(PersonId, IssuingMemberState),
+    \+ exception(optional_refusal(article40_2,
+                                  MemberState,
+                                  europeanArrestWarrant),
+                 _).
+optional_refusal(article695_24_1, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    (   proceeding_status(Offence, MemberState, no_prosecution)
+    ;   proceeding_status(Offence, MemberState, halted)
+    ;   person_event(PersonId, under_prosecution, Offence)
+    ).
+optional_refusal(article695_24_2, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    (   person_domicile(PersonId, MemberState)
+    ;   person_nationality(PersonId, MemberState)
+    ;   person_residence(PersonId, _, MemberState, _)
+    ).
+optional_refusal(article695_24_3, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    proceeding_matter(PersonId, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory).
+optional_refusal(article695_24_4, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    issuing_member_state(PersonId, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, no_prosecution).
+optional_refusal(article695_24_5, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    proceeding_status(Offence, ThirdState, final_judgement),
+    MemberState\=ThirdState,
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+optional_refusal(article695_24_6, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    proceeding_status(Offence, MemberState, statute_barred).
+optional_refusal(article7_1, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState).
+optional_refusal(article18bis_1_a, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory).
+optional_refusal(article18bis_1_a, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    issuing_member_state(PersonId, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, no_prosecution).
+optional_refusal(article18bis_1_b, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_event(PersonId, under_prosecution, Offence).
+optional_refusal(article18_2, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    person_residence(PersonId,
+                     lawful_effective_residence,
+                     MemberState,
+                     Time),
+    Time>=5.
+optional_refusal(article61bis, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          deprivation_of_liberty)
+    ),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      trial_in_absentia),
+    issuing_member_state(PersonId, IssuingMemberState),
+    \+ exception(optional_refusal(article61bis, _, europeanArrestWarrant),
+                 _).
+optional_refusal(article607r_1_1, MemberState, europeanArrestWarrant) :-
+    art2_4applies(MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState).
+optional_refusal(article607r_1_2, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_event(PersonId, under_prosecution, Offence).
+optional_refusal(article607r_1_3, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    (   proceeding_status(Offence, MemberState, no_prosecution)
+    ;   proceeding_status(Offence, MemberState, halted)
+    ;   person_event(PersonId, irrevocably_convicted, Offence)
+    ).
+optional_refusal(article607r_1_4, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    proceeding_status(Offence, MemberState, statute_barred).
+optional_refusal(article607r_1_5, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    proceeding_matter(PersonId, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory).
+optional_refusal(article607r_1_5, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    issuing_member_state(PersonId, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, no_prosecution).
+optional_refusal(article607r_3, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      trial_in_absentia),
+    issuing_member_state(PersonId, IssuingMemberState),
+    \+ exception(optional_refusal(article607r_3,
+                                  MemberState,
+                                  europeanArrestWarrant),
+                 _).
+optional_refusal(article2_3, MemberState, europeanArrestWarrant) :-
+    art2_4applies(MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState).
+optional_refusal(article12_1_b, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_event(PersonId, under_prosecution, Offence).
+optional_refusal(article12_1_c, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    (   proceeding_status(Offence, MemberState, no_prosecution)
+    ;   proceeding_status(Offence, MemberState, halted)
+    ).
+optional_refusal(article12_1_d, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    person_event(PersonId, irrevocably_convicted, Offence).
+optional_refusal(article12_1_e, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    proceeding_status(Offence, MemberState, statute_barred).
+optional_refusal(article12_1_f, MemberState, europeanArrestWarrant) :-
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    person_role(PersonId, subject_eaw),
+    proceeding_status(Offence, ThirdState, final_judgement),
+    MemberState\=ThirdState,
+    person_event(PersonId, irrevocably_convicted, Offence),
+    (   sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
+    ).
+optional_refusal(article12_1_g, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    (   person_domicile(PersonId, MemberState)
+    ;   person_nationality(PersonId, MemberState)
+    ;   person_residence(PersonId, _, MemberState, _)
+    ).
+optional_refusal(article12_1_h_i, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    proceeding_matter(PersonId, Offence, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          committed_inside_territory)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          committed_aboard_ship_aircrafts)
+    ).
+optional_refusal(article12_1_h_ii, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    proceeding_matter(PersonId, Offence, MemberState),
+    executing_member_state(PersonId, MemberState),
+    issuing_member_state(PersonId, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, no_prosecution).
+optional_refusal(article12_a_1, MemberState, europeanArrestWarrant) :-
+    person_role(PersonId, subject_eaw),
+    executing_member_state(PersonId, MemberState),
+    (   proceeding_status(Offence,
+                          MemberState,
+                          execution_custodial_sentence)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          execution_detention_order)
+    ),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      trial_in_absentia),
+    issuing_member_state(PersonId, IssuingMemberState),
+    \+ exception(optional_refusaloptional_refusal(article12_a_1,
+                                                  MemberState,
+                                                  europeanArrestWarrant),
+                 _).
+optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant) :-
+    art2_4applies(Offence),
+    issuing_proceeding(_, PersonId, Offence),
+    national_law_not_offence(Offence, ExecutingMemberState).
+optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    (   executing_proceeding_status(Offence,
+                                    ExecutingMemberState,
+                                    no_prosecution)
+    ;   executing_proceeding_status(Offence,
+                                    ExecutingMemberState,
+                                    halted)
+    ;   person_event(PersonId, irrevocably_convicted_in_ms, Offence)
+    ).
+optional_refusal(article4_4, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    executing_proceeding_status(Offence,
+                                ExecutingMemberState,
+                                statute_barred).
+optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    person_event(PersonId,
+                 irrevocably_convicted_in_third_state,
+                 Offence),
+    (   sentence_served_in_third_state(PersonId)
+    ;   sentence_being_served_in_third_state(PersonId)
+    ;   sentence_execution_impossible_in_third_state(PersonId)
+    ).
+optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(_, PersonId, Offence),
+    (   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_detention_order)
+    ),
+    (   person_nationality(PersonId, ExecutingMemberState)
+    ;   person_residence(PersonId,
+                         _,
+                         ExecutingMemberState,
+                         _)
+    ).
+optional_refusal(article4_7_a, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(_, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    executing_proceeding_status(Offence,
+                                ExecutingMemberState,
+                                committed_inside_territory).
+optional_refusal(article4_7_b, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    executing_proceeding(ExecutingMemberState, PersonId, _),
+    issuing_proceeding_status(Offence,
+                              IssuingMemberState,
+                              committed_outside_territory),
+    proceeding_status(Offence, ExecutingMemberState, no_prosecution).
+optional_refusal(article4a_1, ExecutingMemberState, europeanArrestWarrant) :-
+    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    (   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_detention_order)
+    ),
+    issuing_proceeding_status(Offence,
+                              IssuingMemberState,
+                              trial_in_absentia),
+    \+ exception(optional_refusal(article4a_1_a,
+                                  ExecutingMemberState,
+                                  europeanArrestWarrant),
+                 _).
+optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant) :-
+    art2_4applies(Offence),
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    national_law_not_offence(Offence, ExecutingMemberState).
+optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    person_event(PersonId,
+                 under_prosecution_by_executing_state,
+                 Offence).
+optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    (   executing_proceeding_status(Offence,
+                                    ExecutingMemberState,
+                                    no_prosecution)
+    ;   executing_proceeding_status(Offence,
+                                    ExecutingMemberState,
+                                    halted)
+    ;   person_event(PersonId, irrevocably_convicted_in_ms, Offence)
+    ).
+optional_refusal(article4_4, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    executing_proceeding_status(Offence,
+                                ExecutingMemberState,
+                                statute_barred).
+optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    person_event(PersonId,
+                 irrevocably_convicted_in_third_state,
+                 Offence),
+    (   sentence_served_in_third_state(PersonId)
+    ;   sentence_being_served_in_third_state(PersonId)
+    ;   sentence_execution_impossible_in_third_state(PersonId)
+    ).
+optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    (   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState,
+                             PersonId,
+                             execution_detention_order)
+    ),
+    (   person_nationality(PersonId, ExecutingMemberState)
+    ;   person_residence(PersonId,
+                         _,
+                         ExecutingMemberState,
+                         _)
+    ).
+optional_refusal(article4_7_a, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    executing_proceeding_status(Offence,
+                                ExecutingMemberState,
+                                committed_inside_territory).
+optional_refusal(article4_7_b, ExecutingMemberState, europeanArrestWarrant) :-
+    eaw_matter(PersonId,
+               IssuingMemberState,
+               ExecutingMemberState,
+               Offence),
+    issuing_proceeding_status(Offence,
+                              IssuingMemberState,
+                              committed_outside_territory),
+    prosecution_not_allowed(Offence, ExecutingMemberState).
+optional_refusal(article11_1_a, MemberState, europeanInvestigationOrder) :-
+    (   executing_member_state(_, MemberState),
+        proceeding_matter(_, Offence, MemberState),
+        proceeding_status(Offence,
+                          MemberState,
+                          impossible_execute_eio)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          limitation_criminal_liability)
+    ).
+optional_refusal(article11_1_b, MemberState, europeanInvestigationOrder) :-
+    (   proceeding_danger(_, MemberState, national_security)
+    ;   proceeding_danger(_,
+                          MemberState,
+                          jeopardise_source_information)
+    ;   proceeding_danger(_,
+                          MemberState,
+                          classified_information_intelligence)
+    ).
+optional_refusal(article11_1_c, MemberState, europeanInvestigationOrder) :-
+    article4applies(MemberState),
+    national_law_does_not_authorize(MemberState).
+optional_refusal(article11_1_d, MemberState, europeanInvestigationOrder) :-
+    contrary_to_ne_bis_in_idem(MemberState).
+optional_refusal(article11_1_e, MemberState, europeanInvestigationOrder) :-
+    proceeding_matter(_, Offence, MemberState),
+    executing_member_state(_, MemberState),
+    issuing_member_state(_, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, not_offence).
+optional_refusal(article11_1_e, MemberState, europeanInvestigationOrder) :-
+    executing_member_state(_, MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory),
+    proceeding_status(Offence, MemberState, not_offence).
+optional_refusal(article11_1_f, MemberState, europeanInvestigationOrder) :-
+    proceeding_danger(_,
+                      MemberState,
+                      incompatible_executing_obligations).
+optional_refusal(article11_1_g, MemberState, europeanInvestigationOrder) :-
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState),
+    \+ exception(optional_refusal(article11_1_g,
+                                  MemberState,
+                                  europeanInvestigationOrder),
+                 _).
+optional_refusal(article11_1_h, MemberState, europeanInvestigationOrder) :-
+    proceeding_matter(_, Offence, MemberState),
+    proceeding_status(Offence, MemberState, restricted_treshold),
+    \+ exception(optional_refusal(article11_1_h,
+                                  MemberState,
+                                  europeanInvestigationOrder),
+                 _).
+optional_refusal(article11_1_a, ExecutingMemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    eio_execution_impossible(Measure, ExecutingMemberState).
+optional_refusal(article11_1_b, ExecutingMemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    (   proceeding_danger(Measure,
+                          ExecutingMemberState,
+                          national_security)
+    ;   proceeding_danger(Measure,
+                          ExecutingMemberState,
+                          jeopardise_source_information)
+    ;   proceeding_danger(Measure,
+                          ExecutingMemberState,
+                          classified_information_intelligence)
+    ).
+optional_refusal(article11_1_c, ExecutingMemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    issuing_proceeding(IssuingMemberState, Offence),
+    article4b_c_applies(Offence),
+    national_law_does_not_authorize(ExecutingMemberState,
+                                    Measure,
+                                    Offence).
+optional_refusal(article11_1_d, MemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    contrary_to_ne_bis_in_idem(ExecutingMemberState, Measure).
+optional_refusal(article11_1_e, MemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    issuing_proceeding(IssuingMemberState, Offence),
+    issuing_proceeding_status(IssuingMemberState,
+                              Offence,
+                              committed_outside_territory),
+    issuing_proceeding_status(IssuingMemberState,
+                              Offence,
+                              committed_inside_executing_ms),
+    not_offence(Offence, ExecutingMemberState).
+optional_refusal(article11_1_f, ExecutingMemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    proceeding_danger(Measure,
+                      ExecutingMemberState,
+                      incompatible_EU_obligations).
+optional_refusal(article11_1_g, ExecutingMemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    issuing_proceeding(IssuingMemberState, Offence),
+    not_offence(Offence, ExecutingMemberState),
+    \+ exception(optional_refusal(article11_1_g,
+                                  ExecutingMemberState,
+                                  europeanInvestigationOrder),
+                 _).
+optional_refusal(article11_1_h, ExecutingMemberState, europeanInvestigationOrder) :-
+    eio_matter(IssuingMemberState,
+               ExecutingMemberState,
+               Measure),
+    issuing_proceeding(IssuingMemberState, Offence),
+    national_law_does_not_authorize(ExecutingMemberState,
+                                    Measure,
+                                    Offence).
+optional_refusal(article8_1_a, MemberState, europeanFreezingOrder) :-
+    contrary_to_ne_bis_in_idem(MemberState).
+optional_refusal(article8_1_b, MemberState, europeanFreezingOrder) :-
+    (   executing_member_state(_, MemberState),
+        proceeding_matter(_, Offence, MemberState),
+        proceeding_status(Offence,
+                          MemberState,
+                          impossible_freeze_property)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          limitation_criminal_liability)
+    ).
+optional_refusal(article8_1_c, MemberState, europeanFreezingOrder) :-
+    proceeding_status(Offence,
+                      MemberState,
+                      certificate_incomplete_manifestly_incorrect).
+optional_refusal(article8_1_d, MemberState, europeanFreezingOrder) :-
+    proceeding_matter(_, Offence, MemberState),
+    executing_member_state(_, MemberState),
+    issuing_member_state(_, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, not_offence).
+optional_refusal(article8_1_d, MemberState, europeanFreezingOrder) :-
+    executing_member_state(_, MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory),
+    proceeding_status(Offence, MemberState, not_offence).
+optional_refusal(article8_1_e, MemberState, europeanFreezingOrder) :-
+    art3_2applies(MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState).
+optional_refusal(article8_1_f, MemberState, europeanFreezingOrder) :-
+    proceeding_danger(_, MemberState, breach_fundamental_rights).
+optional_refusal(article19_1_a, MemberState, europeanConfiscationOrder) :-
+    contrary_to_ne_bis_in_idem(MemberState).
+optional_refusal(article19_1_b, MemberState, europeanConfiscationOrder) :-
+    (   executing_member_state(_, MemberState),
+        proceeding_matter(_, Offence, MemberState),
+        proceeding_status(Offence,
+                          MemberState,
+                          impossible_freeze_property)
+    ;   proceeding_status(Offence,
+                          MemberState,
+                          limitation_criminal_liability)
+    ).
+optional_refusal(article19_1_c, MemberState, europeanConfiscationOrder) :-
+    proceeding_status(Offence,
+                      MemberState,
+                      certificate_incomplete_manifestly_incorrect).
+optional_refusal(article19_1_d, MemberState, europeanConfiscationOrder) :-
+    proceeding_matter(_, Offence, MemberState),
+    executing_member_state(_, MemberState),
+    issuing_member_state(_, IssuingMemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      committed_outside_territory),
+    proceeding_status(Offence, MemberState, not_offence).
+optional_refusal(article19_1_d, MemberState, europeanConfiscationOrder) :-
+    executing_member_state(_, MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      committed_inside_territory),
+    proceeding_status(Offence, MemberState, not_offence).
+optional_refusal(article19_1_e, MemberState, europeanConfiscationOrder) :-
+    executing_member_state(_, MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    proceeding_status(Offence,
+                      MemberState,
+                      rights_person_impossible_execute_eco).
+optional_refusal(article19_1_f, MemberState, europeanConfiscationOrder) :-
+    art3_2applies(MemberState),
+    proceeding_matter(_, Offence, MemberState),
+    national_law_not_offence(Offence, MemberState).
+optional_refusal(article19_1_g, MemberState, europeanConfiscationOrder) :-
+    person_role(PersonId, subject_confiscation_order),
+    executing_member_state(PersonId, MemberState),
+    proceeding_status(Offence,
+                      IssuingMemberState,
+                      trial_in_absentia),
+    issuing_member_state(PersonId, IssuingMemberState),
+    \+ exception(optional_refusal(article19_1_g,
+                                  MemberState,
+                                  europeanConfiscationOrder),
+                 _).
+optional_refusal(article19_1_h, MemberState, europeanConfiscationOrder) :-
+    proceeding_danger(_, MemberState, breach_fundamental_rights).
+
+facilex(Request) :-
+    http_parameters(Request, [facts(FactsInput, [])]),
+    format('Content-type: text/plain~n~n'),
+    term_string(Facts, FactsInput),
+    snapshot(( forall(member(X, Facts), assert(X)),
+               get_answers(Dict)
+             )),
+    json_write_dict(current_output, Dict, [null('')]).
+
+:- multifile prolog_predicate_name/2.
+
+
+get_answer(mandatory, _{article:Article, memberstate:MemberState, regulation:Regulation, tree:Tree}) :-
+    solve(mandatory_refusal(Article, MemberState, Regulation),
+          TreeList),
+    term_string(TreeList, Tree).
+get_answer(optional, _{article:Article, memberstate:MemberState, regulation:Regulation, tree:Tree}) :-
+    solve(optional_refusal(Article, MemberState, Regulation),
+          TreeList),
+    term_string(TreeList, Tree).
+
+server(Port) :-
+    http_server(http_dispatch, [port(Port)]),
+    thread_get_message(_).
+
+:- multifile message_property/2.
+
+
+:- multifile proceeding_status/3.
+
+proceeding_status(Offence, MemberState, impossible_execute_eio) :-
+    proceeding_danger(_, MemberState, immunity_privilege).
+proceeding_status(Offence, MemberState, limitation_criminal_liability) :-
+    (   proceeding_danger(_, MemberState, freedom_press)
+    ;   proceeding_danger(_, MemberState, freedom_expression_media)
+    ).
+proceeding_status(Offence, MemberState, impossible_freeze_property) :-
+    proceeding_danger(_, MemberState, immunity_privilege).
+proceeding_status(Offence, MemberState, limitation_criminal_liability) :-
+    (   proceeding_danger(_, MemberState, freedom_press)
+    ;   proceeding_danger(_, MemberState, freedom_expression_media)
+    ).
+proceeding_status(Offence, MemberState, impossible_freeze_property) :-
+    proceeding_danger(_, MemberState, immunity_privilege).
+proceeding_status(Offence, MemberState, limitation_criminal_liability) :-
+    (   proceeding_danger(_, MemberState, freedom_press)
+    ;   proceeding_danger(_, MemberState, freedom_expression_media)
+    ).
+
+:- dynamic resource/2.
+:- multifile resource/2.
+
+
+:- dynamic exception/3.
+:- multifile exception/3.
+
+
+:- thread_local thread_message_hook/3.
+:- dynamic thread_message_hook/3.
+:- volatile thread_message_hook/3.
+
+
+:- multifile exception/2.
+
+exception(optional_refusal(article40_2, MemberState, europeanArrestWarrant), article40_2_1) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, informed_decision, Offence).
+exception(optional_refusal(article40_2, MemberState, europeanArrestWarrant), article40_2_2) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, presence_legal_defence, Offence).
+exception(optional_refusal(article40_2, MemberState, europeanArrestWarrant), article40_2_3) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_contest_decision, Offence).
+exception(optional_refusal(article40_2, MemberState, europeanArrestWarrant), article40_2_3) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_request_retrial_appeal, Offence).
+exception(optional_refusal(article40_2, MemberState, europeanArrestWarrant), article40_2_4) :-
+    person_event(PersonId, not_personally_served_decision, Offence),
+    person_event(PersonId,
+                 will_informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId,
+                 will_informed_of_timeframe_retrial_appeal,
+                 Offence).
+exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis_a) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, informed_decision, Offence).
+exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis_b) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, presence_legal_defence, Offence).
+exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis_c) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    (   person_event(PersonId, does_not_contest_decision, Offence)
+    ;   person_event(PersonId,
+                     does_not_request_retrial_appeal,
+                     Offence)
+    ).
+exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis_d) :-
+    person_event(PersonId, not_personally_served_decision, Offence),
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId,
+                 informed_of_timeframe_retrial_appeal,
+                 Offence).
+exception(optional_refusal(article607r_3, MemberState, europeanArrestWarrant), article607r_3_a) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, informed_decision, Offence).
+exception(optional_refusal(article607r_3, MemberState, europeanArrestWarrant), article607r_3_a) :-
+    person_event(PersonId, presence_legal_defence, Offence).
+exception(optional_refusal(article607r_3, MemberState, europeanArrestWarrant), article607r_3_b) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_contest_decision, Offence).
+exception(optional_refusal(article607r_3, MemberState, europeanArrestWarrant), article607r_3_b) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_request_retrial_appeal, Offence).
+exception(optional_refusal(article607r_3, MemberState, europeanArrestWarrant), article607r_3_c) :-
+    person_event(PersonId, not_personally_served_decision, Offence),
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId,
+                 informed_of_timeframe_retrial_appeal,
+                 Offence).
+exception(optional_refusaloptional_refusal(article12_a_1, MemberState, europeanArrestWarrant), article12_a_1_a) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, informed_decision, Offence).
+exception(optional_refusaloptional_refusal(article12_a_1, MemberState, europeanArrestWarrant), article12_a_1_b) :-
+    person_event(PersonId, presence_legal_defence, Offence).
+exception(optional_refusaloptional_refusal(article12_a_1, MemberState, europeanArrestWarrant), article12_a_1_c) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_contest_decision, Offence).
+exception(optional_refusaloptional_refusal(article12_a_1, MemberState, europeanArrestWarrant), article12_a_1_c) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_request_retrial_appeal, Offence).
+exception(optional_refusaloptional_refusal(article12_a_1, MemberState, europeanArrestWarrant), article12_a_1_d) :-
+    person_event(PersonId, not_personally_served_decision, Offence),
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId,
+                 informed_of_timeframe_retrial_appeal,
+                 Offence).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_a) :-
+    issuing_proceeding_event(PersonId, Offence, aware_trial),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_potential_decision).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_b) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             mandated_legal_defence).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_i) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             does_not_contest_decision).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             does_not_request_retrial_appeal).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             not_personally_served_decision),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_timeframe_retrial_appeal).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_b) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             mandated_legal_defence).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_i) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             does_not_contest_decision).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             does_not_request_retrial_appeal).
+exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii) :-
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             not_personally_served_decision),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId,
+                             Offence,
+                             informed_of_timeframe_retrial_appeal).
+exception(optional_refusal(article11_1_g, MemberState, europeanInvestigationOrder), article11_2) :-
+    article10_2Applies(MemberState).
+exception(optional_refusal(article11_1_h, MemberState, europeanInvestigationOrder), article11_2) :-
+    article10_2Applies(MemberState).
+exception(optional_refusal(article19_1_g, MemberState, europeanConfiscationOrder), article19_1_g_i) :-
+    person_event(PersonId, aware_trial, Offence),
+    person_event(PersonId, informed_decision, Offence).
+exception(optional_refusal(article19_1_g, MemberState, europeanConfiscationOrder), article19_1_g_ii) :-
+    person_event(PersonId, presence_legal_defence, Offence).
+exception(optional_refusal(article19_1_g, MemberState, europeanConfiscationOrder), article19_1_g_iii) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_contest_decision, Offence).
+exception(optional_refusal(article19_1_g, MemberState, europeanConfiscationOrder), article19_1_g_iii) :-
+    person_event(PersonId,
+                 informed_of_right_retrial_appeal,
+                 Offence),
+    person_event(PersonId, does_not_request_retrial_appeal, Offence).
+
+:- dynamic prolog_file_type/2.
+:- multifile prolog_file_type/2.
+
+prolog_file_type(pl, prolog).
+prolog_file_type(prolog, prolog).
+prolog_file_type(qlf, prolog).
+prolog_file_type(qlf, qlf).
+prolog_file_type(A, executable) :-
+    system:current_prolog_flag(shared_object_extension, A).
+prolog_file_type(dylib, executable) :-
+    system:current_prolog_flag(apple, true).
+
+:- dynamic expand_answer/2.
+:- multifile expand_answer/2.
+
+
+:- dynamic resource/3.
+:- multifile resource/3.
+
+
+:- dynamic message_hook/3.
+:- multifile message_hook/3.
+
+message_hook(make(done(Reload)), _Level, _Lines) :-
+    http_path:
+    (   Reload\==[],
+        http_clean_location_cache,
+        fail
+    ).
+message_hook(make(done(Reload)), _Level, _Lines) :-
+    http_dispatch:
+    (   Reload\==[],
+        next_generation,
+        fail
+    ).
+
+:- dynamic portray/1.
+:- multifile portray/1.
+
+
+:- dynamic goal_expansion/2.
+:- multifile goal_expansion/2.
+
+
+eio_matter(IssuingMemberState, ExecutingMemberState, Measure) :-
+    issuing_proceeding(IssuingMemberState,
+                       Proceeding,
+                       Offence),
+    executing_member_state(ExecutingMemberState,
+                           PersonId,
+                           Measure).
+
+:- dynamic prolog_load_file/2.
+:- multifile prolog_load_file/2.
+
+
+eio_execution_impossible(Measure, ExecutingMemberState) :-
+    contrast_with(Measure, ExecutingMemberState, immunity_privilege).
+
+person_status(PersonId, under_age) :-
+    person_age(PersonId, Age),
+    Age<14.
