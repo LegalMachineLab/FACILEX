@@ -5,7 +5,7 @@
 
 :- initialization(main).
 
-:- http_handler(root(facilex/Sub), facilex(Sub), []).
+:- http_handler(root(facilex), facilex, []).
 
 :- include('meta_interpreter.pl').
 % :- include('EAW/Decision_2002_584.pl').
@@ -18,7 +18,7 @@ server(Port) :-
     % Use thread_get_message to keep the server alive on a non interactive system (Docker)
     thread_get_message(_).
 
-facilex(query, Request) :-
+facilex(Request) :-
     http_parameters(Request, [facts(FactsInput, [])]),
     format('Content-type: text/plain~n~n'),
     term_string(Facts, FactsInput),
@@ -54,4 +54,4 @@ main:-
     consult_all,
     server(8000).
 
-% http://localhost:8000/facilex/query?facts=[proceeding_matter(marco,reato,italia),amnesty(reato,italia),executing_member_state(marco,italia),art2_4applies(italia),national_law_not_offence(reato,italia),person_role(marco,subject_eaw), person_event(marco,under_prosecution,reato)]
+% http://localhost:8000/facilex?facts=[proceeding_matter(marco,reato,italia),amnesty(reato,italia),executing_member_state(marco,italia),art2_4applies(italia),national_law_not_offence(reato,italia),person_role(marco,subject_eaw), person_event(marco,under_prosecution,reato)]
