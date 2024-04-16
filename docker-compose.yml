@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+    facilex:
+      image: ghcr.io/legalmachinelab/facilex:latest
+      build: .
+      ports:
+        - "8000:8000"
