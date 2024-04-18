@@ -11,6 +11,11 @@
         result: [italy, bulgaria, france, poland]
     },
     {
+        id: question1,
+        type: predicate,
+        result: issuing_proceeding(IssuingMemberState, PersonId, offence) #va bene mettere due id: question1? come si fa quando quando serve sia una variabile sia un predicato?
+    },
+    {
         id: question2,
         type: variable,
         name: ExecutingMemberState,
