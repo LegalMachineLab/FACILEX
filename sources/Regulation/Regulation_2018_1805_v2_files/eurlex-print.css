@@ -1,0 +1,446 @@
+/*General rules*/
+#MainContent > .row.row-offcanvas .col-md-9{
+	width: 100% !important;
+}
+.EurlexContent{
+	/*background-color: #FFF !important;*/
+	padding: 8px;
+	margin: 10px;
+}
+.EurlexContent, .EurlexContent label{
+	font-size: 125% !important;
+}
+.EurlexContent span:not(.btn){
+	font-size: 105% !important;
+}
+.EurlexContent dt{
+	font-size: 100% !important;
+}
+.EurlexContent th{
+	font-size: 150% !important;
+}
+.EurlexContent td{
+	font-size: 150% !important;
+}
+.EurlexEditorial th{
+	font-size: 100% !important;
+}
+.EurlexEditorial td{
+	font-size: 100% !important;
+}
+.EurlexContent{
+	height:auto ; page-break-before: avoid; overflow: hidden !important;
+}
+div.alert{
+	overflow: hidden !important;
+}
+.panel-title a{
+	font-size: 125% !important;
+}
+/*Plugin class for MS/MD relation in notice page*/
+.dataTable {
+	font-size: 75% !important;
+}
+.checkbox{
+	font-size: 75% !important;
+}
+/*General rules (end)*/
+
+/*Non displayed components*/
+#com-header, #op-header, #op-header-pdf, #webtrendsTime, op-header-pdf-everypage, #searchResultForm, .SelfTitle,
+ #quick-search-editorial-content, .widgetControl, .modal, footer.clearfix, .sidebar-offcanvas,
+  .NavSearch, .SiteBreadcrumb, .SearchTools, .deleteAction, .PageTools.clearfix, 
+input[type=checkbox], .PageTitle > .row > div:first-of-type, .PageTitle > .row > div + div + div, noscript,
+.ResultsTools .row + .row, .PagePanel .panel-heading a:before, .procSteps .input-group, #tocBtnMbl, #tocHideBtnMbl {
+	display: none !important;
+}
+/*Non displayed components (end)*/
+
+/*Search results*/
+.SearchResultData dt{
+	font-size: 100% !important;
+}
+.SearchResult, .ResultsTools label, .SearchCriteria >span, #SearchCriteriaPanelTitle a{
+	font-size: 115% !important;
+}
+.SearchResultData{
+	display: block !important;
+}
+.SearchCriteria{
+	border-bottom: 0px solid #cad7dc !important;
+}
+.documentPrintDiv .SearchResult > label.hidden-print{
+	display: block !important;
+	position: relative !important;
+}
+.documentPrintDiv{
+	background-color: #FFF !important;
+	padding:8px !important;
+	margin:10px !important;
+}
+.titleHeader small{
+	color:inherit !important;
+}
+.documentPrintDiv .SearchResultData  dt:before{
+	display: block !important;
+}
+/*Search results (end)*/
+
+/*Notice*/
+.PageTitle p.DocumentTitle{
+	font-size: 125% !important;
+}
+.countryToggle > span.nonTransform{
+	font-size: 125% !important;
+}
+#text table p {
+	font-size: 16px !important;
+}
+/*Notice (end)*/
+
+/* No highlighting when printing */
+span.highlight {
+    background-color: transparent; 
+}
+/* No highlighting when printing (end) */
+
+/* Override media selectors from app. css */
+/*OJ table*/
+@media (max-width: 767px)
+{
+	.OJTable thead							{display: table-header-group;}
+	.OJTable tr								{display: table-row; padding: 0px;}
+	.OJTable tbody tr td					{display: table-cell; padding: 5px; position:relative;}
+	.OJTable td:first-child					{padding: 5px; font-weight:500;}
+}
+/*OJ table (end)*/
+
+/*Notice page: always display a table on print*/
+@media (max-width: 1px)
+{
+	.PubFormat								{padding-left:5px;}
+	.PubFormatType							{float:none; text-align:center;}
+	.PubFormatType span						{margin:0;}
+	.PubFormatType .exi						{margin-right:10px;}
+}
+@media (min-width: 1px)
+{
+	.PubFormats								{display:table; width:100%;}
+	.PubFormat								{float:none; padding:0 5px; display:table-row; background:transparent;}
+	.PubFormatType							{line-height:28px;}
+	.PubFormatType							{display:table-cell; float:none;}
+	.PubFormat .btn-group					{display:table-cell; float:left;}
+	.PubFormatType .exi						{display:none;}
+	.PubFormat button						{display:none;}
+	.PubFormat .dropdown-menu				{display:table; width:100%; position:relative; background:transparent; border:0; box-shadow:none; padding:0; margin:0;}
+	.PubFormat .dropdown-menu li			{display:table-cell;}
+	.PubFormat .dropdown-menu > li > a		{padding:3px 0; text-align:center; margin:1px 0 0 1px;}
+	.PubFormat .dropdown-menu > li > a:hover{background:#fff;}
+
+	.PubFormat .dropdown-menu > li > a span	{display:none;}
+	.PubFormat .PubFormatVIEW > li > a		{color:#36c;}
+	.PubFormat .PubFormatVIEW > li > a span	{display:inline-block; font-size:12px; font-weight:500; width:16px;}
+	
+	.PubFormat .dropdown-menu > li > a				{margin-right:5px}
+	.PubFormat .dropdown-menu > li .exi				{display:inline-block; width:16px; height:16px; overflow:hidden; position:relative; vertical-align:middle;}
+ 	.PubFormat .dropdown-menu > li .exi:after		{content:url(../revamp/images/doc_icons.png); position:absolute; left:-2px;}
+ 	
+	.PubFormat .dropdown-menu > li.disabled > a				{color:#444; opacity:.4; background:transparent;}
+	.PubFormat .dropdown-menu > li.disabled > a:focus		{outline:0;}
+	.PubFormat .dropdown-menu > li.disabled > a:after		{color:#444;}
+}
+
+/*Notice page (end)*/
+
+/* E-Learning (start) */
+#mapster_wrap_0 {
+	width: 700px !important;
+	height: auto !important;	
+}
+#mapster_wrap_0 img{
+	height: auto !important;
+}
+.ELQuiz input[type=checkbox] {
+	display: inline-block !important
+}
+/* E-Learning (end) */
+
+/*Other issues*/
+.DateLabelMargin {
+    margin-top: 35px !important;
+}
+.col-sm-3 > .ASCondCheckbox:first-of-type{
+	margin-left: 20px !important;
+}
+.normalTreeLink {
+	font-size: 105% !important;
+}
+#textStatisticsTable {
+	display: none !important;
+}
+#printTable1, #printTable2, #printTable3, #printTable4 {
+	display: table !important;
+}
+.embed-responsive-16by9{
+	width: 500px !important;
+}
+video {
+	width: 500px !important;
+}
+/*Other issues (end)*/
+
+/* Override media selectors from app. css (end)*/
+
+/* Bootstrap 3 printing should be commented out. We handle everything here. */
+	 .visible-print-block{
+		display: block !important;
+	 }
+	 .hidden-print {
+	   display: none !important;
+	 }
+	 .SearchResultDoc li:last-child [title~=html], .SearchResultDoc li:last-child [title~=pdf], .SearchResultDoc li:last-child [title~=doc] {
+	   margin-right: 15px;
+	 }
+	
+	/* The following code fixes Bootstrap 3 Printing issue. 
+	When printing with BS3 (in Google Chrome or certain versions Internet Explorer) the mobile layout is rendered.
+	Here we set print resolution to sm instead of xs.
+	See also: https://blog.donnierayjones.com/2014/10/fix-bootstrap3-printing/ */
+	
+	@media print {
+	  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+	    float: left;
+	  }
+	  .col-sm-12 {
+	    width: 100%;
+	  }
+	  .col-sm-11 {
+	    width: 91.66666667%;
+	  }
+	  .col-sm-10 {
+	    width: 83.33333333%;
+	  }
+	  .col-sm-9 {
+	    width: 75%;
+	  }
+	  .col-sm-8 {
+	    width: 66.66666667%;
+	  }
+	  .col-sm-7 {
+	    width: 58.33333333%;
+	  }
+	  .col-sm-6 {
+	    width: 50%;
+	  }
+	  .col-sm-5 {
+	    width: 41.66666667%;
+	  }
+	  .col-sm-4 {
+	    width: 33.33333333%;
+	  }
+	  .col-sm-3 {
+	    width: 25%;
+	  }
+	  .col-sm-2 {
+	    width: 16.66666667%;
+	  }
+	  .col-sm-1 {
+	    width: 8.33333333%;
+	  }
+	  .col-sm-pull-12 {
+	    right: 100%;
+	  }
+	  .col-sm-pull-11 {
+	    right: 91.66666667%;
+	  }
+	  .col-sm-pull-10 {
+	    right: 83.33333333%;
+	  }
+	  .col-sm-pull-9 {
+	    right: 75%;
+	  }
+	  .col-sm-pull-8 {
+	    right: 66.66666667%;
+	  }
+	  .col-sm-pull-7 {
+	    right: 58.33333333%;
+	  }
+	  .col-sm-pull-6 {
+	    right: 50%;
+	  }
+	  .col-sm-pull-5 {
+	    right: 41.66666667%;
+	  }
+	  .col-sm-pull-4 {
+	    right: 33.33333333%;
+	  }
+	  .col-sm-pull-3 {
+	    right: 25%;
+	  }
+	  .col-sm-pull-2 {
+	    right: 16.66666667%;
+	  }
+	  .col-sm-pull-1 {
+	    right: 8.33333333%;
+	  }
+	  .col-sm-pull-0 {
+	    right: auto;
+	  }
+	  .col-sm-push-12 {
+	    left: 100%;
+	  }
+	  .col-sm-push-11 {
+	    left: 91.66666667%;
+	  }
+	  .col-sm-push-10 {
+	    left: 83.33333333%;
+	  }
+	  .col-sm-push-9 {
+	    left: 75%;
+	  }
+	  .col-sm-push-8 {
+	    left: 66.66666667%;
+	  }
+	  .col-sm-push-7 {
+	    left: 58.33333333%;
+	  }
+	  .col-sm-push-6 {
+	    left: 50%;
+	  }
+	  .col-sm-push-5 {
+	    left: 41.66666667%;
+	  }
+	  .col-sm-push-4 {
+	    left: 33.33333333%;
+	  }
+	  .col-sm-push-3 {
+	    left: 25%;
+	  }
+	  .col-sm-push-2 {
+	    left: 16.66666667%;
+	  }
+	  .col-sm-push-1 {
+	    left: 8.33333333%;
+	  }
+	  .col-sm-push-0 {
+	    left: auto;
+	  }
+	  .col-sm-offset-12 {
+	    margin-left: 100%;
+	  }
+	  .col-sm-offset-11 {
+	    margin-left: 91.66666667%;
+	  }
+	  .col-sm-offset-10 {
+	    margin-left: 83.33333333%;
+	  }
+	  .col-sm-offset-9 {
+	    margin-left: 75%;
+	  }
+	  .col-sm-offset-8 {
+	    margin-left: 66.66666667%;
+	  }
+	  .col-sm-offset-7 {
+	    margin-left: 58.33333333%;
+	  }
+	  .col-sm-offset-6 {
+	    margin-left: 50%;
+	  }
+	  .col-sm-offset-5 {
+	    margin-left: 41.66666667%;
+	  }
+	  .col-sm-offset-4 {
+	    margin-left: 33.33333333%;
+	  }
+	  .col-sm-offset-3 {
+	    margin-left: 25%;
+	  }
+	  .col-sm-offset-2 {
+	    margin-left: 16.66666667%;
+	  }
+	  .col-sm-offset-1 {
+	    margin-left: 8.33333333%;
+	  }
+	  .col-sm-offset-0 {
+	    margin-left: 0%;
+	  }
+	  .visible-xs {
+	    display: none !important;
+	  }
+	  .hidden-xs {
+	    display: block !important;
+	  }
+	  table.hidden-xs {
+	    display: table;
+	  }
+	  tr.hidden-xs {
+	    display: table-row !important;
+	  }
+	  th.hidden-xs,
+	  td.hidden-xs {
+	    display: table-cell !important;
+	  }
+	  .hidden-xs.hidden-print {
+	    display: none !important;
+	  }
+	  .hidden-sm {
+	    display: none !important;
+	  }
+	  .visible-sm {
+	    display: block !important;
+	  }
+	  table.visible-sm {
+	    display: table;
+	  }
+	  tr.visible-sm {
+	    display: table-row !important;
+	  }
+	  th.visible-sm,
+	  td.visible-sm {
+	    display: table-cell !important;
+	  }
+	  /*This rule makes sure that all app. colors are applied on print*/
+	  *,
+	  *:before,
+	  *:after {
+	    -webkit-print-color-adjust: exact !important;
+	  }
+	}
+/* Bootstrap 3 printing should be commented out. We handle everything here. (end)*/
+
+/* Itext realated fix for ClassNotFound exception caused by display table*/
+.clearfix:before,
+.clearfix:after,
+.dl-horizontal dd:before,
+.dl-horizontal dd:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-collapse:before,
+.navbar-collapse:after,
+.pager:before,
+.pager:after,
+.panel-body:before,
+.panel-body:after,
+.modal-header:before,
+.modal-header:after,
+.modal-footer:before,
+.modal-footer:after {
+	content: " ";
+	display: block !important;
+}

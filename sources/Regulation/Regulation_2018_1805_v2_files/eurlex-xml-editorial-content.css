@@ -1,0 +1,426 @@
+/* This file contains the styling of the editorial content located in .xml files */
+
+.emphasis-text {
+    font-weight: bold;
+    color: #087FAA;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.nowrap-text {
+    white-space: nowrap;
+}
+
+/* Used in development_2017-03.xml */
+.background-green {
+    background-color: #66cc00;
+}
+.background-yellow {
+    background-color: #ffff00;
+}
+.background-red {
+    background-color: #ff0000;
+}
+
+/* Homepage banner widget*/
+
+.homepage-banner {
+    width: 100%;
+}
+.homepage-banner-text {
+	background: #004d99;
+    height: auto;
+    margin: 10px auto 0;
+    padding: 25px 25px 25px 25px;
+} 
+.homepage-banner a {
+    color: #f2f2f2;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    padding-left: 0px;
+}
+.homepage-banner a:hover, .homepage-banner a:focus {
+    color: #5B5B5B;
+    outline: medium none;
+    text-decoration: none;
+}
+p.homepage-button {
+    width:40%;
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+}
+.homepage-banner i {
+    padding-left: 10px;
+    color: #f2f2f2;
+}
+
+.carouselArrow{
+	top: 20%;
+	position: relative;
+	background: none; important;
+}
+
+@media screen and (max-width: 767px) {
+    .carouselArrow{
+        top: 80%;
+        opacity: 0.6;
+    }
+    .carousel-control.right {
+        right: 6px;
+    }
+}
+
+#homepageCarousel .carousel-indicators {
+    position: relative;
+    color: #868686;
+}
+
+.align-indicators {
+    text-align: left;
+    position: relative;
+    left: 25%;
+    top: 7px;
+}
+@media screen and (max-width: 767px) {
+    .carousel-control.left {
+        width: 5%;
+        background: none !important;
+        filter: progid:none !important;
+        z-index: 99;
+    }
+    .carousel-control.right {
+        width: 5%;
+        background: none !important;
+        filter: progid:none !important;
+        z-index: 99;
+    }
+}
+@media screen and (max-width: 740px) {
+    .homepage-banner-text {
+        text-align: center;
+        padding: 5px 5px 5px 5px;
+        font-size: 16px;
+    }
+    .homepage-banner a {
+        padding-left: 0px;
+    }
+}
+.labelBannerPlacement1{
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	left: 10%;
+	color:white;
+	font-size:150%;
+}
+
+@media screen and (max-width: 767px) {
+    .labelBannerPlacement1{
+        position: absolute;
+        top: 10%;
+        width: 95%;
+        left: 5%;
+        color:white;
+        font-size:150%;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .labelBannerPlacement1{
+        position: absolute;
+        top: 25%;
+        width: 55%;
+        left: 5%;
+        color:white;
+        font-size:115%;
+    }
+}
+
+.labelBannerPlacement2{
+	position: absolute;
+	top: 35%;
+	width: 100%;
+	left: 10%;
+	color:white;
+	font-size:150%;
+}
+
+@media screen and (max-width: 767px) {
+    .labelBannerPlacement2{
+        position: absolute;
+        top: 35%;
+        width: 95%;
+        left: 5%;
+        color:white;
+        font-size:150%;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .labelBannerPlacement2{
+        position: absolute;
+        top: 25%;
+        width: 55%;
+        left: 5%;
+        color:white;
+        font-size:115%;
+    }
+}
+
+.labelBannerPlacement3{
+	position: absolute;
+	top: 12%;
+	width: 100%;
+	left: 5%;
+	color:white;
+	font-size:125%;
+}
+
+@media screen and (max-width: 767px) {
+    .labelBannerPlacement3{
+        position: absolute;
+        top: 12%;
+        width: 95%;
+        left: 5%;
+        color:white;
+        font-size:125%;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .labelBannerPlacement3{
+        position: absolute;
+        top: 12%;
+        width: 55%;
+        left: 5%;
+        color:white;
+        font-size:105%;
+    }
+}
+.labelBannerPlacement4{
+	position: absolute;
+	top: 10%;
+	width: 100%;
+	left: 15%;
+	color:white;
+	font-size:150%;
+}
+
+@media screen and (max-width: 767px) {
+    .labelBannerPlacement4{
+        position: absolute;
+        top: 35%;
+        width: 95%;
+        left: 15%;
+        color:white;
+        font-size:140%;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .labelBannerPlacement4{
+        position: absolute;
+        top: 25%;
+        width: 55%;
+        left: 15%;
+        color:white;
+        font-size:115%;
+    }
+}
+
+.main-img {
+  height: 250px;
+  width:100%;
+  background-image: url(images/banners/Eur_Lex_mobile_02.jpg);
+} 
+
+/* E-Learning homepage banner */
+#e-learning-homepage-banner {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+#e-learning-homepage-banner .e-learning-link {
+    background-color: #eee;
+	width: 172px;
+}
+
+#e-learning-homepage-banner .e-learning-img {
+    width: 100%;
+}
+
+/* Used in legis/avis.xml */
+.legis-amendments {
+	font-size: 0.9em;
+	margin-top: 0px;
+	margin-left: 10px;
+}
+.legis-codelist {
+    margin-left: 5em;
+    text-indent: -1.5em;
+}
+
+/* Used in faq/oj-series-subseries-special_edition.xml */
+.faq-oj-series-col1 {
+    width: 10em;
+}
+
+/* Used in help pages to set a reasonnable width for the first column of tables */
+.help-table-fields-col1 {
+    width: 12em;
+}
+
+/* Used in help/my-eurlex-preferences/update-website-preferences.xml */
+.help-website-prefs-col1 {
+    width: 16em;
+}
+
+/* Used in intro/old-celex.xml */
+.table-old-celex {
+    width: auto;
+}
+.table-old-celex th,
+.table-old-celex td {
+   text-align: center;
+}
+.table-old-celex td:first-child {
+   text-align: left;
+}
+.table-old-celex-code {
+    width: 4em;
+}
+.table-old-celex-doctype {
+    width: 25em;
+}
+
+/* Used in grid for summaries by topic in summaries of legislation */
+.summaryGridBox {
+    padding: 0 0.5em 0.5em 0;
+}
+.summaryGridTitle {
+    background-color: #eee;
+    font-weight: bold;
+    padding: 1em 1em 5em 1em;
+    border-style: solid;
+    border-color: #097eaa;
+    border-width: 0.05em;
+    height: 5em;
+    color: #666666;
+}
+.summaryGridTitle img {
+    float: left;
+    padding: 0 1em 2em 0;
+}
+/* Fix outline for the "summaries by topic" boxes */
+a:focus > .summaryGridTitle {
+    outline: 3px solid #ffd617;
+}
+.summaryGridBox a {
+    outline: 0 none !important;
+}
+
+/* Used in glossary entries for summaries of legislation */
+#main_menu_glossary {
+    overflow: hidden;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+#main_menu_glossary li {
+    list-style: none;
+    float: left;
+    margin-top: 0px;
+    padding: 0px;
+}
+#main_menu_glossary li a {
+    background-color: #087FAA;
+    padding: 0px 5px 0px 5px;
+    font-weight: bold;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+#main_menu_glossary li.summary-glossary-lettergroup-start {
+    margin-left: 10px;
+}
+
+/* Prevent the right edge of tables to be hidden */
+.tableTreatiesAutomatic {
+    margin-left: 0px !important;
+}
+/* INFO and DANGER messages on Homepage */
+.homepageMessage {
+    font-size: 13px;
+    background-color: transparent;
+    border: none;
+    padding: 15px 15px 0px 15px;
+    background-position: 0 top;
+    margin-bottom: 0px;
+}
+/* Change Bootstrap default colour for warning messages */
+.alert-warning {
+    color: #801515;
+}
+.userMsgSimple {
+    font-size: 0.9em;
+    background-color: transparent;
+    border: none;
+    padding: 0 0 0 20px;
+    background-position: 0 top;
+}
+@media screen and (max-width: 991px) {
+    .homepageMessage {
+        padding: 15px
+    }
+}
+
+/* Addition for treaties tables */
+.maybehiddenTreatiesAutomatic {
+    color: #00CC00;
+    font-weight: bolder;
+    visibility : hidden; display: none;
+}
+.treaties-table-column1 {
+    width: 65%;
+}
+.screenreaderNoDisplay {
+    position:absolute;
+    left:-9999px;
+    top:-9999px;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+}
+.link-treaty-article {
+    border: 1px solid;
+    border-radius: 12px;
+    display: inline-block;
+    margin: 4px 3px;
+    min-width: 34px;
+    text-align: center;
+}
+.treatiesTableMobile {
+    white-space: normal;
+}
+
+/* UPPERCASE transform rule for QS button and MENU button */
+.QuickSearchBtn {
+    text-transform: uppercase;
+}
+#EurlexNavBtn {
+    text-transform: uppercase;
+}
+
+/* Video container for embedded videos */
+.video-container,
+.video-script-container {
+    margin-bottom: 10px;
+}
+
+/* Used to change to link color languages acronyms in doc page */
+.PubFormat .PubFormatVIEW > li > a { color:#337ab7 !important;}

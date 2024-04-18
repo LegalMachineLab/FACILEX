@@ -1,0 +1,13 @@
+var hideQueryLabel = 'Hide search';
+var interStyleGuideLabel = 'Interinstitutional style guide';
+var viewQueryLabel = '[View search]';
+var zoomingErrorLabel = 'An error has occured during the zoom on textual metadata. Please try again later.';
+var fileTooBigLabel = 'The file you selected is too large. File size may not exceed 10,240 KB.';
+var allTheseWordsLabel = 'All these words';
+var otherLinksLabel = 'Links';
+var zoomingTextMetadataLabel = 'Zooming text metadata';
+var noResults = 'No results found.';
+var fullTextLabel = 'Text search';
+var legDraftLabel = 'Legislative drafting';
+var celexBasicActLabel = 'The Celex id must begin with at least 5 numbers and a letter.';
+var relationInvalidLabel = 'The CELEX or annotation part of the relation search cannot start with a truncation operator (*, ?, +).';

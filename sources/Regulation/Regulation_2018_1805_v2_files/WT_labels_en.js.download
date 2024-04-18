@@ -1,0 +1,23 @@
+var WTLabels = {
+'nextMonth' : 'Next Month', 
+'all' : 'All', 
+'naturalNumber.civilServiceTribunal' : 'Civil Service Tribunal', 
+'nextDecade' : 'Next Decade', 
+'naturalNumber.court' : 'General Court', 
+'prevDecade' : 'Previous Decade', 
+'naturalNumber.courtOfJustice' : 'Court of Justice', 
+'opinion' : 'Opinion', 
+'thirdParty' : 'Third-party proceedings', 
+'garnisheeOrder' : 'Attachment order', 
+'selectMonth' : 'Select Month', 
+'judgment' : 'Judgment', 
+'prevMonth' : 'Previous Month', 
+'today' : 'Go to today', 
+'selectYear' : 'Select year', 
+'nextYear' : 'Next year', 
+'prevYear' : 'Previous year', 
+'judicialInfo' : 'Judicial information', 
+'close' : 'Close the picker', 
+'advGeneral' : 'Advocate General\u2019s opinion', 
+'order' : 'Order'
+};
