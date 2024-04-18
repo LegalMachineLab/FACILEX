@@ -1,7 +1,7 @@
 [
     {
         id: question0,
-        question: What are you interested in,
+        question: What are you interested in?,
         type: choice,
         choices: [European Arrest Warrant, European Investigation Order, European Freezing or Confiscation Order]
     },
