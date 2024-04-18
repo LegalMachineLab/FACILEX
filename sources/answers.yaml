@@ -1,0 +1,44 @@
+[
+    {
+        id: question0,
+        type: openQuestions,
+        result: #access question1 to question6 come si scrive?
+    },
+    {
+        id: question1,
+        type: variable,
+        name: IssuingMemberState,
+        result: [italy, bulgaria, france, poland]
+    },
+    {
+        id: question2,
+        type: variable,
+        name: ExecutingMemberState,
+        result: [italy, bulgaria, france, poland]
+    },
+    {
+        id: question3,
+        type: predicate,
+        result: art2applies(offence) #to change depending on if we ask for specific offence variable?
+    },
+    {
+        id: question4,
+        type: variable,
+        name: PersonId,
+        result: freeText #should we stick with a name for the person?
+    },
+    {
+        id: question5,
+        type: predicate,
+        result: [ 
+         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution),
+         executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence),
+         executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
+         ] #should we indicate variables in another way?
+    },
+    {
+        id: question6,
+        type: predicate,
+        result: amnesty(offence, ExecutingMemberState)
+    },
+]
