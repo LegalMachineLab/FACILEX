@@ -1,0 +1,59 @@
+[
+    {
+        "id": "question0",
+        "type": "openQuestions",
+        "result": null
+    },
+    {
+        "id": "question1,",
+        "type": "variable,",
+        "name": "IssuingMemberState,",
+        "result": [
+            "italy",
+            "bulgaria",
+            "france",
+            "poland"
+        ]
+    },
+    {
+        "id": "question1,",
+        "type": "predicate,",
+        "result": "issuing_proceeding(IssuingMemberState, PersonId, offence)"
+    },
+    {
+        "id": "question2,",
+        "type": "variable,",
+        "name": "ExecutingMemberState,",
+        "result": [
+            "italy",
+            "bulgaria",
+            "france",
+            "poland"
+        ]
+    },
+    {
+        "id": "question3,",
+        "type": "predicate,",
+        "result": "art2applies(offence)"
+    },
+    {
+        "id": "question4,",
+        "type": "variable,",
+        "name": "PersonId,",
+        "result": "freeText"
+    },
+    {
+        "id": "question5,",
+        "type": "predicate,",
+        "result": [
+            "executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)",
+            "executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)",
+            "executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)"
+        ]
+    },
+    {
+        "id": "question6,",
+        "type": "predicate,",
+        "result": "amnesty(offence, ExecutingMemberState)"
+    }
+]
