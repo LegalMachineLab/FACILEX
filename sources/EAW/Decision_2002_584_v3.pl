@@ -8,7 +8,6 @@
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    %punishable_by_law(IssuingMemberState, Offence),
     art2applies(Offence),
     %(
     %    art2_2applies(Offence)
