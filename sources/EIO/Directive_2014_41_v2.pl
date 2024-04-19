@@ -9,7 +9,7 @@
 %The EIO may also be issued for obtaining evidence that is already in the possession of the competent authorities of the executing State.
 
 eio_matter(IssuingMemberState, ExecutingMemberState, Measure):-
-    issuing_proceeding(IssuingMemberState, Proceeding, Offence),
+    issuing_proceeding(IssuingMemberState, _, Offence),
     executing_member_state(ExecutingMemberState, PersonId, Measure).
 
 %Article 11
@@ -44,7 +44,7 @@ optional_refusal(article11_1_b, ExecutingMemberState, europeanInvestigationOrder
 
 optional_refusal(article11_1_c, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    issuing_proceeding(IssuingMemberState, Offence),
+    issuing_proceeding(IssuingMemberState, _, Offence),
     article4b_c_applies(Offence),
     national_law_does_not_authorize(ExecutingMemberState, Measure, Offence).
 
@@ -58,7 +58,6 @@ optional_refusal(article11_1_d, MemberState, europeanInvestigationOrder):-
 
 optional_refusal(article11_1_e, MemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    issuing_proceeding(IssuingMemberState, Offence),
     issuing_proceeding_status(IssuingMemberState, Offence, committed_outside_territory),
     issuing_proceeding_status(IssuingMemberState, Offence, committed_inside_executing_ms),
     not_offence(Offence, ExecutingMemberState).
@@ -75,7 +74,7 @@ optional_refusal(article11_1_f, ExecutingMemberState, europeanInvestigationOrder
 
 optional_refusal(article11_1_g, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    issuing_proceeding(IssuingMemberState, Offence),
+    issuing_proceeding(IssuingMemberState, _, Offence),
     not_offence(Offence, ExecutingMemberState),
     \+ exception(optional_refusal(article11_1_g, ExecutingMemberState, europeanInvestigationOrder), _).
 
@@ -84,5 +83,5 @@ optional_refusal(article11_1_g, ExecutingMemberState, europeanInvestigationOrder
 
 optional_refusal(article11_1_h, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    issuing_proceeding(IssuingMemberState, Offence),
+    issuing_proceeding(IssuingMemberState, _, Offence),
     national_law_does_not_authorize(ExecutingMemberState, Measure, Offence).

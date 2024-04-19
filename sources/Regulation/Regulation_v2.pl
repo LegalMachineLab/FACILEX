@@ -5,13 +5,13 @@
 %%Article 1
 
 regulation_matter(IssuingMemberState, ExecutingMemberState, europeanConfiscationOrder):-
-    issuing_proceeding(IssuingMemberState, Offence, europeanConfiscationOrder),
-    executing_proceeding(ExecutingMemberState, Offence, europeanConfiscationOrder).
+    issuing_proceeding(IssuingMemberState, europeanConfiscationOrder, Offence),
+    executing_proceeding(ExecutingMemberState, europeanConfiscationOrder, Offence).
     
 
 regulation_matter(IssuingMemberState, ExecutingMemberState, europeanFreezingOrder):-
-    issuing_proceeding(IssuingMemberState, Offence, europeanFreezingOrder),
-    executing_proceeding(ExecutingMemberState, Offence, europeanFreezingOrder).
+    issuing_proceeding(IssuingMemberState, europeanFreezingOrder, Offence),
+    executing_proceeding(ExecutingMemberState, europeanFreezingOrder, Offence).
 
 
 %% Article 8 
@@ -34,7 +34,7 @@ freezing_prevented(europeanFreezingOrder, ExecutingMemberState):-
     contrast_with(europeanFreezingOrder, ExecutingMemberState, immunity_privilege).
     
 freezing_prevented(europeanFreezingOrder, ExecutingMemberState):-
-    contrast_with(europeanFreezingOrder, ExecutingMemberState freedom_press)
+    contrast_with(europeanFreezingOrder, ExecutingMemberState, freedom_press)
 ;   contrast_with(europeanFreezingOrder, ExecutingMemberState, freedom_expression_media).
 
 %%(c) the freezing certificate is incomplete or manifestly incorrect and has not been completed following the consultation referred to in paragraph 2;
@@ -47,17 +47,12 @@ optional_refusal(article8_1_c, ExecutingMemberState, europeanFreezingOrder):-
 %%(d) the freezing order relates to a criminal offence committed, wholly or partially, outside the territory of the issuing State and, wholly or partially, in the territory of the executing State and the conduct in connection with which the freezing order was issued does not constitute a criminal offence under the law of the executing State;
 
 optional_refusal(article8_1_d, ExecutingMemberState, europeanFreezingOrder):-
-    proceeding_matter(_, Offence, ExecutingMemberState),
-    executing_member_state(_, ExecutingMemberState),
-    issuing_member_state(_, IssuingMemberState),
-    proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
-    proceeding_status(Offence, ExecutingMemberState, not_offence).
-
-optional_refusal(article8_1_d, ExecutingMemberState, europeanFreezingOrder):-
-    executing_member_state(_, ExecutingMemberState),
-    proceeding_matter(_, Offence, ExecutingMemberState),
-    proceeding_status(Offence, ExecutingMemberState, committed_inside_territory),
-    proceeding_status(Offence, ExecutingMemberState, not_offence).
+    regulation_matter(IssuingMemberState, ExecutingMemberState, europeanFreezingOrder),
+    crime_type(Offence, committed_in(MemberState)),
+    MemberState = ExecutingMemberState,
+    MemberState \= IssuingMemberState,
+    not_offence(Offence, ExecutingMemberState).
+    
 
 %%(e) in a case falling under Article 3(2), the conduct in connection with which the freezing order was issued does not constitute a criminal offence under the law of the executing State; however, in cases that involve taxes or duties or customs and exchange regulations, the recognition or execution of the freezing order shall not be refused on the grounds that the law of the executing State does not impose the same kind of taxes or duties or does not provide for the same type of rules as regards taxes and duties or the same type of customs and exchange regulations as the law of the issuing State;
 
