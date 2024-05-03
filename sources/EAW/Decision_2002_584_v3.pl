@@ -72,6 +72,9 @@ optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     national_law_not_offence(Offence, ExecutingMemberState).
 
+%national_law_not_offence(Offence, ExecutingMemberState):-
+%    cassazione_dice_nonreato(reatodiguidabla, italia, ordinanza n. 41102 del 28/10/2022).
+
 %2. where the person who is the subject of the European arrest warrant is being prosecuted in the executing Member State for the same act as that on which the European arrest warrant is based;
 
 optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant):-
