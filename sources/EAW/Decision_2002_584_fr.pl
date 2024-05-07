@@ -29,12 +29,14 @@ mandatory_refusal(article695_22_2, MemberState, europeanArrestWarrant):-
 
 mandatory_refusal(article695_22_3, MemberState, europeanArrestWarrant):-
     person_role(PersonId, subject_eaw),
-    person_status(PersonId, under_age),
-    executing_member_state(PersonId, MemberState).
+    person_status(PersonId, under_age, ExecutingMemberState).
 
-person_status(PersonId, under_age):-
+person_status(PersonId, under_age, ExecutingMemberState):-
     person_age(PersonId, Age),
-    Age < 13.
+    Age =< 13.
+
+%%Article 695-23(4) - Fully implemented
+%Regarding taxes and duties, customs and exchange, the execution of a European arrest warrant shall not be refused on the grounds that French law does not impose the same type of tax or duty or does not contain the same type of regulation regarding taxes, duties, customs and exchange as the law of the issuing Member State.
 
 %% Article 695-24 - Fully implemented
 % The execution of a European arrest warrant may be refused :

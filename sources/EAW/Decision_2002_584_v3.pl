@@ -58,8 +58,6 @@ mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     person_status(PersonId, under_age, ExecutingMemberState).
 
-
-
 %%Article 4
 %Grounds for optional non-execution of the European arrest warrant
 

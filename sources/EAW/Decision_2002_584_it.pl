@@ -40,14 +40,11 @@ mandatory_refusal(article18_1_b, MemberState, europeanArrestWarrant):-
 
 mandatory_refusal(article18_1_c, MemberState, europeanArrestWarrant):-
     person_role(PersonId, subject_eaw),
-    person_status(PersonId, under_age),
-    executing_member_state(PersonId, MemberState).
+    person_status(PersonId, under_age, ExecutingMemberState).
 
-person_status(PersonId, under_age):-
+person_status(PersonId, under_age, ExecutingMemberState):-
     person_age(PersonId, Age),
-    Age < 14.
-
-% TODO - Add person_age(PersonId, Age, Purpose)?
+    Age =< 14.
 
 %% Article 7(1-2) - Fully implemented
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
@@ -56,6 +53,9 @@ person_status(PersonId, under_age):-
 optional_refusal(article7_1, MemberState, europeanArrestWarrant):-
     proceeding_matter(_, Offence, MemberState),
     national_law_not_offence(Offence, MemberState).
+
+%national_law_not_offence(Offence, ExecutingMemberState):-
+%    cassazione_dice_nonreato(reatodiguidabla, italia, ordinanza n. 41102 del 28/10/2022).
 
 %% Article 18bis - Fully implemented
 % 1. When the European arrest warrant has been issued for the purpose of prosecution in criminal matters, the Court of Appeal may refuse surrender in the following cases
