@@ -7,15 +7,10 @@
 %1.[...]
 %2. Il mandato d'arresto europeo è una decisione giudiziaria emessa da uno Stato membro dell'Unione europea, di seguito denominato "Stato membro di emissione", in vista dell'arresto e della consegna da parte di un altro Stato membro, di seguito denominato "Stato membro di esecuzione", di una persona, al fine dell'esercizio di azioni giudiziarie in materia penale o dell'esecuzione di una pena o di una misura di sicurezza privative della libertà personale.
 
-%% Article 7(1-2-3-4) - Fully implemented
-%1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
-%2. For the purposes of paragraph 1, for offences relating to taxes, customs and exchanges, it is not necessary that Italian law imposes the same kind of taxes or duties or contains the same kind of tax, duty, customs and exchange regulations as the law of the issuing Member State 
-%3. The European arrest warrant shall in any event not be executed if the offence is punishable under the law of the issuing Member State by a custodial sentence or a security measure whose maximum duration is less than twelve months
-%4. In case of the execution of a conviction, the sentence or the security measure shall be ordered for a period of not less than four months.
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    criminal_act(Offence, ExecutingMemberState),                             %%%Art.7
+    crime_type(Offence, committed_in(_)),
     (
         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
@@ -37,7 +32,7 @@ mandatory_refusal(article18_1_a, MemberState, europeanArrestWarrant):-
 mandatory_refusal(article18_1_b, MemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     (
-        person_event(PersonId, irrevocably_convicted, Offence)
+        person_event(PersonId, irrevocably_convicted_in_italy, Offence)
     ;   person_event(PersonId, decree_of_conviction, Offence)
     ;   person_event(PersonId, judgement_no_grounds_to_proceed, Offence)
     ).
@@ -53,11 +48,11 @@ mandatory_refusal(article18_1_b, MemberState, europeanArrestWarrant):-
 
 % c) if the person who is the subject of the European arrest warrant was a minor 14 years of age at the time of the commission of the offence.
 
-mandatory_refusal(article18_1_c, MemberState, europeanArrestWarrant):-
+mandatory_refusal(article18_1_c, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
-    person_status(PersonId, under_age, ExecutingMemberState).
+    person_status(PersonId, under_age, italy).
 
-person_status(PersonId, under_age, ExecutingMemberState):-
+person_status(PersonId, under_age, italy):-
     person_age(PersonId, Age),
     Age =< 14.
 
@@ -65,12 +60,12 @@ person_status(PersonId, under_age, ExecutingMemberState):-
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
 % 2. For the purposes of paragraph 1, for offences relating to taxes, customs and exchanges, it is not necessary that Italian law imposes the same kind of taxes or duties or contains the same kind of tax, duty, customs and exchange regulations as the law of the issuing Member State.
 
-%optional_refusal(article7_1, MemberState, europeanArrestWarrant):-
-%    proceeding_matter(_, Offence, MemberState),
-%    national_law_not_offence(Offence, MemberState).
+optional_refusal(article7_1, MemberState, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, italy, Offence),
+    national_law_not_offence(Offence, MemberState).
 
-%national_law_not_offence(Offence, ExecutingMemberState):-
-%    cassazione_dice_nonreato(reatodiguidabla, italia, ordinanza n. 41102 del 28/10/2022).
+national_law_not_offence(Offence, ExecutingMemberState):-
+    cassazione_dice_nonreato(reatodiguidabla, italia, ordinanza n. 41102 del 28/10/2022).
 
 %% Article 18bis - Fully implemented
 % 1. When the European arrest warrant has been issued for the purpose of prosecution in criminal matters, the Court of Appeal may refuse surrender in the following cases
@@ -105,15 +100,15 @@ optional_refusal(article18bis_2, MemberState, europeanArrestWarrant):-
     (
         person_citizenship(PersonId, italian)
     ;   (person_continuous_residence(PersonId, ExecutingMemberState, Time),
-        Time >= 5)
+        Time >= 5,
+        residence_status(PersonId, ExecutingMemberState, lawful_effective))
     ).
     
-    
+
 % 2-bis. For the purposes of verifying the lawful and effective residence on the Italian territory of the person requested to be surrendered, the Court of Appeal shall ascertain whether the execution of the sentence or of the security measure on the territory is in fact suitable to enhance the person's chances of social reintegration, taking into account: the duration, nature and modalities of residence; the time elapsed between the commission of the offence on the basis of which the European arrest warrant was issued and the beginning of the period of residence; the commission of offences and the regular fulfilment of social security and tax obligation duties during that period; the compliance with national rules on the entry and residence of foreigners, as well the family ties, linguistic, cultural, social, economic or other ties that the person possesses on Italian territory and any other relevant element. The judgment is null and void if it does not contain the specific indication of the elements referred above and the relevant evaluation criteria
 
-person_residence(PersonId, lawful_effective_residence, MemberState, Time):-
-    person_residence_time(Time),
-    proceeding_event(PersonId, social_reintegration, article18_2bis).
+residence_status(PersonId, ExecutingMemberState, lawful_effective):-
+    residence_purpose(PersonId, ExecutingMemberState, social_reintegration, article18_2bis).
 
 %% Article 6(1-bis) - Fully implemented
 % When it has been issued for the purpose of enforcing a custodial sentence or a detention order involving deprivation of liberty applied following a trial at which the person concerned did not appear in person, the European arrest warrant shall also contain an indication of at least one of the following conditions:
@@ -165,16 +160,26 @@ exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis
 %% Article 19(1) - Fully implemented
 % If the offence on the basis of which the European arrest warrant has been issued is punishable by a custodial sentence or a security measure for life, execution of the warrant shall be subject to the condition that the issuing Member State makes provision in its law for review of the sentence imposed, on an application or after a maximum of twenty years, or for the application of measures of clemency to which the person is entitled under the law or practice of the issuing Member State, so that the sentence or security measure is not executed.
 
-right_property(IssuingMemberState, review_clemency):-
+optional_refusal(article19_1, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    proceeding_status(Offence, MemberState, punishable_life).
+    punishable_by_life_sentence(Offence, IssuingMemberState)
+    \+ guarantee(IssuingMemberState, review_clemency_right).
 
 %% Article 19(2) - Fully implemented
 % If the European arrest warrant has been issued for the purpose of prosecuting an Italian citizen or a person who has been lawfully and effectively residing continuously for at least five years in the Italian territory, the execution of the warrant may be subject to the condition that the person, after having been tried, is returned to the Italian State to serve there the custodial sentence or detention order which may have been imposed on him in the issuing Member State. The provisions of Article 18-bis, paragraph 2-bis shall apply.
 
-person_event(PersonId, Offence, guarantee_return_to_executing_state):-
+optional_refusal(article19_2, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    person_residence(PersonId, lawful_effective_residence, MemberState, Time),
-    Time >= 5.
+    executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution),
+    (
+        person_citizenship(PersonId, italian)
+    ;   (
+            person_continuous_residence(PersonId, ExecutingMemberState, Time),
+            Time >= 5,
+            residence_status(PersonId, ExecutingMemberState, lawful_effective)
+        )
+    ),
+    \+ guarantee(PersonId, Offence, return_to_executing_state).
+
 
 % TODO - prosecution important? processuale vs esecuzione pena? sentenza 43252/23?
