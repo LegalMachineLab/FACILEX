@@ -10,7 +10,13 @@
 
 directive_matter(IssuingMemberState, ExecutingMemberState, Measure):-
     issuing_proceeding(IssuingMemberState, _, Offence),
-    executing_member_state(ExecutingMemberState, PersonId, Measure).
+    executing_member_state(ExecutingMemberState, PersonId, Measure),
+    (
+        art4_a_applies
+    ;   art4_b_applies
+    ;   art4_c_applies
+    ;   art4_d_applies
+    ).
 
 %Article 11
 
@@ -44,9 +50,11 @@ optional_refusal(article11_1_b, ExecutingMemberState, europeanInvestigationOrder
 
 optional_refusal(article11_1_c, ExecutingMemberState, europeanInvestigationOrder):-
     directive_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    issuing_proceeding(IssuingMemberState, _, Offence),
-    article4b_c_applies(Offence),
-    national_law_does_not_authorize(ExecutingMemberState, Measure, Offence).
+    (
+        art4_b_applies
+    ;   art4_c_applies
+    ),
+    national_law_does_not_authorize(ExecutingMemberState, Measure).
 
 %%(d) the execution of the EIO would be contrary to the principle of ne bis in idem;
 
