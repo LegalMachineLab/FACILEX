@@ -60,12 +60,12 @@ person_status(PersonId, under_age, italy):-
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
 % 2. For the purposes of paragraph 1, for offences relating to taxes, customs and exchanges, it is not necessary that Italian law imposes the same kind of taxes or duties or contains the same kind of tax, duty, customs and exchange regulations as the law of the issuing Member State.
 
-optional_refusal(article7_1, MemberState, europeanArrestWarrant):-
+mandatory_refusal(article7_1, MemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     national_law_not_offence(Offence, MemberState).
 
 national_law_not_offence(Offence, ExecutingMemberState):-
-    cassazione_dice_nonreato(reatodiguidabla, italia, ordinanza n. 41102 del 28/10/2022).
+    cassazione(numero_41102_2022, reato_di_guida, italia).
 
 %% Article 18bis - Fully implemented
 % 1. When the European arrest warrant has been issued for the purpose of prosecution in criminal matters, the Court of Appeal may refuse surrender in the following cases
