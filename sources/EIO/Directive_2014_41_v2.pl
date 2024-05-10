@@ -18,6 +18,15 @@ directive_matter(IssuingMemberState, ExecutingMemberState, Measure):-
     ;   art4_d_applies
     ).
 
+
+
+%%%%    *TODO*: 
+%%      VEDERE SE ART. 10(1) è motivo di rifiuto e di conseguenza art. 10(2) eccezione
+
+
+
+
+
 %Article 11
 
 %%Grounds for non-recognition or non-execution 
