@@ -11,7 +11,7 @@
     },
     {
         "id": "question1",
-        "question": "What is the country issuing the European Arrest Warrant?",
+        "question": "What is the issuing State?",
         "type": "choice",
         "choices": [
             "Italy",
@@ -22,7 +22,7 @@
     },
     {
         "id": "question2",
-        "question": "What is the country executing the European Arrest Warrant?",
+        "question": "What is the executing State?",
         "type": "choice",
         "choices": [
             "Italy",
@@ -30,6 +30,9 @@
             "France",
             "Poland"
         ]
+    },
+    {
+        "comment": "Following are EAW questions"
     },
     {
         "id": "question3",
@@ -55,5 +58,94 @@
         "id": "question6",
         "question": "Is the offence covered by amnesty in the executing Member State?",
         "type": "boolean"
+    },
+    {
+        "id": "question7",
+        "question": "Information regarding the identity of the requested person: Name and Forename",
+        "type": "freeText"
+    },
+    {
+        "id": "question8",
+        "question": "Information regarding the identity of the requested person: Nationality",
+        "type": "freeText"
+    },
+    {
+        "id": "question9",
+        "question": "Information regarding the identity of the requested person: Age",
+        "type": "freeText"
+    },
+    {
+        "id": "question10",
+        "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
+        "type": "choice",
+        "choices": [
+            "furto",
+            "guida senza patente e guida pericolosa",
+            "altri reati"
+        ]
+    },
+    {
+        "id": "question11",
+        "question": "Offences: State in which the offence was committed",
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
+        "id": "question12",
+        "question": "Offences: is the offence covered in the Executing Member State?",
+        "type": "boolean"
+    },
+    {
+        "comment": "Following are EIO questions"
+    },
+    {
+        "id": "question13",
+        "question": "Which is the investigative measure to be carried out?",
+        "type": "freeText"
+    },
+    {
+        "id": "question14",
+        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
+        "type": "boolean"
+    },
+    {
+        "id": "question15",
+        "question": "Is the measure the interception of telecommunications?",
+        "type": "boolean"
+    },
+    {
+        "id": "question16",
+        "question": "The type of proceedings for which the EIO is issued: (a) with respect to criminal proceedings that are brought by, or that may be brought before, a judicial authority in respect of a criminal offence under the national law of the issuing State;",
+        "type": "boolean"
+    },
+    {
+        "id": "question17",
+        "question": "The authority which issued the EIO is: any competent authority as defined by the law of the issuing state",
+        "type": "boolean"
+    },
+    {
+        "id": "question18",
+        "question": "Name of the authority which issued the EIO",
+        "type": "choice",
+        "choices": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
+        ]
+    },
+    {
+        "id": "question19",
+        "question": "Type of judicial authority which validated this EIO: public prosecutor",
+        "type": "choice",
+        "choices": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
+        ]
     }
 ]
