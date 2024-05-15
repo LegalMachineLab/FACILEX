@@ -4,7 +4,7 @@
 
 %The European Investigation Order and obligation to execute it
 
-%1.   A European Investigation Order (EIO) is a judicial decision which has been issued or validated by a judicial authority of a Member State (‘OGthe issuing State’) to have one or several specific investigative measure(s) carried out in another Member State (‘the executing State’) to obtain evidence in accordance with this Directive.
+%1.   A European Investigation Order (EIO) is a judicial decision which has been issued or validated by a judicial authority of a Member State (‘the issuing State’) to have one or several specific investigative measure(s) carried out in another Member State (‘the executing State’) to obtain evidence in accordance with this Directive.
 %The EIO may also be issued for obtaining evidence that is already in the possession of the competent authorities of the executing State.
 
 directive_matter(IssuingMemberState, ExecutingMemberState, Measure):-

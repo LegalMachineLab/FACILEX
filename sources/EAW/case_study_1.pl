@@ -66,7 +66,7 @@ mandatory_refusal(article18_1_c, italy, europeanArrestWarrant):-
 
 person_status(PersonId, under_age, italy):-
     person_age(PersonId, Age),
-    Age =< 14.
+    Age < 14.
 
 %% Article 7(1-2) - Fully implemented
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
@@ -74,7 +74,7 @@ person_status(PersonId, under_age, italy):-
 
 mandatory_refusal(article7_1, MemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
-    national_law_not_offence(Offence, MemberState).
+    national_law_not_offence(Offence, italy).
 
-national_law_not_offence(Offence, ExecutingMemberState):-
-    cassazione(numero_41102_2022, guida_senza_patente_e_guida_pericolosa, italia).
+national_law_not_offence(guida_senza_patente_e_guida_pericolosa, italy):-
+    cassazione(numero_41102_2022, guida_senza_patente_e_guida_pericolosa, italy).
