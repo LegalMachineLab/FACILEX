@@ -79,8 +79,8 @@
         "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
         "type": "choice",
         "choices": [
-            "furto",
-            "guida senza patente e guida pericolosa",
+            "theft",
+            "driving without license",
             "altri reati"
         ]
     },
@@ -120,8 +120,14 @@
     },
     {
         "id": "question16",
-        "question": "The type of proceedings for which the EIO is issued: (a) with respect to criminal proceedings that are brought by, or that may be brought before, a judicial authority in respect of a criminal offence under the national law of the issuing State;",
-        "type": "boolean"
+        "question": "The type of proceedings for which the EIO is issued:",
+        "type": "choice",
+        "choices": [
+            "(a) with respect to criminal proceedings that are brought by, or that may be brought before, a judicial authority in respect of a criminal offence under the national law of the issuing State;",
+            "(b) in proceedings brought by administrative authorities in respect of acts which are punishable under the national law of the issuing State by virtue of being infringements of the rules of law and where the decision may give rise to proceedings before a court having jurisdiction, in particular, in criminal matters;",
+            "(c) in proceedings brought by judicial authorities in respect of acts which are punishable under the national law of the issuing State by virtue of being infringements of the rules of law, and where the decision may give rise to proceedings before a court having jurisdiction, in particular, in criminal matters; and",
+            "(d) in connection with proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State."
+        ]
     },
     {
         "id": "question17",

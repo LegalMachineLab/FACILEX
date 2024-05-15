@@ -76,5 +76,5 @@ mandatory_refusal(article7_1, MemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     national_law_not_offence(Offence, italy).
 
-national_law_not_offence(guida_senza_patente_e_guida_pericolosa, italy):-
-    cassazione(numero_41102_2022, guida_senza_patente_e_guida_pericolosa, italy).
+national_law_not_offence(driving_without_license, italy):-
+    cassazione(numero_41102_2022, driving_without_license, italy).

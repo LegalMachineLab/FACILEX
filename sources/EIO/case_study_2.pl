@@ -8,7 +8,7 @@
 %The EIO may also be issued for obtaining evidence that is already in the possession of the competent authorities of the executing State.
 
 directive_matter(IssuingMemberState, ExecutingMemberState, Measure):-
-    issuing_proceeding(IssuingMemberState, _, Offence),
+    issuing_proceeding(IssuingMemberState, _, Measure),
     executing_member_state(ExecutingMemberState, PersonId, Measure),
     (
         art4_a_applies
