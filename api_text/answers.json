@@ -34,7 +34,7 @@
     {
         "id": "question3,",
         "type": "predicate,",
-        "result": "art2applies(offence)"
+        "result": "art2applies(Offence)"
     },
     {
         "id": "question4,",
