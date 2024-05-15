@@ -140,7 +140,7 @@
     },
     {
         "id": "question19",
-        "question": "Type of judicial authority which validated this EIO: public prosecutor",
+        "question": "Type of judicial authority which validated this EIO:",
         "type": "choice",
         "choices": [
             "judge or court",

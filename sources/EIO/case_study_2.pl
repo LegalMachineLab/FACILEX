@@ -34,11 +34,9 @@ optional_refusal(article11_1_c, ExecutingMemberState, europeanInvestigationOrder
 
 optional_refusal(article694_31_4, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    (
-        art694_29_applies
-    ),
+    art694_29_applies(Measure),
     national_law_does_not_authorize(ExecutingMemberState, Measure).
 
-national_law_does_not_authorize(ExecutingMemberState, Measure):-
+national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications):-
     %Article 694-28 does not provide a specific ground for refusing the investigative measure where it is not authorised in a similar domestic procedure. However, the provision can be considered as fully transposed, since article 694-38 of the Code of Criminal Procedure provides for the general possibility for the investigating magistrate to refuse to carry out the requested investigative measure where it could not be carried out in similar domestic cases and there is no other investigative measure that would make it possible to obtain the information requested by the issuing authority.
-    authority_decision(Measure, investigating_magistrate, ExecutingMemberState).
+    \+ authority_decision(Measure, investigating_magistrate, ExecutingMemberState).

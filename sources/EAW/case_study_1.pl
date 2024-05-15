@@ -77,4 +77,4 @@ mandatory_refusal(article7_1, MemberState, europeanArrestWarrant):-
     national_law_not_offence(Offence, MemberState).
 
 national_law_not_offence(Offence, ExecutingMemberState):-
-    cassazione(numero_41102_2022, reato_di_guida, italia).
+    cassazione(numero_41102_2022, guida_senza_patente_e_guida_pericolosa, italia).
