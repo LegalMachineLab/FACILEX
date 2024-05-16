@@ -49,7 +49,7 @@
         "id": "question6,",
         "type": "predicate,",
         "result": "amnesty(Offence, ExecutingMemberState)"
-    }
+    },
     {
         "id": "question7",
         "type": "variable",
@@ -164,7 +164,7 @@
 
 
 
-    
+
     {
         "id": "question16",
         "question": "In what tye of proceeding was the EIO issued",
