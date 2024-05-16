@@ -132,6 +132,16 @@
         "result": "art694_29_applies(interception_of_telecommunications)"
     },
     {
+        "id": "question16",
+        "type": "predicate",
+        "result":{
+            "(a)": "art4_a_applies",
+            "(b)": "art4_b_applies",
+            "(c)": "art4_c_applies",
+            "(d)": "art4_d_applies"
+        }
+    },
+    {
         "id": "question18",
         "type": "variable",
         "name": "IssuingAut",
@@ -160,22 +170,6 @@
         "id": "question19",
         "type": "predicate",
         "result": "validating_authority(Measure, ValidatingAut)"
-    },
-
-
-
-
-    {
-        "id": "question16",
-        "question": "In what tye of proceeding was the EIO issued",
-        "type": "choice",
-        "choices": [
-            "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;",
-            "(b) administrative proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
-            "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
-            "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State"
-        ]
     }
-
 ]
 
