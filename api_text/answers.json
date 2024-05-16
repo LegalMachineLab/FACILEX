@@ -18,7 +18,7 @@
     {
         "id": "question1,",
         "type": "predicate,",
-        "result": "issuing_proceeding(IssuingMemberState, PersonId, offence)"
+        "result": "issuing_proceeding(IssuingMemberState, PersonId, Offence)"
     },
     {
         "id": "question2,",
@@ -37,12 +37,6 @@
         "result": "art2applies(Offence)"
     },
     {
-        "id": "question4,",
-        "type": "variable,",
-        "name": "PersonId,",
-        "result": "freeText"
-    },
-    {
         "id": "question5,",
         "type": "predicate,",
         "result": [
@@ -54,6 +48,134 @@
     {
         "id": "question6,",
         "type": "predicate,",
-        "result": "amnesty(offence, ExecutingMemberState)"
+        "result": "amnesty(Offence, ExecutingMemberState)"
     }
+    {
+        "id": "question7",
+        "type": "variable",
+        "name": "PersonId",
+        "result": "freeText"
+    },
+    {
+        "id": "question8",
+        "type": "variable",
+        "name": "Nationality",
+        "result": [
+            "italy",
+            "bulgaria",
+            "france",
+            "poland"
+        ]
+    },
+    {
+        "id": "question8",
+        "type": "predicate",
+        "result":"person_nationality(PersonId, Nationality)"
+    },
+    {
+        "id": "question9",
+        "type": "variable",
+        "name": "Age",
+        "result": "freeText"
+    },
+    {
+        "id": "question9",
+        "type": "predicate",
+        "result":"person_age(PersonId, Age)"
+    },
+    {
+        "id": "question10",
+        "type": "variable",
+        "name": "Offence",
+        "result": [
+            "theft",
+            "driving without license",
+            "altri reati"
+        ]
+    },
+    {
+        "id": "question10",
+        "type": "predicate",
+        "result": "crime_type(Offence, committed_in(CommIn))"
+    },
+    {
+        "id": "question11",
+        "type": "variable",
+        "name": "CommIn",
+        "result": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
+        "id": "question12",
+        "type": "predicate",
+        "result": "national_law_not_offence(Offence, ExecutingMemberState)"
+    },
+    {
+        "id": "question13",
+        "type": "variable",
+        "name": "Measure",
+        "result": "freeText"
+    },
+    {
+        "id": "question15",
+        "type": "variable",
+        "name": "Measure",
+        "result": "interception_of_telecommunications"
+    },
+    {
+        "id": "question15",
+        "type": "predicate",
+        "result": "art694_29_applies(interception_of_telecommunications)"
+    },
+    {
+        "id": "question18",
+        "type": "variable",
+        "name": "IssuingAut",
+        "result": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
+        ]
+    },
+    {
+        "id": "question18",
+        "type": "predicate",
+        "result": "issuing_authority(Measure, IssuingAut, ExecutingMemberState)"
+    },
+    {
+        "id": "question19",
+        "type": "variable",
+        "name": "ValidatingAut",
+        "result": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
+        ]
+    },
+    {
+        "id": "question19",
+        "type": "predicate",
+        "result": "validating_authority(Measure, ValidatingAut)"
+    },
+
+
+
+    
+    {
+        "id": "question16",
+        "question": "In what tye of proceeding was the EIO issued",
+        "type": "choice",
+        "choices": [
+            "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;",
+            "(b) administrative proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
+            "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
+            "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State"
+        ]
+    }
+
 ]
+

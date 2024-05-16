@@ -51,7 +51,7 @@ optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
     issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    crime_type(Offence, committed_in(_)),
+    crime_type(Offence, committed_in(MemberState)),
     (
         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)

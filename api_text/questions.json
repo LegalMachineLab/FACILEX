@@ -40,11 +40,6 @@
         "type": "boolean"
     },
     {
-        "id": "question4",
-        "question": "Which is the national authority deciding on the execution of the EAW?",
-        "type": "freeText"
-    },
-    {
         "id": "question5",
         "question": "Which is the purpose of the EAW?",
         "type": "choice",
@@ -67,7 +62,13 @@
     {
         "id": "question8",
         "question": "Information regarding the identity of the requested person: Nationality",
-        "type": "freeText"
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
     },
     {
         "id": "question9",
