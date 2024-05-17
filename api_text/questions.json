@@ -40,7 +40,7 @@
         "type": "boolean"
     },
     {
-        "id": "question5",
+        "id": "question4",
         "question": "Which is the purpose of the EAW?",
         "type": "choice",
         "choices": [
@@ -50,17 +50,17 @@
         ]
     },
     {
-        "id": "question6",
+        "id": "question5",
         "question": "Is the offence covered by amnesty in the executing Member State?",
         "type": "boolean"
     },
     {
-        "id": "question7",
+        "id": "question6",
         "question": "Information regarding the identity of the requested person: Name and Forename",
         "type": "freeText"
     },
     {
-        "id": "question8",
+        "id": "question7",
         "question": "Information regarding the identity of the requested person: Nationality",
         "type": "choice",
         "choices": [
@@ -71,12 +71,12 @@
         ]
     },
     {
-        "id": "question9",
+        "id": "question8",
         "question": "Information regarding the identity of the requested person: Age",
         "type": "freeText"
     },
     {
-        "id": "question10",
+        "id": "question9",
         "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
         "type": "choice",
         "choices": [
@@ -86,7 +86,7 @@
         ]
     },
     {
-        "id": "question11",
+        "id": "question10",
         "question": "Offences: State in which the offence was committed",
         "type": "choice",
         "choices": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "id": "question12",
+        "id": "question11",
         "question": "Offences: is the offence covered in the Executing Member State?",
         "type": "boolean"
     },
@@ -105,23 +105,23 @@
         "comment": "Following are EIO questions"
     },
     {
-        "id": "question13",
+        "id": "question12",
         "question": "Which is the investigative measure to be carried out?",
         "type": "freeText"
     },
     {
-        "id": "question14",
+        "id": "question13",
         "question": "Is the measure for obtaining information already in the possession of the executing authority?",
         "type": "boolean"
     },
     {
-        "id": "question15",
+        "id": "question14",
         "question": "Is the measure the interception of telecommunications?",
         "type": "boolean"
     },
     {
-        "id": "question16",
-        "question": "In what tye of proceeding was the EIO issued",
+        "id": "question15",
+        "question": "In what type of proceeding was the EIO issued",
         "type": "choice",
         "choices": [
             "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;",
@@ -131,12 +131,12 @@
         ]
     },
     {
-        "id": "question17",
+        "id": "question16",
         "question": "The authority which issued the EIO is: any competent authority as defined by the law of the issuing state",
         "type": "boolean"
     },
     {
-        "id": "question18",
+        "id": "question17",
         "question": "Name of the authority which issued the EIO",
         "type": "choice",
         "choices": [
@@ -146,7 +146,7 @@
         ]
     },
     {
-        "id": "question19",
+        "id": "question18",
         "question": "Type of judicial authority which validated this EIO:",
         "type": "choice",
         "choices": [
