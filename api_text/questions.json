@@ -1,95 +1,108 @@
 [
     {
         "id": "question0",
-        "question": "What are you interested in?",
-        "type": "choice",
-        "choices": [
-            "European Arrest Warrant",
-            "European Investigation Order",
-            "European Freezing or Confiscation Order"
+        "type": "openQuestions",
+        "result": null
+    },
+    {
+        "id": "question1",
+        "type": "variable",
+        "name": "IssuingMemberState",
+        "result": [
+            "italy",
+            "bulgaria",
+            "france",
+            "poland"
         ]
     },
     {
         "id": "question1",
-        "question": "What is the issuing State?",
-        "type": "choice",
-        "choices": [
-            "Italy",
-            "Bulgaria",
-            "France",
-            "Poland"
-        ]
+        "type": "predicate",
+        "result": "issuing_proceeding(IssuingMemberState, PersonId, Offence)"
     },
     {
         "id": "question2",
-        "question": "What is the executing State?",
-        "type": "choice",
-        "choices": [
-            "Italy",
-            "Bulgaria",
-            "France",
-            "Poland"
+        "type": "variable",
+        "name": "ExecutingMemberState",
+        "result": [
+            "italy",
+            "bulgaria",
+            "france",
+            "poland"
         ]
     },
     {
-        "comment": "Following are EAW questions"
-    },
-    {
         "id": "question3",
-        "question": "Do the acts, which the European Arrest Warrant is based on, fall under the definition of Article 2, paragraph 2?",
-        "type": "boolean"
+        "type": "predicate",
+        "result": "art2applies(Offence)"
     },
     {
         "id": "question4",
-        "question": "Which is the purpose of the EAW?",
-        "type": "choice",
-        "choices": [
-            "conducting a criminal prosecution",
-            "executing a custodial sentence",
-            "executing a detention order"
+        "type": "predicate",
+        "result": [
+            "executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)",
+            "executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)",
+            "executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)"
         ]
     },
     {
         "id": "question5",
-        "question": "Is the offence covered by amnesty in the executing Member State?",
-        "type": "boolean"
+        "type": "predicate",
+        "result": "amnesty(Offence, ExecutingMemberState)"
     },
     {
         "id": "question6",
-        "question": "Information regarding the identity of the requested person: Name and Forename",
-        "type": "freeText"
+        "type": "variable",
+        "name": "PersonId",
+        "result": "freeText"
     },
     {
         "id": "question7",
-        "question": "Information regarding the identity of the requested person: Nationality",
-        "type": "choice",
-        "choices": [
-            "Italy",
-            "Bulgaria",
-            "France",
-            "Poland"
+        "type": "variable",
+        "name": "Nationality",
+        "result": [
+            "italy",
+            "bulgaria",
+            "france",
+            "poland"
         ]
     },
     {
+        "id": "question7",
+        "type": "predicate",
+        "result": "person_nationality(PersonId, Nationality)"
+    },
+    {
         "id": "question8",
-        "question": "Information regarding the identity of the requested person: Age",
-        "type": "freeText"
+        "type": "variable",
+        "name": "Age",
+        "result": "freeText"
+    },
+    {
+        "id": "question8",
+        "type": "predicate",
+        "result": "person_age(PersonId, Age)"
     },
     {
         "id": "question9",
-        "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
-        "type": "choice",
-        "choices": [
+        "type": "variable",
+        "name": "Offence",
+        "result": [
             "theft",
             "driving without license",
             "altri reati"
         ]
     },
     {
+        "id": "question9",
+        "type": "predicate",
+        "result": "crime_type(Offence, committed_in(CommIn))"
+    },
+    {
         "id": "question10",
-        "question": "Offences: State in which the offence was committed",
-        "type": "choice",
-        "choices": [
+        "type": "variable",
+        "name": "CommIn",
+        "result": [
             "Italy",
             "Bulgaria",
             "France",
@@ -98,61 +111,64 @@
     },
     {
         "id": "question11",
-        "question": "Offences: is the offence covered in the Executing Member State?",
-        "type": "boolean"
-    },
-    {
-        "comment": "Following are EIO questions"
+        "type": "predicate",
+        "result": "national_law_not_offence(Offence, ExecutingMemberState)"
     },
     {
         "id": "question12",
-        "question": "Which is the investigative measure to be carried out?",
-        "type": "freeText"
-    },
-    {
-        "id": "question13",
-        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
-        "type": "boolean"
+        "type": "variable",
+        "name": "Measure",
+        "result": "freeText"
     },
     {
         "id": "question14",
-        "question": "Is the measure the interception of telecommunications?",
-        "type": "boolean"
+        "type": "variable",
+        "name": "Measure",
+        "result": "interception_of_telecommunications"
+    },
+    {
+        "id": "question14",
+        "type": "predicate",
+        "result": "art694_29_applies(interception_of_telecommunications)"
     },
     {
         "id": "question15",
-        "question": "In what type of proceeding was the EIO issued",
-        "type": "choice",
-        "choices": [
-            "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;",
-            "(b) administrative proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
-            "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
-            "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State"
+        "type": "predicate",
+        "result": {
+            "(a)": "art4_a_applies",
+            "(b)": "art4_b_applies",
+            "(c)": "art4_c_applies",
+            "(d)": "art4_d_applies"
+        }
+    },
+    {
+        "id": "question16",
+        "type": "variable",
+        "name": "IssuingAut",
+        "result": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
         ]
     },
     {
         "id": "question16",
-        "question": "The authority which issued the EIO is: any competent authority as defined by the law of the issuing state",
-        "type": "boolean"
+        "type": "predicate",
+        "result": "issuing_authority(Measure, IssuingAut, ExecutingMemberState)"
     },
     {
         "id": "question17",
-        "question": "Name of the authority which issued the EIO",
-        "type": "choice",
-        "choices": [
+        "type": "variable",
+        "name": "ValidatingAut",
+        "result": [
             "judge or court",
             "investigating judge",
             "public prosecutor"
         ]
     },
     {
-        "id": "question18",
-        "question": "Type of judicial authority which validated this EIO:",
-        "type": "choice",
-        "choices": [
-            "judge or court",
-            "investigating judge",
-            "public prosecutor"
-        ]
+        "id": "question17",
+        "type": "predicate",
+        "result": "validating_authority(Measure, ValidatingAut)"
     }
 ]
