@@ -5,9 +5,9 @@
         "result": null
     },
     {
-        "id": "question1,",
-        "type": "variable,",
-        "name": "IssuingMemberState,",
+        "id": "question1",
+        "type": "variable",
+        "name": "IssuingMemberState",
         "result": [
             "italy",
             "bulgaria",
@@ -16,14 +16,14 @@
         ]
     },
     {
-        "id": "question1,",
-        "type": "predicate,",
+        "id": "question1",
+        "type": "predicate",
         "result": "issuing_proceeding(IssuingMemberState, PersonId, Offence)"
     },
     {
-        "id": "question2,",
-        "type": "variable,",
-        "name": "ExecutingMemberState,",
+        "id": "question2",
+        "type": "variable",
+        "name": "ExecutingMemberState",
         "result": [
             "italy",
             "bulgaria",
@@ -32,13 +32,13 @@
         ]
     },
     {
-        "id": "question3,",
-        "type": "predicate,",
+        "id": "question3",
+        "type": "predicate",
         "result": "art2applies(Offence)"
     },
     {
-        "id": "question5,",
-        "type": "predicate,",
+        "id": "question4",
+        "type": "predicate",
         "result": [
             "executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)",
             "executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)",
@@ -46,18 +46,18 @@
         ]
     },
     {
-        "id": "question6,",
-        "type": "predicate,",
+        "id": "question5",
+        "type": "predicate",
         "result": "amnesty(Offence, ExecutingMemberState)"
     },
     {
-        "id": "question7",
+        "id": "question6",
         "type": "variable",
         "name": "PersonId",
         "result": "freeText"
     },
     {
-        "id": "question8",
+        "id": "question7",
         "type": "variable",
         "name": "Nationality",
         "result": [
@@ -68,23 +68,23 @@
         ]
     },
     {
-        "id": "question8",
+        "id": "question7",
         "type": "predicate",
-        "result":"person_nationality(PersonId, Nationality)"
+        "result": "person_nationality(PersonId, Nationality)"
     },
     {
-        "id": "question9",
+        "id": "question8",
         "type": "variable",
         "name": "Age",
         "result": "freeText"
     },
     {
-        "id": "question9",
+        "id": "question8",
         "type": "predicate",
-        "result":"person_age(PersonId, Age)"
+        "result": "person_age(PersonId, Age)"
     },
     {
-        "id": "question10",
+        "id": "question9",
         "type": "variable",
         "name": "Offence",
         "result": [
@@ -94,12 +94,12 @@
         ]
     },
     {
-        "id": "question10",
+        "id": "question9",
         "type": "predicate",
         "result": "crime_type(Offence, committed_in(CommIn))"
     },
     {
-        "id": "question11",
+        "id": "question10",
         "type": "variable",
         "name": "CommIn",
         "result": [
@@ -110,31 +110,31 @@
         ]
     },
     {
-        "id": "question12",
+        "id": "question11",
         "type": "predicate",
         "result": "national_law_not_offence(Offence, ExecutingMemberState)"
     },
     {
-        "id": "question13",
+        "id": "question12",
         "type": "variable",
         "name": "Measure",
         "result": "freeText"
     },
     {
-        "id": "question15",
+        "id": "question14",
         "type": "variable",
         "name": "Measure",
         "result": "interception_of_telecommunications"
     },
     {
-        "id": "question15",
+        "id": "question14",
         "type": "predicate",
         "result": "art694_29_applies(interception_of_telecommunications)"
     },
     {
-        "id": "question16",
+        "id": "question15",
         "type": "predicate",
-        "result":{
+        "result": {
             "(a)": "art4_a_applies",
             "(b)": "art4_b_applies",
             "(c)": "art4_c_applies",
@@ -142,7 +142,7 @@
         }
     },
     {
-        "id": "question18",
+        "id": "question16",
         "type": "variable",
         "name": "IssuingAut",
         "result": [
@@ -152,12 +152,12 @@
         ]
     },
     {
-        "id": "question18",
+        "id": "question16",
         "type": "predicate",
         "result": "issuing_authority(Measure, IssuingAut, ExecutingMemberState)"
     },
     {
-        "id": "question19",
+        "id": "question17",
         "type": "variable",
         "name": "ValidatingAut",
         "result": [
@@ -167,9 +167,8 @@
         ]
     },
     {
-        "id": "question19",
+        "id": "question17",
         "type": "predicate",
         "result": "validating_authority(Measure, ValidatingAut)"
     }
 ]
-
