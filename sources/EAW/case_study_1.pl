@@ -26,16 +26,23 @@ issuing_proceeding(IssuingMemberState, PersonId):-
     person_role(PersonId, subject_eaw).
 
 executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution):-
-    executing_member_state(ExecutingMemberState, PersonId),
-    executing_proceeding_status(PersonId, criminal_prosecution).
+    executing_member_state(ExecutingMemberState),
+    executing_proceeding_purpose(PersonId, criminal_prosecution),
+    person_role(PersonId, subject_eaw).
 
 executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence):-
-    executing_member_state(ExecutingMemberState, PersonId),
-    executing_proceeding_status(PersonId, execution_custodial_sentence).
+    executing_member_state(ExecutingMemberState),
+    executing_proceeding_purpose(PersonId, execution_custodial_sentence),
+    person_role(PersonId, subject_eaw).
 
 executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order):-
-    executing_member_state(ExecutingMemberState, PersonId),
-    executing_proceeding_status(PersonId, execution_detention_order).
+    executing_member_state(ExecutingMemberState),
+    executing_proceeding_purpose(PersonId, execution_detention_order),
+    person_role(PersonId, subject_eaw).
+
+crime_type(Offence, committed_in(CommIn)):-
+    offence_type(Offence),
+    offence_committed_in(CommIn).
 
 %3. if the person who is the subject of the European arrest warrant may not, owing to his age, be held criminally responsible for the acts on which the arrest warrant is based under the law of the executing State.
 
@@ -44,7 +51,11 @@ executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order):
 
 mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    person_status(PersonId, under_age).
+    person_status(PersonId, under_age, ExecutingMemberState).
+
+person_status(PersonId, under_age, ExecutingMemberState):-
+    person_age(PersonId, Age),
+    executing_member_state(ExecutingMemberState).
 
 %%Article 4
 %Grounds for optional non-execution of the European arrest warrant
@@ -82,7 +93,8 @@ mandatory_refusal(article18_1_c, italy, europeanArrestWarrant):-
 
 person_status(PersonId, under_age, italy):-
     person_age(PersonId, Age),
-    Age < 14.
+    Age < 14,
+    executing_member_state(italy).
 
 %% Article 7(1-2) - Fully implemented
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.

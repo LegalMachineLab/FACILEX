@@ -14,7 +14,7 @@
         "id": "question2",
         "type": "variable",
         "name": "ExecutingMemberState",
-        "result": "executing_member_state(ExecutingMemberState, PersonId)"
+        "result": "executing_member_state(ExecutingMemberState)"
     },
     {
         "id": "question3",
@@ -23,8 +23,12 @@
     },
     {
         "id": "question4",
-        "type": "variable",
-        "result": "executing_proceeding_status(PersonId, ExecutingProceedingStatus)"
+        "type": "predicate",
+        "result": {
+            "conducting a criminal prosecution": "executing_proceeding_purpose(PersonId, criminal_prosecution)",
+            "executing a custodial sentence": "executing_proceeding_purpose(PersonId, execution_custodial_sentence)",
+            "executing a detention order": "executing_proceeding_purpose(PersonId, criminal_prosecution)"
+        }
     },
     {
         "id": "question5",
@@ -38,25 +42,8 @@
     },
     {
         "id": "question7",
-        "type": "variable",
-        "name": "Nationality",
-        "result": [
-            "italy",
-            "bulgaria",
-            "france",
-            "poland"
-        ]
-    },
-    {
-        "id": "question7",
         "type": "predicate",
         "result": "person_nationality(PersonId, Nationality)"
-    },
-    {
-        "id": "question8",
-        "type": "variable",
-        "name": "Age",
-        "result": "freeText"
     },
     {
         "id": "question8",
@@ -67,27 +54,13 @@
         "id": "question9",
         "type": "variable",
         "name": "Offence",
-        "result": [
-            "theft",
-            "driving without license",
-            "altri reati"
-        ]
-    },
-    {
-        "id": "question9",
-        "type": "predicate",
-        "result": "crime_type(Offence, committed_in(CommIn))"
+        "result": "offence_type(Offence)"
     },
     {
         "id": "question10",
         "type": "variable",
         "name": "CommIn",
-        "result": [
-            "Italy",
-            "Bulgaria",
-            "France",
-            "Poland"
-        ]
+        "result": "offence_committed_in(CommIn)"
     },
     {
         "id": "question11",
