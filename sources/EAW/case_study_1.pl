@@ -7,7 +7,7 @@
 %1. The European arrest warrant is a judicial decision issued by a Member State with a view to the arrest and surrender by another Member State of a requested person, for the purposes of conducting a criminal prosecution or executing a custodial sentence or detention order.
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
-    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    issuing_proceeding(IssuingMemberState, PersonId),
     (
         art2_2applies(Offence)
     ;   art2_4applies(Offence)
@@ -21,6 +21,22 @@ eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
 art2_4applies(Offence):-
     \+ art2_2applies(Offence).
 
+issuing_proceeding(IssuingMemberState, PersonId):-
+    issuing_member_state(IssuingMemberState),
+    person_role(PersonId, subject_eaw).
+
+executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution):-
+    executing_member_state(ExecutingMemberState, PersonId),
+    executing_proceeding_status(PersonId, criminal_prosecution).
+
+executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence):-
+    executing_member_state(ExecutingMemberState, PersonId),
+    executing_proceeding_status(PersonId, execution_custodial_sentence).
+
+executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order):-
+    executing_member_state(ExecutingMemberState, PersonId),
+    executing_proceeding_status(PersonId, execution_detention_order).
+
 %3. if the person who is the subject of the European arrest warrant may not, owing to his age, be held criminally responsible for the acts on which the arrest warrant is based under the law of the executing State.
 
 %[executing_proceeding(ExecutingMemberState, PersonId, _)] = if the person who is the subject of the European arrest warrant
@@ -28,7 +44,7 @@ art2_4applies(Offence):-
 
 mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    person_status(PersonId, under_age, ExecutingMemberState).
+    person_status(PersonId, under_age).
 
 %%Article 4
 %Grounds for optional non-execution of the European arrest warrant
@@ -50,7 +66,7 @@ optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
 %2. Il mandato d'arresto europeo è una decisione giudiziaria emessa da uno Stato membro dell'Unione europea, di seguito denominato "Stato membro di emissione", in vista dell'arresto e della consegna da parte di un altro Stato membro, di seguito denominato "Stato membro di esecuzione", di una persona, al fine dell'esercizio di azioni giudiziarie in materia penale o dell'esecuzione di una pena o di una misura di sicurezza privative della libertà personale.
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
-    issuing_proceeding(IssuingMemberState, PersonId, Offence),
+    issuing_proceeding(IssuingMemberState, PersonId),
     crime_type(Offence, committed_in(MemberState)),
     (
         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)

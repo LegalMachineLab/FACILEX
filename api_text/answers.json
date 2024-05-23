@@ -8,28 +8,13 @@
         "id": "question1",
         "type": "variable",
         "name": "IssuingMemberState",
-        "result": [
-            "italy",
-            "bulgaria",
-            "france",
-            "poland"
-        ]
-    },
-    {
-        "id": "question1",
-        "type": "predicate",
-        "result": "issuing_proceeding(IssuingMemberState, PersonId, Offence)"
+        "result": "issuing_member_state(IssuingMemberState)"
     },
     {
         "id": "question2",
         "type": "variable",
         "name": "ExecutingMemberState",
-        "result": [
-            "italy",
-            "bulgaria",
-            "france",
-            "poland"
-        ]
+        "result": "executing_member_state(ExecutingMemberState, PersonId)"
     },
     {
         "id": "question3",
@@ -38,12 +23,8 @@
     },
     {
         "id": "question4",
-        "type": "predicate",
-        "result": [
-            "executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)",
-            "executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)",
-            "executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)"
-        ]
+        "type": "variable",
+        "result": "executing_proceeding_status(PersonId, ExecutingProceedingStatus)"
     },
     {
         "id": "question5",
@@ -52,9 +33,8 @@
     },
     {
         "id": "question6",
-        "type": "variable",
-        "name": "PersonId",
-        "result": "freeText"
+        "type": "predicate",
+        "result": "person_role(PersonId, subject_to_eaw)"
     },
     {
         "id": "question7",
