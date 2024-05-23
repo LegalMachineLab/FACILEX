@@ -71,13 +71,7 @@
         "id": "question12",
         "type": "variable",
         "name": "Measure",
-        "result": "freeText"
-    },
-    {
-        "id": "question14",
-        "type": "variable",
-        "name": "Measure",
-        "result": "interception_of_telecommunications"
+        "result": "measure_type(Measure, eio)"
     },
     {
         "id": "question14",
@@ -97,31 +91,13 @@
     {
         "id": "question16",
         "type": "variable",
-        "name": "IssuingAut",
-        "result": [
-            "judge or court",
-            "investigating judge",
-            "public prosecutor"
-        ]
-    },
-    {
-        "id": "question16",
-        "type": "predicate",
-        "result": "issuing_authority(Measure, IssuingAut, ExecutingMemberState)"
+        "name": "Measure",
+        "result": "issuing_authority(interception_of_telecommunications, IssuingAut)"
     },
     {
         "id": "question17",
         "type": "variable",
-        "name": "ValidatingAut",
-        "result": [
-            "judge or court",
-            "investigating judge",
-            "public prosecutor"
-        ]
-    },
-    {
-        "id": "question17",
-        "type": "predicate",
-        "result": "validating_authority(Measure, ValidatingAut)"
+        "name": "Measure",
+        "result": "validating_authority(interception_of_telecommunications, ValidatingAut)"
     }
 ]
