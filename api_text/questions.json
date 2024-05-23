@@ -111,16 +111,6 @@
     },
     {
         "id": "question13",
-        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
-        "type": "boolean"
-    },
-    {
-        "id": "question14",
-        "question": "Is the measure the interception of telecommunications?",
-        "type": "boolean"
-    },
-    {
-        "id": "question15",
         "question": "In what type of proceeding was the EIO issued",
         "type": "choice",
         "choices": [
@@ -129,6 +119,16 @@
             "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
             "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State"
         ]
+    },
+    {
+        "id": "question14",
+        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
+        "type": "boolean"
+    },
+    {
+        "id": "question15",
+        "question": "Is the measure the interception of telecommunications?",
+        "type": "boolean"
     },
     {
         "id": "question16",

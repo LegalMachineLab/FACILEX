@@ -74,12 +74,7 @@
         "result": "measure_type(Measure, eio)"
     },
     {
-        "id": "question14",
-        "type": "predicate",
-        "result": "art694_29_applies(interception_of_telecommunications)"
-    },
-    {
-        "id": "question15",
+        "id": "question13",
         "type": "predicate",
         "result": {
             "(a)": "art4_a_applies",
@@ -89,15 +84,21 @@
         }
     },
     {
-        "id": "question16",
-        "type": "variable",
-        "name": "Measure",
-        "result": "issuing_authority(interception_of_telecommunications, IssuingAut)"
+        "id": "question15",
+        "type": "predicate",
+        "result": "art694_29_applies(interception_of_telecommunications)"
     },
+
     {
         "id": "question17",
         "type": "variable",
-        "name": "Measure",
-        "result": "validating_authority(interception_of_telecommunications, ValidatingAut)"
+        "name": "IssuingAut",
+        "result": "issuing_authority(Measure, IssuingAut)"
+    },
+    {
+        "id": "question18",
+        "type": "variable",
+        "name": "ValidatingAut",
+        "result": "validating_authority(Measure, ValidatingAut)"
     }
 ]
