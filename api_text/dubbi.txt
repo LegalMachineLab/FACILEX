@@ -1,0 +1,15 @@
+1. Caso1 - qual è il purpose? direi o criminal prosecution o custodial sentence
+non lo dice il caso esplicitamente. chiediamo ai ppenalisti per sicurezza?
+
+2. Caso1 - ho cambiato la domanda sull'età. Da "Information regarding the identity of the requested person: Age" a "Information regarding the identity of the requested person: Age on the date the offence was allegedly committed". Va bene?
+
+3. Caso 1 - Ho fatto le risposte sia per reato di furto che per guida pericolosa. Giusto?
+
+4. Caso 1 - question11:
+    - non so se è meglio cambiare la domanda (Offences: is the offence covered in the Executing Member State?), così forse è un po' imprecisa? Una roba tipo "Offences: does the offence constitute a crime under the law of the Executing Member State?"
+    - Caso 1b: in questo caso verosimilmente, l'utente non sa se la guida in stato di ebrezza è reato o no in italia, ma è il sistema che ha la regola relativa che dice che, per la cassazione numero_41102_2022, non è più reato. --> Quindi la risposta a questa domanda quale dovrebbe essere? Si, No, I don't know?
+
+5. Caso 2. visto che facciamo solo il caso oie delle intercettazioni magari la domanda 14("Is the measure for obtaining information already in the possession of the executing authority?"). Inoltre, questa domanda forse dovrebbe essere riformulata : "Is the information requested already in possession of the executing authority?"
+Magari ancora meglio
+
+6. caso 2: issuing autority e validating autority sono entrambe PM?
