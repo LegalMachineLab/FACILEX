@@ -25,9 +25,10 @@ issuing_proceeding(IssuingMemberState, PersonId):-
     issuing_member_state(IssuingMemberState),
     person_role(PersonId, subject_eaw).
 
-executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution):-
+executing_proceeding(ExecutingMemberState, PersonId, Purpose):-
     executing_member_state(ExecutingMemberState),
-    executing_proceeding_purpose(PersonId, criminal_prosecution),
+    executing_proceeding_purpose(PersonId, Purpose),
+    member(Purpose, [criminal_prosecution, execution_custodial_sentence, execution_detention_order]),
     person_role(PersonId, subject_eaw).
 
 executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence):-

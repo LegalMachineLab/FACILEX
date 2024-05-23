@@ -23,12 +23,14 @@
     },
     {
         "id": "question4",
-        "type": "predicate",
-        "result": {
-            "conducting a criminal prosecution": "executing_proceeding_purpose(PersonId, criminal_prosecution)",
-            "executing a custodial sentence": "executing_proceeding_purpose(PersonId, execution_custodial_sentence)",
-            "executing a detention order": "executing_proceeding_purpose(PersonId, criminal_prosecution)"
-        }
+        "type": "variable",
+        "name": "Purpose",
+        "choices": {
+            "conducting a criminal prosecution": "criminal_prosecution",
+            "executing a custodial sentence": "execution_custodial_sentence",
+            "executing a detention order": "execution_detention_order"
+        },
+        "result": "executing_proceeding_purpose(PersonId, Purpose)"
     },
     {
         "id": "question5",
@@ -88,17 +90,16 @@
         "type": "predicate",
         "result": "art694_29_applies(interception_of_telecommunications)"
     },
-
     {
         "id": "question17",
         "type": "variable",
         "name": "IssuingAut",
-        "result": "issuing_authority(Measure, IssuingAut)"
+        "result": "issuing_authority(interception_of_telecommunications, IssuingAut)"
     },
     {
         "id": "question18",
         "type": "variable",
         "name": "ValidatingAut",
-        "result": "validating_authority(Measure, ValidatingAut)"
+        "result": "validating_authority(interception_of_telecommunications, ValidatingAut)"
     }
 ]
