@@ -105,5 +105,10 @@ mandatory_refusal(article7_1, MemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     national_law_not_offence(Offence, italy).
 
+national_law_not_offence(Offence, italy):-
+    \+ crime_constitutes_offence_national_law(Offence, italy).
+
 national_law_not_offence(driving_without_license, italy):-
     cassazione(numero_41102_2022, driving_without_license, italy).
+
+cassazione(numero_41102_2022, driving_without_license, italy).

@@ -67,7 +67,7 @@
     {
         "id": "question11",
         "type": "predicate",
-        "result": "national_law_not_offence(Offence, ExecutingMemberState)"
+        "result": "crime_constitutes_offence_national_law(Offence, italy)"
     },
     {
         "id": "question12",

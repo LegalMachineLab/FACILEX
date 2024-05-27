@@ -98,7 +98,7 @@
     },
     {
         "id": "question11",
-        "question": "Offences: is the offence covered in the Executing Member State?",
+        "question": "Offences: does the offence constitute a crime under the law of the Executing Member State?",
         "type": "boolean"
     },
     {
