@@ -10,7 +10,7 @@
         ]
     },
     {
-        "id": "question1",
+        "id": "issuing_state",
         "question": "What is the issuing State?",
         "type": "choice",
         "choices": [
@@ -21,7 +21,7 @@
         ]
     },
     {
-        "id": "question2",
+        "id": "executing_state",
         "question": "What is the executing State?",
         "type": "choice",
         "choices": [
@@ -35,12 +35,12 @@
         "comment": "Following are EAW questions"
     },
     {
-        "id": "question3",
+        "id": "art2_eaw",
         "question": "Do the acts, which the European Arrest Warrant is based on, fall under the definition of Article 2, paragraph 2?",
         "type": "boolean"
     },
     {
-        "id": "question4",
+        "id": "executing_proceeding_purpose",
         "question": "Which is the purpose of the EAW?",
         "type": "choice",
         "choices": [
@@ -50,17 +50,17 @@
         ]
     },
     {
-        "id": "question5",
+        "id": "amnesty",
         "question": "Is the offence covered by amnesty in the executing Member State?",
         "type": "boolean"
     },
     {
-        "id": "question6",
+        "id": "personId",
         "question": "Information regarding the identity of the requested person: Name and Forename",
         "type": "freeText"
     },
     {
-        "id": "question7",
+        "id": "person_nationality",
         "question": "Information regarding the identity of the requested person: Nationality",
         "type": "choice",
         "choices": [
@@ -71,12 +71,12 @@
         ]
     },
     {
-        "id": "question8",
+        "id": "person_age",
         "question": "Information regarding the identity of the requested person: Age on the date the offence was allegedly committed",
         "type": "freeText"
     },
     {
-        "id": "question9",
+        "id": "offence",
         "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
         "type": "choice",
         "choices": [
@@ -86,7 +86,7 @@
         ]
     },
     {
-        "id": "question10",
+        "id": "offence_committed_in",
         "question": "Offences: State in which the offence was committed",
         "type": "choice",
         "choices": [
@@ -97,7 +97,7 @@
         ]
     },
     {
-        "id": "question11",
+        "id": "crime_recognised",
         "question": "Offences: does the offence constitute a crime under the law of the Executing Member State?",
         "type": "boolean"
     },
@@ -105,12 +105,12 @@
         "comment": "Following are EIO questions"
     },
     {
-        "id": "question12",
+        "id": "measure",
         "question": "Which is the investigative measure to be carried out?",
         "type": "freeText"
     },
     {
-        "id": "question13",
+        "id": "art4_eio",
         "question": "In what type of proceeding was the EIO issued",
         "type": "choice",
         "choices": [
@@ -126,7 +126,7 @@
         "type": "boolean"
     },
     {
-        "id": "question15",
+        "id": "art694_29_eio",
         "question": "Is the measure the interception of telecommunications?",
         "type": "boolean"
     },
@@ -136,7 +136,7 @@
         "type": "boolean"
     },
     {
-        "id": "question17",
+        "id": "issuing_authority",
         "question": "Name of the authority which issued the EIO",
         "type": "choice",
         "choices": [
@@ -146,7 +146,7 @@
         ]
     },
     {
-        "id": "question18",
+        "id": "validating_authority",
         "question": "Type of judicial authority which validated this EIO:",
         "type": "choice",
         "choices": [

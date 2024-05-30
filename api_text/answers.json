@@ -5,24 +5,24 @@
         "result": null
     },
     {
-        "id": "question1",
+        "id": "issuing_state",
         "type": "variable",
         "name": "IssuingMemberState",
         "result": "issuing_member_state(IssuingMemberState)"
     },
     {
-        "id": "question2",
+        "id": "executing_state",
         "type": "variable",
         "name": "ExecutingMemberState",
         "result": "executing_member_state(ExecutingMemberState)"
     },
     {
-        "id": "question3",
+        "id": "art2_eaw",
         "type": "predicate",
         "result": "art2applies(Offence)"
     },
     {
-        "id": "question4",
+        "id": "executing_proceeding_purpose",
         "type": "variable",
         "name": "Purpose",
         "choices": {
@@ -33,50 +33,51 @@
         "result": "executing_proceeding_purpose(PersonId, Purpose)"
     },
     {
-        "id": "question5",
+        "id": "amnesty",
         "type": "predicate",
         "result": "amnesty(Offence, ExecutingMemberState)"
     },
     {
-        "id": "question6",
-        "type": "predicate",
+        "id": "personId",
+        "type": "variable",
+        "name": "PersonId",
         "result": "person_role(PersonId, subject_to_eaw)"
     },
     {
-        "id": "question7",
+        "id": "person_nationality",
         "type": "predicate",
         "result": "person_nationality(PersonId, Nationality)"
     },
     {
-        "id": "question8",
+        "id": "person_age",
         "type": "predicate",
         "result": "person_age(PersonId, Age)"
     },
     {
-        "id": "question9",
+        "id": "offence",
         "type": "variable",
         "name": "Offence",
         "result": "offence_type(Offence)"
     },
     {
-        "id": "question10",
+        "id": "offence_committed_in",
         "type": "variable",
         "name": "CommIn",
         "result": "offence_committed_in(CommIn)"
     },
     {
-        "id": "question11",
+        "id": "crime_recognised",
         "type": "predicate",
         "result": "crime_constitutes_offence_national_law(Offence, italy)"
     },
     {
-        "id": "question12",
+        "id": "measure",
         "type": "variable",
         "name": "Measure",
         "result": "measure_type(Measure, eio)"
     },
     {
-        "id": "question13",
+        "id": "art4_eio",
         "type": "predicate",
         "result": {
             "(a)": "art4_a_applies",
@@ -86,18 +87,18 @@
         }
     },
     {
-        "id": "question15",
+        "id": "art694_29_eio",
         "type": "predicate",
         "result": "art694_29_applies(interception_of_telecommunications)"
     },
     {
-        "id": "question17",
+        "id": "issuing_authority",
         "type": "variable",
         "name": "IssuingAut",
         "result": "issuing_authority(interception_of_telecommunications, IssuingAut)"
     },
     {
-        "id": "question18",
+        "id": "validating_authority",
         "type": "variable",
         "name": "ValidatingAut",
         "result": "validating_authority(interception_of_telecommunications, ValidatingAut)"
