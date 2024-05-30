@@ -43,11 +43,11 @@
         "id": "executing_proceeding_purpose",
         "question": "Which is the purpose of the EAW?",
         "type": "choice",
-        "choices": [
-            "conducting a criminal prosecution",
-            "executing a custodial sentence",
-            "executing a detention order"
-        ]
+        "choices": {
+            "conducting a criminal prosecution": "criminal_prosecution",
+            "executing a custodial sentence": "execution_custodial_sentence",
+            "executing a detention order": "execution_detention_order"
+        }
     },
     {
         "id": "amnesty",
@@ -113,12 +113,12 @@
         "id": "art4_eio",
         "question": "In what type of proceeding was the EIO issued",
         "type": "choice",
-        "choices": [
-            "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;",
-            "(b) administrative proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
-            "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;",
-            "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State"
-        ]
+        "choices": {
+            "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;": "art4_a_applies",
+            "(b) administrative proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;": "art4_b_applies",
+            "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;": "art4_c_applies",
+            "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State": "art4_d_applies"
+        }
     },
     {
         "id": "question14",

@@ -8,6 +8,7 @@
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
     issuing_proceeding(IssuingMemberState, PersonId),
+    offence_type(Offence),
     (
         art2_2applies(Offence)
     ;   art2_4applies(Offence)
