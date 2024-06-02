@@ -19,7 +19,9 @@
 :- dynamic person_age/2.
 
 server(Port) :-
-    http_server(http_dispatch, [port(Port)]).
+    http_server(http_dispatch, [port(Port)]),
+    % Use thread_get_message to keep the server alive on a non interactive system (Docker)
+    thread_get_message(_).
 
 facilex_facts(Request) :-
     http_parameters(Request, [facts(FactsInput, [])]),
@@ -194,9 +196,9 @@ strip_results([A|Rest], Arts, Dest) :-
 
 all_sources(Directory, Files) :-
     working_directory(CWD, CWD), 
-    atom_concat(CWD, Directory, CWDSub), 
+    atom_concat(CWD, Directory, CWDSub),
     atom_concat(CWDSub, '/**/*.pl', Wildcard),
-    writeln(Wildcard),
+    % writeln(Wildcard),
     expand_file_name(Wildcard, Files).
 
 consult_all :-
