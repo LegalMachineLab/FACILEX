@@ -8,6 +8,8 @@
 %The EIO may also be issued for obtaining evidence that is already in the possession of the competent authorities of the executing State.
 
 eio_matter(IssuingMemberState, ExecutingMemberState, Measure):-
+    issuing_member_state(IssuingMemberState),
+    executing_member_state(ExecutingMemberState),
     issuing_proceeding(IssuingMemberState, _, Measure),
     executing_proceeding(ExecutingMemberState, _, Measure),
     (
