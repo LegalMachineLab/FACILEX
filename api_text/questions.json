@@ -1,6 +1,6 @@
 [
     {
-        "id": "question0",
+        "id": "matter",
         "question": "What are you interested in?",
         "type": "choice",
         "choices": [
@@ -82,7 +82,7 @@
         "choices": [
             "theft",
             "driving without license",
-            "altri reati"
+            "other crimes"
         ]
     },
     {
@@ -121,18 +121,8 @@
         }
     },
     {
-        "id": "question14",
-        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
-        "type": "boolean"
-    },
-    {
         "id": "art694_29_eio",
         "question": "Is the measure the interception of telecommunications?",
-        "type": "boolean"
-    },
-    {
-        "id": "question16",
-        "question": "The authority which issued the EIO is: any competent authority as defined by the law of the issuing state",
         "type": "boolean"
     },
     {
