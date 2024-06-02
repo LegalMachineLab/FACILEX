@@ -26,35 +26,35 @@ facilex_facts(Request) :-
     format('Content-type: text/plain~n~n'),
     term_string(Facts, FactsInput),
     snapshot((
-    forall(member(X, Facts), assert(X)),
-    get_answers(Dict)
+        forall(member(X, Facts), assert(X)),
+        get_answers(Dict)
     )),
     json_write_dict(current_output, Dict, [null('')]).
 
 facilex(Request) :-
     http_read_data(Request, JSONIn, [json_object(dict)]),
-    % snapshot((
+    snapshot((
         parse_answers(JSONIn, 0),
         get_answers(Dict),
         print_message(informational, Dict),
-        reply_json_dict(Dict).
-        % json_write_dict(current_output, Dict, [null('')])
-    % )).
+        reply_json_dict(Dict)
+    )).
 
-parse_test :-
-    open('test.json', read, In),
+parse_test(A, B) :-
+    open('api_text/case1.json', read, In),
     json_read_dict(In, Test),
     close(In),
-    parse_answers(Test, 0).
+    parse_answers(Test, 0),
+    get_answers(_{mandatory: A, optional: B}).
     
-parse_answers(JSONIn, X) :-
+parse_answers(_, X) :-
     \+ question(X, _), !.
 
 parse_answers(JSONIn, X) :-
     Y is X+1,
     question(X, Key),
-    print_message(informational, X),
-    print_message(informational, Key),
+    % print_message(informational, X),
+    % print_message(informational, Key),
     get_dict(Key, JSONIn, Value),
     build_fact(Key, Value),
     parse_answers(JSONIn, Y), !.
@@ -63,27 +63,35 @@ parse_answers(JSONIn, X) :-
     Y is X+1,
     parse_answers(JSONIn, Y).
 
-question(0, personId).
-question(1, person_nationality).
-question(2, person_age).
-question(3, issuing_state).
-question(4, executing_state).
-question(5, offence).
-question(6, art2_eaw).
-question(7, executing_proceeding_purpose).
-question(8, amnesty).
-question(9, offence_committed_in).
-question(10, crime_recognised).
-question(11, measure).
-question(12, art694_29_eio).
-question(13, issuing_authority).
-question(14, validating_authority).
+question(0, matter).
+question(1, personId).
+question(2, person_nationality).
+question(3, person_age).
+question(4, issuing_state).
+question(5, executing_state).
+question(6, offence).
+question(7, art2_eaw).
+question(8, executing_proceeding_purpose).
+question(9, amnesty).
+question(10, offence_committed_in).
+question(11, crime_recognised).
+question(12, measure).
+question(13, art4_eio).
+question(14, art694_29_eio).
+question(15, issuing_authority).
+question(16, validating_authority).
 
 clean_string(String, Clean) :-
-    atomic_list_concat(_Words, ' ', String),
-    atomic_list_concat(_Words, '_', _ValueUnd),
-    string_lower(_ValueUnd, ValueLower),
+    atomic_list_concat(Words, ' ', String),
+    atomic_list_concat(Words, '_', ValueUnd),
+    string_lower(ValueUnd, ValueLower),
     atom_string(Clean, ValueLower).
+
+build_fact(matter, "European Arrest Warrant") :-
+    consult('sources/EAW/case_study_1.pl').
+
+build_fact(matter, "European Investigation Order") :-
+    consult('sources/EIO/case_study_2.pl').
 
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
@@ -111,7 +119,22 @@ build_fact(executing_proceeding_purpose, Value) :-
 build_fact(amnesty, true) :-
     offence_type(Offence),
     executing_member_state(Value),
-    assertz(amnesty(Offense, Value)), !.
+    assertz(amnesty(Offence, Value)), !.
+
+build_fact(art4_eio, Value) :-
+    clean_string(Value, Clean),
+    assertz(Clean).
+
+build_fact(art694_29_eio, true) :-
+    assertz(art694_29_applies(interception_of_telecommunications)).
+
+build_fact(issuing_authority, Value) :-
+    clean_string(Value, Clean),
+    assertz(issuing_authority(interception_of_telecommunications, Clean)).
+
+    build_fact(validating_authority, Value) :-
+        clean_string(Value, Clean),
+        assertz(validating_authority(interception_of_telecommunications, Clean)).
 
 % build_fact(question6, _) :-
 %     personId(PersonId),
@@ -152,8 +175,22 @@ get_answer(optional, _{article: Article, memberstate: MemberState, regulation: R
     term_string(TreeList, Tree).
 
 get_answers(_{mandatory: MDictList, optional: ODictList}) :-
-    findall(MDict, get_answer(mandatory, MDict), MDictList),
-    findall(ODict, get_answer(optional, ODict), ODictList).
+    findall(MDict, get_answer(mandatory, MDict), TMDictList),
+    findall(ODict, get_answer(optional, ODict), TODictList),
+    strip_results(TMDictList, [], MDictList),
+    strip_results(TODictList, [], ODictList).
+
+strip_results([], _, []):- !.
+% strip_results([A|Rest], [A.Article|Arts], [A|Dest]) :- Arts = [], !.
+strip_results([A|Rest], _Arts, [A|Dest]) :-
+    \+ member(A.article, _Arts),
+    append(_Arts, [A.article], Arts),
+    strip_results(Rest, Arts, Dest), !.
+strip_results([A|Rest], Arts, Dest) :-
+    strip_results(Rest, Arts, Dest).
+% strip_results([A|Rest], Arts, TDest) :-
+%     member(A.article, Arts),
+%     strip_results(Rest, Arts, TDest).
 
 all_sources(Directory, Files) :-
     working_directory(CWD, CWD), 
@@ -168,7 +205,7 @@ consult_all :-
 
 main:-
     % consult_all,
-    consult('sources/EAW/case_study_1.pl'),
+    % consult('sources/EAW/case_study_1.pl'),
     server(8000).
 
 % http://localhost:8000/facilex?facts=[proceeding_matter(marco,reato,italia),amnesty(reato,italia),executing_member_state(marco,italia),art2_4applies(italia),national_law_not_offence(reato,italia),person_role(marco,subject_eaw), person_event(marco,under_prosecution,reato)]
