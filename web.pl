@@ -90,14 +90,10 @@ clean_string(String, Clean) :-
     atom_string(Clean, ValueLower).
 
 build_fact(matter, "European Arrest Warrant") :-
-    working_directory(CWD, CWD),
-    atom_concat(CWD, 'sources/EAW/case_study_1.pl', CWDSub),
-    consult(CWDSub).
+    consult('/app/sources/EAW/case_study_1.pl').
 
 build_fact(matter, "European Investigation Order") :-
-    working_directory(CWD, CWD),
-    atom_concat(CWD, 'sources/EIO/case_study_2.pl', CWDSub),
-    consult(CWDSub).
+    consult('/app/sources/EIO/case_study_2.pl').
 
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
