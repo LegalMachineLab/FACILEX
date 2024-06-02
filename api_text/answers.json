@@ -1,0 +1,106 @@
+[
+    {
+        "id": "question0",
+        "type": "openQuestions",
+        "result": null
+    },
+    {
+        "id": "issuing_state",
+        "type": "variable",
+        "name": "IssuingMemberState",
+        "result": "issuing_member_state(IssuingMemberState)"
+    },
+    {
+        "id": "executing_state",
+        "type": "variable",
+        "name": "ExecutingMemberState",
+        "result": "executing_member_state(ExecutingMemberState)"
+    },
+    {
+        "id": "art2_eaw",
+        "type": "predicate",
+        "result": "art2applies(Offence)"
+    },
+    {
+        "id": "executing_proceeding_purpose",
+        "type": "variable",
+        "name": "Purpose",
+        "choices": {
+            "conducting a criminal prosecution": "criminal_prosecution",
+            "executing a custodial sentence": "execution_custodial_sentence",
+            "executing a detention order": "execution_detention_order"
+        },
+        "result": "executing_proceeding_purpose(PersonId, Purpose)"
+    },
+    {
+        "id": "amnesty",
+        "type": "predicate",
+        "result": "amnesty(Offence, ExecutingMemberState)"
+    },
+    {
+        "id": "personId",
+        "type": "variable",
+        "name": "PersonId",
+        "result": "person_role(PersonId, subject_to_eaw)"
+    },
+    {
+        "id": "person_nationality",
+        "type": "predicate",
+        "result": "person_nationality(PersonId, Nationality)"
+    },
+    {
+        "id": "person_age",
+        "type": "predicate",
+        "result": "person_age(PersonId, Age)"
+    },
+    {
+        "id": "offence",
+        "type": "variable",
+        "name": "Offence",
+        "result": "offence_type(Offence)"
+    },
+    {
+        "id": "offence_committed_in",
+        "type": "variable",
+        "name": "CommIn",
+        "result": "offence_committed_in(CommIn)"
+    },
+    {
+        "id": "crime_recognised",
+        "type": "predicate",
+        "result": "crime_constitutes_offence_national_law(Offence, italy)"
+    },
+    {
+        "id": "measure",
+        "type": "variable",
+        "name": "Measure",
+        "result": "measure_type(Measure, eio)"
+    },
+    {
+        "id": "art4_eio",
+        "type": "predicate",
+        "result": {
+            "(a)": "art4_a_applies",
+            "(b)": "art4_b_applies",
+            "(c)": "art4_c_applies",
+            "(d)": "art4_d_applies"
+        }
+    },
+    {
+        "id": "art694_29_eio",
+        "type": "predicate",
+        "result": "art694_29_applies(interception_of_telecommunications)"
+    },
+    {
+        "id": "issuing_authority",
+        "type": "variable",
+        "name": "IssuingAut",
+        "result": "issuing_authority(interception_of_telecommunications, IssuingAut)"
+    },
+    {
+        "id": "validating_authority",
+        "type": "variable",
+        "name": "ValidatingAut",
+        "result": "validating_authority(interception_of_telecommunications, ValidatingAut)"
+    }
+]

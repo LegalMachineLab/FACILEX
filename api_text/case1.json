@@ -1,0 +1,14 @@
+{
+  "matter": "European Arrest Warrant",
+  "issuing_state": "France",
+  "executing_state": "Italy",
+  "art2_eaw": "false",
+  "executing_proceeding_purpose": "criminal prosecution",
+  "amnesty": "false",
+  "personId": "Seydou Rossi",
+  "person_nationality": "France",
+  "person_age": 13,
+  "offence": "theft",
+  "offence_committed_in": "France",
+  "crime_recognised": "true"
+}

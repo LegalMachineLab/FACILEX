@@ -29,12 +29,22 @@ mandatory_refusal(article695_22_2, MemberState, europeanArrestWarrant):-
 
 mandatory_refusal(article695_22_3, MemberState, europeanArrestWarrant):-
     person_role(PersonId, subject_eaw),
-    person_status(PersonId, under_age),
-    executing_member_state(PersonId, MemberState).
+    person_status(PersonId, under_age, ExecutingMemberState).
 
-person_status(PersonId, under_age):-
+person_status(PersonId, under_age, ExecutingMemberState):-
     person_age(PersonId, Age),
-    Age < 13.
+    Age =< 13.
+
+%%Article 695-23 - Fully implemented
+%The execution of a European arrest warrant may also be refused if the offence for which the warrant is issued does not constitute an offence under French law.
+%By way of derogation from the first paragraph, a European arrest warrant shall be executed without verification of the double criminality of the offences for which it is issued when those offences are, under the law of the issuing Member State, punishable by a custodial sentence of at least three years' imprisonment or by a detention order of a similar duration and fall within one of the categories of offences provided for in Article 694-32.
+
+optional_refusal(article695_23, france, europeanArrestWarrant):-
+    eaw_matter(PersonId, IssuingMemberState, france, Offence),
+    national_law_not_offence(Offence, france).
+
+%%Article 695-23(4) - Fully implemented
+%Regarding taxes and duties, customs and exchange, the execution of a European arrest warrant shall not be refused on the grounds that French law does not impose the same type of tax or duty or does not contain the same type of regulation regarding taxes, duties, customs and exchange as the law of the issuing Member State.
 
 %% Article 695-24 - Fully implemented
 % The execution of a European arrest warrant may be refused :

@@ -1,0 +1,148 @@
+[
+    {
+        "id": "matter",
+        "question": "What are you interested in?",
+        "type": "choice",
+        "choices": [
+            "European Arrest Warrant",
+            "European Investigation Order",
+            "European Freezing or Confiscation Order"
+        ]
+    },
+    {
+        "id": "issuing_state",
+        "question": "What is the issuing State?",
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
+        "id": "executing_state",
+        "question": "What is the executing State?",
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
+        "comment": "Following are EAW questions"
+    },
+    {
+        "id": "art2_eaw",
+        "question": "Do the acts, which the European Arrest Warrant is based on, fall under the definition of Article 2, paragraph 2?",
+        "type": "boolean"
+    },
+    {
+        "id": "executing_proceeding_purpose",
+        "question": "Which is the purpose of the EAW?",
+        "type": "choice",
+        "choices": {
+            "conducting a criminal prosecution": "criminal_prosecution",
+            "executing a custodial sentence": "execution_custodial_sentence",
+            "executing a detention order": "execution_detention_order"
+        }
+    },
+    {
+        "id": "amnesty",
+        "question": "Is the offence covered by amnesty in the executing Member State?",
+        "type": "boolean"
+    },
+    {
+        "id": "personId",
+        "question": "Information regarding the identity of the requested person: Name and Forename",
+        "type": "freeText"
+    },
+    {
+        "id": "person_nationality",
+        "question": "Information regarding the identity of the requested person: Nationality",
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
+        "id": "person_age",
+        "question": "Information regarding the identity of the requested person: Age on the date the offence was allegedly committed",
+        "type": "freeText"
+    },
+    {
+        "id": "offence",
+        "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
+        "type": "choice",
+        "choices": [
+            "theft",
+            "driving without license",
+            "other crimes"
+        ]
+    },
+    {
+        "id": "offence_committed_in",
+        "question": "Offences: State in which the offence was committed",
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
+        "id": "crime_recognised",
+        "question": "Offences: does the offence constitute a crime under the law of the Executing Member State?",
+        "type": "boolean"
+    },
+    {
+        "comment": "Following are EIO questions"
+    },
+    {
+        "id": "measure",
+        "question": "Which is the investigative measure to be carried out?",
+        "type": "freeText"
+    },
+    {
+        "id": "art4_eio",
+        "question": "In what type of proceeding was the EIO issued",
+        "type": "choice",
+        "choices": {
+            "(a) criminal proceedings that are brought by or before a judicial authority in respect of a criminal offence under the national law of the issuing State;": "art4_a_applies",
+            "(b) administrative proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;": "art4_b_applies",
+            "(c) other judicial proceeding that may give rise to proceedings before a court having jurisdiction in criminal matters;": "art4_c_applies",
+            "(d) proceedings referred to in points (a), (b), and (c) which relate to offences or infringements for which a legal person may be held liable or punished in the issuing State": "art4_d_applies"
+        }
+    },
+    {
+        "id": "art694_29_eio",
+        "question": "Is the measure the interception of telecommunications?",
+        "type": "boolean"
+    },
+    {
+        "id": "issuing_authority",
+        "question": "Name of the authority which issued the EIO",
+        "type": "choice",
+        "choices": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
+        ]
+    },
+    {
+        "id": "validating_authority",
+        "question": "Type of judicial authority which validated this EIO:",
+        "type": "choice",
+        "choices": [
+            "judge or court",
+            "investigating judge",
+            "public prosecutor"
+        ]
+    }
+]

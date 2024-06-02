@@ -1,0 +1,13 @@
+
+    {
+        "id": "question16",
+        "question": "The authority which issued the EIO is: any competent authority as defined by the law of the issuing state",
+        "type": "boolean"
+    },
+
+    
+    {
+        "id": "question14",
+        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
+        "type": "boolean"
+    },
