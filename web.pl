@@ -90,10 +90,14 @@ clean_string(String, Clean) :-
     atom_string(Clean, ValueLower).
 
 build_fact(matter, "European Arrest Warrant") :-
-    consult('sources/EAW/case_study_1.pl').
+    working_directory(CWD, CWD),
+    atom_concat(CWD, 'sources/EAW/case_study_1.pl', CWDSub),
+    consult(CWDSub).
 
 build_fact(matter, "European Investigation Order") :-
-    consult('sources/EIO/case_study_2.pl').
+    working_directory(CWD, CWD),
+    atom_concat(CWD, 'sources/EIO/case_study_2.pl', CWDSub),
+    consult(CWDSub).
 
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
@@ -195,7 +199,7 @@ strip_results([A|Rest], Arts, Dest) :-
 %     strip_results(Rest, Arts, TDest).
 
 all_sources(Directory, Files) :-
-    working_directory(CWD, CWD), 
+    working_directory(CWD, CWD),
     atom_concat(CWD, Directory, CWDSub),
     atom_concat(CWDSub, '/**/*.pl', Wildcard),
     % writeln(Wildcard),
