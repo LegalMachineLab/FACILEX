@@ -3,7 +3,7 @@
     "issuing_state": "Italy",
     "executing_state": "France",
     "art2_eaw": "false",
-    "executing_proceeding_purpose": "criminal prosecution",
+    "executing_proceeding_purpose": "criminal_prosecution",
     "amnesty": "false",
     "personId": "Mario Rossi",
     "person_nationality": "Italy",
