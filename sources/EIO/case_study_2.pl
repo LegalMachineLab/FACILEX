@@ -42,7 +42,7 @@ optional_refusal(article11_1_c, ExecutingMemberState, europeanInvestigationOrder
 
 %4. If the request concerns proceedings referred to in Article 694-29 of this Code that do not relate to a criminal offence, where the measure requested would not be authorised under French law in the context of similar national proceedings;
 
-optional_refusal(article694_31_4, ExecutingMemberState, europeanInvestigationOrder):-
+optional_refusal(article694_28, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
     art694_29_applies(interception_of_telecommunications),
     national_law_does_not_authorize(ExecutingMemberState, Measure).
