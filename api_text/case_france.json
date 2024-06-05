@@ -1,0 +1,14 @@
+{
+    "matter": "European Arrest Warrant",
+    "issuing_state": "Italy",
+    "executing_state": "France",
+    "art2_eaw": "false",
+    "executing_proceeding_purpose": "criminal prosecution",
+    "amnesty": "false",
+    "personId": "Mario Rossi",
+    "person_nationality": "Italy",
+    "person_age": 12,
+    "offence": "theft",
+    "offence_committed_in": "Italy",
+    "crime_recognised": "true"
+}
