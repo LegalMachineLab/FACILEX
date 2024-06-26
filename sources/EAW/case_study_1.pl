@@ -7,7 +7,7 @@
 %1. The European arrest warrant is a judicial decision issued by a Member State with a view to the arrest and surrender by another Member State of a requested person, for the purposes of conducting a criminal prosecution or executing a custodial sentence or detention order.
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
-    issuing_proceeding(IssuingMemberState, PersonId),
+    issuing_proceeding(IssuingMemberState, _, PersonId),
     offence_type(Offence),
     (
         art2_2applies(Offence)
@@ -19,10 +19,7 @@ eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
     ).
 
-art2_4applies(Offence):-
-    \+ art2_2applies(Offence).
-
-issuing_proceeding(IssuingMemberState, PersonId):-
+issuing_proceeding(IssuingMemberState, _, PersonId):-
     issuing_member_state(IssuingMemberState),
     person_role(PersonId, subject_eaw).
 
@@ -42,9 +39,8 @@ executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order):
     executing_proceeding_purpose(PersonId, execution_detention_order),
     person_role(PersonId, subject_eaw).
 
-crime_type(Offence, committed_in(CommIn)):-
-    offence_type(Offence),
-    offence_committed_in(CommIn).
+art2_4applies(Offence):-
+    \+ art2_2applies(Offence).
 
 %3. if the person who is the subject of the European arrest warrant may not, owing to his age, be held criminally responsible for the acts on which the arrest warrant is based under the law of the executing State.
 

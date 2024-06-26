@@ -95,10 +95,18 @@ build_fact(matter, "European Arrest Warrant") :-
 build_fact(matter, "European Investigation Order") :-
     consult('sources/EIO/case_study_2.pl').
 
+build_fact(matter, "European Freezing or Confiscation Order") :-
+    consult('sources/Regulation/case_study_3.pl').
+
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
     assertz(personId(Clean)),
     assertz(person_role(Clean, subject_eaw)).
+
+build_fact(personIdFreezing, Value) :-
+    clean_string(Value, Clean),
+    assertz(personId(Clean)),
+    assertz(person_role(Clean, subject_freezingOrder)).
     
 build_fact(issuing_state, Value) :-
     clean_string(Value, Clean),
@@ -134,9 +142,9 @@ build_fact(issuing_authority, Value) :-
     clean_string(Value, Clean),
     assertz(issuing_authority(interception_of_telecommunications, Clean)).
 
-    build_fact(validating_authority, Value) :-
-        clean_string(Value, Clean),
-        assertz(validating_authority(interception_of_telecommunications, Clean)).
+build_fact(validating_authority, Value) :-
+    clean_string(Value, Clean),
+    assertz(validating_authority(interception_of_telecommunications, Clean)).
 
 % build_fact(question6, _) :-
 %     personId(PersonId),
@@ -166,6 +174,15 @@ build_fact(crime_recognised, true) :-
 build_fact(measure, Value) :-
     clean_string(Value, Clean),
     assertz(measure_type(Clean, eio)), !.
+
+build_fact(certificate_status, true) :-
+    issuing_member_state(IssuingMemberState),
+    assertz(certificate_status(Clean, not_transmitted)), !.
+
+build_fact(proceeding_actor, Value) :-
+    clean_string(Value, Clean),
+    issuing_member_state(IssuingMemberState)
+    assertz(proceeding_actor(IssuingMemberState, Clean)).
 
 build_fact(_, _).
     

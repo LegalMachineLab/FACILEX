@@ -11,7 +11,7 @@
 
 
 optional_refusal(article694_31_4, ExecutingMemberState, europeanInvestigationOrder):-
-    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
+    directive_matter(IssuingMemberState, ExecutingMemberState, Measure),
     (
         art694_29_applies
     ),
