@@ -82,6 +82,10 @@ question(13, art4_eio).
 question(14, art694_29_eio).
 question(15, issuing_authority).
 question(16, validating_authority).
+question(16, exception_data_available).
+question(16, personIdFreezing).
+question(16, certificate_status).
+question(16, proceeding_actor).
 
 clean_string(String, Clean) :-
     atomic_list_concat(Words, ' ', String),
@@ -175,13 +179,16 @@ build_fact(measure, Value) :-
     clean_string(Value, Clean),
     assertz(measure_type(Clean, eio)), !.
 
+build_fact(exception_data_available, true) :-
+    assertz(measure_data(Measure, data_directly_accessible_by_executing_authority)).
+
 build_fact(certificate_status, true) :-
     issuing_member_state(IssuingMemberState),
     assertz(certificate_status(Clean, not_transmitted)), !.
 
 build_fact(proceeding_actor, Value) :-
     clean_string(Value, Clean),
-    issuing_member_state(IssuingMemberState)
+    issuing_member_state(IssuingMemberState),
     assertz(proceeding_actor(IssuingMemberState, Clean)).
 
 build_fact(_, _).

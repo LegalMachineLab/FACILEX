@@ -14,7 +14,7 @@ issuing_proceeding(IssuingMemberState, europeanFreezingOrder, Offence):-
     offence_type(Offence).
     
 executing_proceeding(ExecutingMemberState, europeanFreezingOrder, Offence):-
-    issuing_member_state(ExecutingMemberState),
+    executing_member_state(ExecutingMemberState),
     offence_type(Offence).
 
 %%(c) the freezing certificate is incomplete or manifestly incorrect and has not been completed following the consultation referred to in paragraph 2;
@@ -35,4 +35,4 @@ optional_refusal(article8_1_f, ExecutingMemberState, europeanFreezingOrder):-
 proceeding_danger(IssuingMemberState, ExecutingMemberState, breach_fundamental_rights):-
     proceeding_actor(IssuingMemberState, Actor),
     Actor = civil_party,
-    executing_member_state(IssuingMemberState).
+    executing_member_state(ExecutingMemberState).

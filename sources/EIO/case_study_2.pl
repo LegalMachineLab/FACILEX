@@ -33,16 +33,21 @@ optional_refusal(article11_1_c, ExecutingMemberState, europeanInvestigationOrder
         art4_b_applies
     ;   art4_c_applies
     ),
-    national_law_does_not_authorize(ExecutingMemberState, Measure).
+    national_law_does_not_authorize(ExecutingMemberState, Measure),
+    \+ exception(optional_refusal(article188_189, ExecutingMemberState, europeanInvestigationOrder), _).
 
 %%In Portugal, the interception of communications requires the authorisation of a judge (Articles 188-189 Code of Criminal Procedure);
 
 optional_refusal(article188_189, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications).
+    national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications),
+    \+ exception(optional_refusal(article188_189, ExecutingMemberState, europeanInvestigationOrder), _).
 
 national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
     issuing_authority(interception_of_telecommunications, IssuingAut),
     validating_authority(interception_of_telecommunications, ValidatingAut),
     ValidatingAut \= judge_or_court.
+
+exception(optional_refusal(article188_189, ExecutingMemberState, europeanInvestigationOrder), article10_2_b):-
+    measure_data(Measure, data_directly_accessible_by_executing_authority).

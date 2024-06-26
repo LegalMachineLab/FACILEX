@@ -124,6 +124,11 @@
         }
     },
     {
+        "id": "exception_data_available",
+        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
+        "type": "boolean"
+    },
+    {
         "id": "art694_29_eio",
         "question": "Is the measure the interception of telecommunications?",
         "type": "boolean"
