@@ -51,9 +51,9 @@ mandatory_refusal(article3_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     person_status(PersonId, under_age, ExecutingMemberState).
 
-person_status(PersonId, under_age, ExecutingMemberState):-
-    person_age(PersonId, Age),
-    executing_member_state(ExecutingMemberState).
+%person_status(PersonId, under_age, ExecutingMemberState):-
+%    person_age(PersonId, Age),
+%    executing_member_state(ExecutingMemberState).
 
 %%Article 4
 %Grounds for optional non-execution of the European arrest warrant
@@ -94,11 +94,16 @@ person_status(PersonId, under_age, italy):-
     Age < 14,
     executing_member_state(italy).
 
+person_status(PersonId, under_age, france):-
+    person_age(PersonId, Age),
+    Age < 13,
+    executing_member_state(france).
+
 %% Article 7(1-2) - Fully implemented
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
 % 2. For the purposes of paragraph 1, for offences relating to taxes, customs and exchanges, it is not necessary that Italian law imposes the same kind of taxes or duties or contains the same kind of tax, duty, customs and exchange regulations as the law of the issuing Member State.
 
-mandatory_refusal(article7_1, IssuingMemberState, europeanArrestWarrant):-
+mandatory_refusal(article7_1, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     national_law_not_offence(Offence, italy).
 
