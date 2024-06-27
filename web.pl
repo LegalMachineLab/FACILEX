@@ -93,6 +93,8 @@ clean_string(String, Clean) :-
     string_lower(ValueUnd, ValueLower),
     atom_string(Clean, ValueLower).
 
+% To run locally remove /app/ from the three links
+
 build_fact(matter, "European Arrest Warrant") :-
     consult('/app/sources/EAW/case_study_1.pl').
 
@@ -100,7 +102,7 @@ build_fact(matter, "European Investigation Order") :-
     consult('/app/sources/EIO/case_study_2.pl').
 
 build_fact(matter, "European Freezing or Confiscation Order") :-
-    consult('sources/Regulation/case_study_3.pl').
+    consult('/app/sources/Regulation/case_study_3.pl').
 
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
