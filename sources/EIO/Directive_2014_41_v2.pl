@@ -1,6 +1,5 @@
 :- include('../utils.pl').
 
-
 %%Article 1
 
 %The European Investigation Order and obligation to execute it
@@ -40,7 +39,6 @@ crime_type(Offence, committed_in(CommIn)):-
 %%Grounds for non-recognition or non-execution 
 
 %%1.Without prejudice to Article 1(4), recognition or execution of an EIO may be refused in the executing State where:(a) there is an immunity or a privilege under the law of the executing State which makes it impossible to execute the EIO or there are rules on determination and limitation of criminal liability relating to freedom of the press and freedom of expression in other media, which make it impossible to execute the EIO;
-
 
 optional_refusal(article11_1_a, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),

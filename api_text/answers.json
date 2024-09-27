@@ -102,5 +102,22 @@
         "type": "variable",
         "name": "ValidatingAut",
         "result": "validating_authority(interception_of_telecommunications, ValidatingAut)"
+    },
+    {
+        "id": "personIdFreezing",
+        "type": "variable",
+        "name": "PersonId",
+        "result": "person_role(PersonId, subject_freezingOrder)"
+    },
+    {
+        "id": "certificate_status",
+        "type": "predicate",
+        "result": "certificate_status(IssuingMemberState, not_transmitted)"
+    },
+    {
+        "id": "proceeding_actor",
+        "type": "variable",
+        "name": "Actor",
+        "result": "proceeding_actor(IssuingMemberState, Actor)"
     }
 ]

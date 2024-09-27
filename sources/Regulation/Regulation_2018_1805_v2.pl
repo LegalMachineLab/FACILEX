@@ -7,12 +7,10 @@
 regulation_matter(IssuingMemberState, ExecutingMemberState, europeanConfiscationOrder):-
     issuing_proceeding(IssuingMemberState, europeanConfiscationOrder, Offence),
     executing_proceeding(ExecutingMemberState, europeanConfiscationOrder, Offence).
-    
 
 regulation_matter(IssuingMemberState, ExecutingMemberState, europeanFreezingOrder):-
     issuing_proceeding(IssuingMemberState, europeanFreezingOrder, Offence),
     executing_proceeding(ExecutingMemberState, europeanFreezingOrder, Offence).
-
 
 %% Article 8 
 % Grounds for non-recognition and non-execution of freezing orders 
@@ -41,8 +39,10 @@ freezing_prevented(europeanFreezingOrder, ExecutingMemberState):-
 
 optional_refusal(article8_1_c, ExecutingMemberState, europeanFreezingOrder):-
     regulation_matter(IssuingMemberState, ExecutingMemberState, europeanFreezingOrder),
-    \+ issuing_proceeding_status(IssuingMemberState, certificate_incomplete_manifestly_incorrect).
-    
+    issuing_proceeding_status(IssuingMemberState, certificate_incomplete_manifestly_incorrect).
+
+issuing_proceeding_status(IssuingMemberState, certificate_incomplete_manifestly_incorrect):-
+    certificate_status(IssuingMemberState, not_transmitted).
 
 %%(d) the freezing order relates to a criminal offence committed, wholly or partially, outside the territory of the issuing State and, wholly or partially, in the territory of the executing State and the conduct in connection with which the freezing order was issued does not constitute a criminal offence under the law of the executing State;
 
@@ -64,7 +64,12 @@ optional_refusal(article8_1_e, ExecutingMemberState, europeanFreezingOrder):-
 
 optional_refusal(article8_1_f, ExecutingMemberState, europeanFreezingOrder):-
     regulation_matter(IssuingMemberState, ExecutingMemberState, europeanFreezingOrder),
-    proceeding_danger(_, ExecutingMemberState, breach_fundamental_rights).
+    proceeding_danger(IssuingMemberState, ExecutingMemberState, breach_fundamental_rights).
+
+proceeding_danger(IssuingMemberState, ExecutingMemberState, breach_fundamental_rights):-
+    proceeding_actor(IssuingMemberState, Actor),
+    Actor = civil_party,
+    executing_member_state(IssuingMemberState).
 
 %% 2. In any of the cases referred to in paragraph 1, before deciding not to recognise or execute the freezing order, whether wholly or partially, the executing authority shall consult the issuing authority by any appropriate means and where appropriate, shall request the issuing authority to supply any necessary information without delay.
 

@@ -82,6 +82,10 @@ question(13, art4_eio).
 question(14, art694_29_eio).
 question(15, issuing_authority).
 question(16, validating_authority).
+question(17, exception_data_available).
+question(18, personIdFreezing).
+question(19, certificate_status).
+question(20, proceeding_actor).
 
 clean_string(String, Clean) :-
     atomic_list_concat(Words, ' ', String),
@@ -89,54 +93,64 @@ clean_string(String, Clean) :-
     string_lower(ValueUnd, ValueLower),
     atom_string(Clean, ValueLower).
 
+% To run locally remove /app/ from the three links
+
 build_fact(matter, "European Arrest Warrant") :-
     consult('/app/sources/EAW/case_study_1.pl').
 
 build_fact(matter, "European Investigation Order") :-
     consult('/app/sources/EIO/case_study_2.pl').
 
+build_fact(matter, "European Freezing or Confiscation Order") :-
+    consult('/app/sources/Regulation/case_study_3.pl').
+
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
     assertz(personId(Clean)),
     assertz(person_role(Clean, subject_eaw)).
+
+build_fact(personIdFreezing, Value) :-
+    clean_string(Value, Clean),
+    assertz(personId(Clean)),
+    assertz(person_role(Clean, subject_freezingOrder)).
     
 build_fact(issuing_state, Value) :-
     clean_string(Value, Clean),
-    assertz(issuing_member_state(Clean)), !.
+    assert(issuing_member_state(Clean)), !.
 
 build_fact(executing_state, Value) :-
     clean_string(Value, Clean),
-    assertz(executing_member_state(Clean)), !.
+    assert(executing_member_state(Clean)), !.
 
 build_fact(art2_eaw, true) :-
     offence_type(Offence),
-    assertz(art2_2applies(Offence)), !.
+    assert(art2_2applies(Offence)), !.
 
 build_fact(executing_proceeding_purpose, Value) :-
     clean_string(Value, Clean),
     personId(PersonId),
     % print_message(informational, R),
-    assertz(executing_proceeding_purpose(PersonId, Clean)), !.
+    assert(executing_proceeding_purpose(PersonId, Clean)), !.
 
 build_fact(amnesty, true) :-
     offence_type(Offence),
     executing_member_state(Value),
-    assertz(amnesty(Offence, Value)), !.
+    assert(amnesty(Offence, Value)), !.
 
 build_fact(art4_eio, Value) :-
     clean_string(Value, Clean),
-    assertz(Clean).
+    assert(Clean).
 
 build_fact(art694_29_eio, true) :-
-    assertz(art694_29_applies(interception_of_telecommunications)).
+    assert(art694_29_applies(interception_of_telecommunications)).
 
 build_fact(issuing_authority, Value) :-
     clean_string(Value, Clean),
-    assertz(issuing_authority(interception_of_telecommunications, Clean)).
+    assert(issuing_authority(interception_of_telecommunications, Clean)).
 
-    build_fact(validating_authority, Value) :-
-        clean_string(Value, Clean),
-        assertz(validating_authority(interception_of_telecommunications, Clean)).
+build_fact(validating_authority, Value) :-
+    clean_string(Value, Clean),
+    assertz(validating_authority(interception_of_telecommunications, Clean)).
 
 % build_fact(question6, _) :-
 %     personId(PersonId),
@@ -145,28 +159,42 @@ build_fact(issuing_authority, Value) :-
 build_fact(person_nationality, Value) :-
     clean_string(Value, Clean),
     personId(PersonId),
-    assertz(person_nationality(PersonId, Clean)), !.
+    assert(person_nationality(PersonId, Clean)), !.
 
 build_fact(person_age, Value) :-
     personId(PersonId),
-    assertz(person_age(PersonId, Value)), !.
+    assert(person_age(PersonId, Value)), !.
 
 build_fact(offence, Value) :-
     clean_string(Value, Clean),
-    assertz(offence_type(Clean)), !.
+    assert(offence_type(Clean)), !.
 
 build_fact(offence_committed_in, Value) :-
     clean_string(Value, Clean),
-    assertz(offence_committed_in(Clean)), !.
+    assert(offence_committed_in(Clean)), !.
 
 build_fact(crime_recognised, true) :-
     offence_type(Offence),
-    assertz(crime_constitutes_offence_national_law(Offence, italy)), !.
+    assert(crime_constitutes_offence_national_law(Offence, italy)), !.
 
 build_fact(measure, Value) :-
     clean_string(Value, Clean),
-    assertz(measure_type(Clean, eio)), !.
+    assert(measure_type(Clean, eio)), !.
 
+build_fact(exception_data_available, true) :-
+    measure_type(Measure, eio),
+    assertz(measure_data(Measure, data_directly_accessible_by_executing_authority)).
+
+build_fact(certificate_status, true) :-
+    issuing_member_state(IssuingMemberState),
+    assertz(certificate_status(IssuingMemberState, not_transmitted)), !.
+
+build_fact(proceeding_actor, Value) :-
+    clean_string(Value, Clean),
+    issuing_member_state(IssuingMemberState),
+    assertz(proceeding_actor(IssuingMemberState, Clean)).
+
+% Skip unknown facts temporarily
 build_fact(_, _).
     
 get_answer(mandatory, _{article: Article, memberstate: MemberState, regulation: Regulation, tree: Tree}) :-

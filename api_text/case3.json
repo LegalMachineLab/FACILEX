@@ -1,0 +1,9 @@
+{
+  "matter": "European Freezing or Confiscation Order",
+  "issuing_state": "Italy",
+  "executing_state": "Poland",
+  "offence": "selfmoney laundering",
+  "personIdFreezing":"tizio",
+  "certificate_status":true,
+  "proceeding_actor":"civil party"
+}

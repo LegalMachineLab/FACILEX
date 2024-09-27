@@ -1,10 +1,9 @@
 {
   "matter": "European Investigation Order",
   "issuing_state": "Italy",
-  "executing_state": "France",
+  "executing_state": "Portugal",
   "measure": "Interception of Telecommunications",
   "art4_eio": "art4_a_applies",
-  "art694_29_eio": true,
   "issuing_authority": "public prosecutor",
   "validating_authority": "public prosecutor"
 }

@@ -32,6 +32,30 @@
         ]
     },
     {
+        "comment": "If possible following questions only for EAW and Regulation"
+    },
+    {
+        "id": "offence",
+        "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
+        "type": "choice",
+        "choices": [
+            "theft",
+            "driving without license",
+            "selfmoney laundering"
+        ]
+    },
+    {
+        "id": "offence_committed_in",
+        "question": "Offences: State in which the offence was committed",
+        "type": "choice",
+        "choices": [
+            "Italy",
+            "Bulgaria",
+            "France",
+            "Poland"
+        ]
+    },
+    {
         "comment": "Following are EAW questions"
     },
     {
@@ -76,27 +100,6 @@
         "type": "freeText"
     },
     {
-        "id": "offence",
-        "question": "Offences: Nature and legal classification of offence, and the applicable statutory provision",
-        "type": "choice",
-        "choices": [
-            "theft",
-            "driving without license",
-            "other crimes"
-        ]
-    },
-    {
-        "id": "offence_committed_in",
-        "question": "Offences: State in which the offence was committed",
-        "type": "choice",
-        "choices": [
-            "Italy",
-            "Bulgaria",
-            "France",
-            "Poland"
-        ]
-    },
-    {
         "id": "crime_recognised",
         "question": "Offences: does the offence constitute a crime under the law of the Executing Member State?",
         "type": "boolean"
@@ -121,6 +124,11 @@
         }
     },
     {
+        "id": "exception_data_available",
+        "question": "Is the measure for obtaining information already in the possession of the executing authority?",
+        "type": "boolean"
+    },
+    {
         "id": "art694_29_eio",
         "question": "Is the measure the interception of telecommunications?",
         "type": "boolean"
@@ -143,6 +151,29 @@
             "judge or court",
             "investigating judge",
             "public prosecutor"
+        ]
+    },
+    {
+        "comment": "Following are Regulation questions:"
+    },
+    {
+        "id": "personIdFreezing",
+        "question": "Information regarding the identity of the person subject to freezing order: Name and Forename",
+        "type": "freeText"
+    },
+    {
+        "id": "certificate_status",
+        "question": "Has the freezing order been incorrectly transmitted?",
+        "type": "boolean"
+    },
+    {
+        "id": "proceeding_actor",
+        "question": "The party requesting the order is a:",
+        "type": "choice",
+        "choices": [
+            "civil party",
+            "victim",
+            "public authority"
         ]
     }
 ]
