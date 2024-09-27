@@ -44,7 +44,7 @@ eio_execution_impossible(Measure, ExecutingMemberState):-
     contrast_with(Measure, ExecutingMemberState, immunity_privilege).
 
 eio_execution_impossible(Measure, ExecutingMemberState):-
-    contrast_with(Measure, ExecutingMemberState freedom_press)
+    contrast_with(Measure, ExecutingMemberState, freedom_press)
 ;   contrast_with(Measure, ExecutingMemberState, freedom_expression_media).
 
 % Article 22(1)(c)

@@ -28,53 +28,63 @@ crime_type(Offence, committed_in(CommIn)):-
 
 % 1) the court or prosecutor has not obtained the required authorization to carry out the activities with the participation of the person indicated in the EIO;
 mandatory_refusal(article589zj_1_1, ExecutingMemberState, europeanInvestigationOrder):-
-    \+ required_authorization_obtained(ExecutingMemberState, PersonId, europeanInvestigationOrder).
+    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
+    required_authorization_not_obtained(ExecutingMemberState, PersonId, europeanInvestigationOrder).
 
 % 2) a final judgment has been rendered against the prosecuted person in a member state of the European Union for the same acts indicated in the EIO, and, if convicted of the same acts, the prosecuted person is serving a sentence or has served it, or the sentence cannot be enforced according to the law of the state where the conviction was rendered;
 mandatory_refusal(article589zj_1_2, ExecutingMemberState, europeanInvestigationOrder):-
-    final_judgment_rendered(EU_MemberState, PersonId, Acts),
-    same_acts_indicated_in_eio(Acts, europeanInvestigationOrder),
-    (serving_sentence(PersonId, Acts); served_sentence(PersonId, Acts); sentence_not_enforceable(EU_MemberState, Acts)).
+    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
+    final_judgment_rendered(IssuingMemberState, PersonId),
+    (
+        sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId) 
+    ).
 
 % 4) the EIO concerns an interrogation in circumstances covered by an absolute prohibition of interrogation;
 mandatory_refusal(article589zj_1_4, ExecutingMemberState, europeanInvestigationOrder):-
+    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
     eio_concerns_interrogation(europeanInvestigationOrder),
     absolute_prohibition_of_interrogation(ExecutingMemberState).
 
 % 5) the execution of the EIO would violate human and civil liberties and rights;
 mandatory_refusal(article589zj_1_5, ExecutingMemberState, europeanInvestigationOrder):-
+    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
     execution_violates_human_rights(europeanInvestigationOrder, ExecutingMemberState).
 
 % 6) the requested measure would threaten national security;
 mandatory_refusal(article589zj_1_6, ExecutingMemberState, europeanInvestigationOrder):-
+    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
     measure_threatens_national_security(europeanInvestigationOrder, ExecutingMemberState).
 
-% Article 589zj(2)
-
+% Article 589zj(2) - Fully implemented
 % 1) the act giving rise to the issuance of the EIO, other than those listed in Article 607w CCP, does not constitute a crime under Polish law;
 optional_refusal(article589zj_2_1, ExecutingMemberState, europeanInvestigationOrder):-
-    act_giving_rise_to_eio(Act, europeanInvestigationOrder),
-    \+ article_607w_ccp(Act),
-    \+ crime_under_polish_law(Act).
+    eio_atter(IssuingMemberState, ExecutingMemberState, Measure),
+    not_offence(Offence, ExecutingMemberState).
 
 % 2) the act giving rise to the issuance of the EIO under Polish law was committed in whole or in part on the territory of the Republic of Poland or on a Polish ship or aircraft and does not constitute an offense under Polish law;
 optional_refusal(article589zj_2_2, ExecutingMemberState, europeanInvestigationOrder):-
-    act_giving_rise_to_eio(Act, europeanInvestigationOrder),
-    committed_on_polish_territory_or_vessel(Act),
-    \+ offense_under_polish_law(Act).
+    eio_atter(IssuingMemberState, ExecutingMemberState, Measure),
+    issuing_proceeding_status(IssuingMemberState, Offence, committed_inside_executing_ms),
+    not_offence(Offence, ExecutingMemberState).
 
 % 3) the execution of the EIO would involve the disclosure of classified information obtained in the course of covert activities, as well as related to the conduct of these activities;
 optional_refusal(article589zj_2_3, ExecutingMemberState, europeanInvestigationOrder):-
-    execution_involves_disclosure_of_classified_info(europeanInvestigationOrder, ExecutingMemberState).
+    eio_atter(IssuingMemberState, ExecutingMemberState, Measure),
+    proceeding_danger(Measure, ExecutingMemberState, classified_information).
 
 % 4) according to Polish law, the investigative activity to which the EIO relates cannot be carried out in the case of the crime that is the basis for its issuance;
 optional_refusal(article589zj_2_4, ExecutingMemberState, europeanInvestigationOrder):-
-    investigative_activity_not_allowed_for_crime(europeanInvestigationOrder, ExecutingMemberState).
+    eio_atter(IssuingMemberState, ExecutingMemberState, Measure),
+    national_law_does_not_authorize(ExecutingMemberState, Measure, Offence).
 
 % 5) according to Polish law, the investigative measure covered by the EIO cannot be carried out in the proceedings in which it was issued;
 optional_refusal(article589zj_2_5, ExecutingMemberState, europeanInvestigationOrder):-
-    investigative_measure_not_allowed_in_proceedings(europeanInvestigationOrder, ExecutingMemberState).
+    eio_atter(IssuingMemberState, ExecutingMemberState, Measure),
+    national_law_does_not_authorize(ExecutingMemberState, Measure).
 
 % 8) EIO concerns the hearing of persons referred to in Articles 179 § 1 or art. 180 § 1 and 2, as to the circumstances specified in these provisions.
 optional_refusal(article589zj_2_8, ExecutingMemberState, europeanInvestigationOrder):-
-    eio_concerns_hearing_of_persons(Articles179_180, europeanInvestigationOrder).
+    eio_atter(IssuingMemberState, ExecutingMemberState, Measure),
+    issuing_proceeding_status(IssuingMemberState, Offence, hearing_of_persons_under_art179_1_or_180_1_2)
