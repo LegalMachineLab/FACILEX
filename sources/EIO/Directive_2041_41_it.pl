@@ -20,8 +20,6 @@ executing_proceeding(ExecutingMemberState, _, Measure):-
     executing_member_state(IssuingMemberState),
     measure_type(Measure, eio).
 
-
-
 crime_type(Offence, committed_in(CommIn)):-
     offence_type(Offence),
     offence_committed_in(CommIn).

@@ -48,7 +48,7 @@ eio_execution_impossible(Measure, ExecutingMemberState):-
     contrast_with(Measure, ExecutingMemberState, immunity_privilege).
 
 eio_execution_impossible(Measure, ExecutingMemberState):-
-    contrast_with(Measure, ExecutingMemberState freedom_press)
+    contrast_with(Measure, ExecutingMemberState, freedom_press)
 ;   contrast_with(Measure, ExecutingMemberState, freedom_expression_media).
 
 %%(b) in a specific case the execution of the EIO would harm essential national security interests, jeopardise the source of the information or involve the use of classified information relating to specific intelligence activities;
