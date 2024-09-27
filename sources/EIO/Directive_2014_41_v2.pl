@@ -58,7 +58,7 @@ optional_refusal(article11_1_b, ExecutingMemberState, europeanInvestigationOrder
     (
     proceeding_danger(Measure, ExecutingMemberState, national_security);
     proceeding_danger(Measure, ExecutingMemberState, jeopardise_source_information);
-    proceeding_danger(Measure, ExecutingMemberState, classified_information_intelligence)
+    proceeding_danger(Measure, ExecutingMemberState, classified_information)
     ).
 
 %%(c) the EIO has been issued in proceedings referred to in Article 4(b) and (c) and the investigative measure would not be authorised under the law of the executing State in a similar domestic case;
