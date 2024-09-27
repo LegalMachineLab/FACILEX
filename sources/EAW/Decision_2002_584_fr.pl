@@ -18,7 +18,7 @@ mandatory_refusal(article695_22_2, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
     person_role(PersonId, subject_eaw),
-    person_event(PersonId, irrevocably_convicted, Offence),
+    person_event(PersonId, finally_judged, Offence),
     (
         sentence_served(PersonId)
     ;   sentence_being_served(PersonId)

@@ -20,7 +20,7 @@ mandatory_refusal(article607p_1_2, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
     person_role(PersonId, subject_eaw),
-    person_event(PersonId, irrevocably_convicted, Offence),
+    person_event(PersonId, finally_judged, Offence),
     (
         sentence_served(PersonId)
     ;   sentence_being_served(PersonId)
@@ -105,7 +105,7 @@ optional_refusal(article607r_1_3, MemberState, europeanArrestWarrant):-
     (
         proceeding_status(Offence, MemberState, no_prosecution)
     ;   proceeding_status(Offence, MemberState, halted)
-    ;   person_event(PersonId, irrevocably_convicted, Offence)  %proceeding_status(Offence, MemberState, final_judgement),
+    ;   person_event(PersonId, finally_judged, Offence)  %proceeding_status(Offence, MemberState, final_judgement),
     ).
 
 %% Article 607r(1)(point 4) - Fully implemented

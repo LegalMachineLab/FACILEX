@@ -97,7 +97,7 @@ optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
 
 optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    person_event(PersonId, under_prosecution_by_executing_state, Offence). %proceeding_status(Offence, ExecutingMemberState, ongoing)
+    person_event(PersonId, under_prosecution, Offence). 
 
 %3. where the judicial authorities of the executing Member State have decided either not to prosecute for the offence on which the European arrest warrant is based or to halt proceedings, or where a final judgment has been passed upon the requested person in a Member State, in respect of the same acts, which prevents further proceedings;
 
@@ -106,7 +106,7 @@ optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
     (
         executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
     ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
-    ;   person_event(PersonId, irrevocably_convicted_in_ms, Offence)  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
+    ;   person_event(PersonId, finally_judged, Offence)  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
     ).
 
 %4. where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State and the acts fall within the jurisdiction of that Member State under its own criminal law;

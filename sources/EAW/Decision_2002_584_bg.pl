@@ -83,13 +83,12 @@ optional_refusal(article40_1_3, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
     person_role(PersonId, subject_eaw),
-    proceeding_status(Offence, ThirdState, final_judgement),
-    MemberState \= ThirdState,
-    person_event(PersonId, irrevocably_convicted, Offence),
+    person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
+    %ExecutingMemberState \= ThirdState,
     (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId) 
+        sentence_served_in_third_state(PersonId)
+    ;   sentence_being_served_in_third_state(PersonId)
+    ;   sentence_execution_impossible_in_third_state(PersonId)
     ).
 
 %% Article 40(1)(4)
