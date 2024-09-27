@@ -74,7 +74,7 @@ optional_refusal(article40_1_1a, MemberState, europeanArrestWarrant):-
 optional_refusal(article40_1_2, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
-    proceeding_status(Offence, MemberState, statute_barred).
+    executing_proceeding_status(Offence, MemberState, statute_barred).
 
 %% Article 40(1)(3)
 % 3. it has been informed that the person claimed has served or is serving a sentence in a State which is not a member of the European Union, under a final judgement in respect of the same offence on which the warrant is based or the said sentence may no longer be executed under the legislation of the sentencing State;
@@ -103,8 +103,8 @@ optional_refusal(article40_1_4, MemberState, europeanArrestWarrant):-
     ;   proceeding_status(Offence, MemberState, execution_detention_order)
     ),
     (   
-       person_nationality(PersonId, MemberState)
-    ;   person_residence(PersonId, _, MemberState, _)
+        person_nationality(PersonId, MemberState)
+    ;   person_residence(PersonId, MemberState)
     ;   person_residence(PersonId, person_claim_residence, MemberState, _)
     ).
 
@@ -126,7 +126,7 @@ optional_refusal(article40_1_6, MemberState, europeanArrestWarrant):-
     executing_member_state(PersonId, MemberState),
     issuing_member_state(PersonId, IssuingMemberState),
     proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
-    proceeding_status(Offence, MemberState, no_prosecution).
+    executing_proceeding_status(Offence, MemberState, no_prosecution).
 
 %% Article 40(2)
 % (2) (New, SG No. 55/2011) The District Court may also refuse to execute a European arrest warrant issued for the purposes of execution of a custodial sentence or detention order rendered at a trial where the person has not appeared in person, unless the European arrest warrant explicitly states that one of the following conditions is met:

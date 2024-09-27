@@ -18,7 +18,7 @@ mandatory_refusal(article11_b, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
     person_role(PersonId, subject_eaw),
-    person_event(PersonId, irrevocably_convicted, Offence),
+    person_event(PersonId, finally_judged, Offence),
     (
         sentence_served(PersonId)
     ;   sentence_being_served(PersonId)
@@ -69,7 +69,7 @@ optional_refusal(article12_1_d, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
     person_role(PersonId, subject_eaw),
-    person_event(PersonId, irrevocably_convicted, Offence).  %proceeding_status(Offence, MemberState, final_judgement)
+    person_event(PersonId, finally_judged, Offence).  %proceeding_status(Offence, MemberState, final_judgement)
 
 %% Article 12(1)(e) - Fully implemented
 % The criminal prosecution or punishment of the requested person is statute-barred according to the Portuguese law, provided that the Portuguese courts have jurisdiction over the conduct for which the European arrest warrant has been issued;
@@ -86,13 +86,12 @@ optional_refusal(article12_1_f, MemberState, europeanArrestWarrant):-
     proceeding_matter(PersonId, Offence, MemberState),
     executing_member_state(PersonId, MemberState),
     person_role(PersonId, subject_eaw),
-    proceeding_status(Offence, ThirdState, final_judgement),
-    MemberState \= ThirdState,
-    person_event(PersonId, irrevocably_convicted, Offence),
+    person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
+    %ExecutingMemberState \= ThirdState,
     (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId) 
+        sentence_served_in_third_state(PersonId)
+    ;   sentence_being_served_in_third_state(PersonId)
+    ;   sentence_execution_impossible_in_third_state(PersonId)
     ).
 
 %% Article 12(1)(g) - Fully implemented

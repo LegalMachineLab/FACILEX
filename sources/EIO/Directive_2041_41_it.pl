@@ -48,7 +48,7 @@ optional_refusal(article10_1_c, italy, europeanInvestigationOrder):-
 
 optional_refusal(article10_1_d, italy, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, italy, Measure),
-    contrary_to_ne_bis_in_idem(italy, _).
+    contrary_to_ne_bis_in_idem(italy, Measure).
 
 % Article 10(1)(e) - Fully implemented
 % there are reasonable grounds for considering that the performance of the act required in the investigation order is not compatible with the State's obligations under Article 6 of the Treaty on European Union and the Charter of Fundamental Rights of the European Union;
