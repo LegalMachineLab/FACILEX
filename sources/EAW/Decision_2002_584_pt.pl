@@ -7,87 +7,73 @@
 % The offence on which the arrest warrant is based is covered by amnesty in Portugal, where the Portuguese courts have jurisdiction to prosecute the offence;
 
 mandatory_refusal(article11_a, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
     amnesty(Offence, MemberState),
-    executing_member_state(PersonId, MemberState).
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence).
 
 %% Article 11(b) - Fully implemented
 % The requested person has been finally judged by a Member State in respect of the same acts provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the Member State where the decision has been taken;
 
 mandatory_refusal(article11_b, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    person_role(PersonId, subject_eaw),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     person_event(PersonId, finally_judged, Offence),
     (
         sentence_served(PersonId)
     ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId) 
+    ;   sentence_execution_impossible(PersonId)
     ).
 
 %% Article 11(c) - Fully implemented
 % Under Portuguese law, the requested person may not, owing to his/her age, be held criminally responsible for the acts on which the European arrest warrant is based.
 
 mandatory_refusal(article11_c, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    person_status(PersonId, under_age),
-    executing_member_state(PersonId, MemberState).
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
+    person_status(PersonId, under_age, MemberState).
 
 %% Article 2(3) - Fully implemented
 % For offences other than those covered by the preceding paragraph, the surrender of the requested person shall only take place if the acts for which the European arrest warrant has been issued constitute an offence under the Portuguese law, whatever the constituent elements or however it is described.
 
 optional_refusal(article2_3, MemberState, europeanArrestWarrant):-
-    art2_4applies(MemberState),
-    proceeding_matter(_, Offence, MemberState),
+    art2_4applies(Offence),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     national_law_not_offence(Offence, MemberState).
 
 %% Article 12(1)(b) - Fully implemented
 % A criminal procedure against the requested person is pending in Portugal for the same acts as that for which the European arrest warrant was issued;
 
 optional_refusal(article12_1_b, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     person_event(PersonId, under_prosecution, Offence).
 
 %% Article 12(1)(c) - Fully implemented
 % Knowing the facts on which the European arrest warrant is based, the Public Prosecution Office decides either not to prosecute or to terminate the proceedings through discontinuation;
 
 optional_refusal(article12_1_c, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    person_role(PersonId, subject_eaw),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     (
-        proceeding_status(Offence, MemberState, no_prosecution)
-    ;   proceeding_status(Offence, MemberState, halted)
+        executing_proceeding_status(Offence, MemberState, no_prosecution)
+    ;   executing_proceeding_status(Offence, MemberState, halted)
     ).
 
 %% Article 12(1)(d) - Fully implemented
 % A final judgment has been passed upon the requested person in a Member State, in respect of the same acts, which prevents further proceedings, in cases other than those referred to in Article 11(b).
 
 optional_refusal(article12_1_d, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    person_role(PersonId, subject_eaw),
-    person_event(PersonId, finally_judged, Offence).  %proceeding_status(Offence, MemberState, final_judgement)
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
+    person_event(PersonId, finally_judged, Offence).
 
 %% Article 12(1)(e) - Fully implemented
 % The criminal prosecution or punishment of the requested person is statute-barred according to the Portuguese law, provided that the Portuguese courts have jurisdiction over the conduct for which the European arrest warrant has been issued;
 
 optional_refusal(article12_1_e, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    proceeding_status(Offence, MemberState, statute_barred).
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
+    executing_proceeding_status(Offence, MemberState, statute_barred).
 
 %% Article 12(1)(f) - Fully implemented
 % The requested person has been finally judged by a third State in respect of the same acts provided that, where there has been sentence, the sentence has been served or is currently being served or may no longer be executed under the law of the sentencing State;
 
 optional_refusal(article12_1_f, MemberState, europeanArrestWarrant):-
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    person_role(PersonId, subject_eaw),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
-    %ExecutingMemberState \= ThirdState,
     (
         sentence_served_in_third_state(PersonId)
     ;   sentence_being_served_in_third_state(PersonId)
@@ -98,17 +84,14 @@ optional_refusal(article12_1_f, MemberState, europeanArrestWarrant):-
 % The arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in the national territory, has the Portuguese nationality or resides in Portugal and the Portuguese State undertakes to execute the sentence or detention order in accordance with the Portuguese law;
 
 optional_refusal(article12_1_g, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     (
-        proceeding_status(Offence, MemberState, execution_custodial_sentence)
-    ;   proceeding_status(Offence, MemberState, execution_detention_order)
+        executing_proceeding(MemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(MemberState, PersonId, execution_detention_order)
     ),
-    (   
-        person_domicile(PersonId, MemberState)
-    ;   person_nationality(PersonId, MemberState)
-    ;   person_residence(PersonId, _, MemberState, _)
+    (
+        person_nationality(PersonId, MemberState)
+    ;   person_residence(PersonId, MemberState)
     ).
 
 %%Article 12(1)(h) - Fully implemented
@@ -118,38 +101,28 @@ optional_refusal(article12_1_g, MemberState, europeanArrestWarrant):-
 % Are regarded by the Portuguese law as having been committed in whole or in part in the national territory or aboard Portuguese ships and aircrafts; or
 
 optional_refusal(article12_1_h_i, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    executing_member_state(PersonId, MemberState),
-    proceeding_matter(PersonId, Offence, MemberState),
-    (   
-        proceeding_status(Offence, MemberState, committed_inside_territory)
-    ;   proceeding_status(Offence, MemberState, committed_aboard_ship_aircrafts)
-    ).
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
+    crime_type(Offence, committed_in(MemberState)).
 
 %% Article 12(1)(h)(ii) - Fully implemented
 % Have been committed outside the territory of the issuing Member State, provided that the Portuguese criminal law is not applicable to the same offences when committed outside the national territory.
 
 optional_refusal(article12_1_h_ii, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    proceeding_matter(PersonId, Offence, MemberState),
-    executing_member_state(PersonId, MemberState),
-    issuing_member_state(PersonId, IssuingMemberState),
-    proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
-    proceeding_status(Offence, MemberState, no_prosecution).        % TODO - pt law not offense?
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
+    \+ crime_type(Offence, committed_in(IssuingMemberState)),
+    prosecution_not_allowed(Offence, MemberState).
 
 %% Article 12-A(1) - Fully implemented
 % The execution of a European arrest warrant issued for the purpose of executing a custodial sentence or detention order can be refused if the person did not appear in person at the trial resulting in the decision, unless the European arrest warrant states that the person, in accordance with the national legislation of the issuing Member State:
 
 optional_refusal(article12_a_1, MemberState, europeanArrestWarrant):-
-    person_role(PersonId, subject_eaw),
-    executing_member_state(PersonId, MemberState),
+    eaw_matter(PersonId, IssuingMemberState, MemberState, Offence),
     (
-        proceeding_status(Offence, MemberState, execution_custodial_sentence)
-    ;   proceeding_status(Offence, MemberState, execution_detention_order)
+        executing_proceeding(MemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(MemberState, PersonId, execution_detention_order)
     ),
-    proceeding_status(Offence, IssuingMemberState, trial_in_absentia),
-    issuing_member_state(PersonId, IssuingMemberState),
-    \+ exception(optional_refusaloptional_refusal(article12_a_1, MemberState, europeanArrestWarrant), _).
+    issuing_proceeding_status(Offence, IssuingMemberState, trial_in_absentia),
+    \+ exception(optional_refusal(article12_a_1, MemberState, europeanArrestWarrant), _).
 
 %% Article 12-A(1)(a) - Fully implemented
 % Was summoned in person and thereby informed of the scheduled date and place of the trial which resulted in the decision, or by other means actually received official information of the scheduled date and place of that trial in such a manner that it was unequivocally established that he or she was aware of the scheduled trial and that a decision could be handed down if he or she did not appear for the trial; or
