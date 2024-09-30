@@ -30,8 +30,27 @@
         "type": "boolean"
     },
     {
-        "id": "ne_bis_in_idem",
-        "question": "Is the execution of the EIO contrary to the principle of ne bis in idem?",
+        "id": "sentence_served",
+        "question": "Has the the sentence has been served?",
         "type": "boolean"
     },
-
+    {
+        "id": "sentence_execution_impossible",
+        "question": "Is the sentence currently being served",
+        "type": "boolean"
+    },
+    {
+        "id": "sentence_being_served",
+        "question": "May the sentence no longer be executed under the law of the sentencing Member State",
+        "type": "boolean"
+    },
+    {
+        "id": "statute_barred",
+        "question": "Is the criminal prosecution or punishment statute-barred according to the law of the executing Member State?",
+        "type": "boolean"
+    }
+    {
+        "id": "person_residence",
+        "question": "Information regarding the residence of the requested person",
+        "type": "freeText"
+    },
