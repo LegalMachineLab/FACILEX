@@ -1,27 +1,32 @@
     {
-        "id": "contrast_with",
-        "question": "Is the execution of the EIO in constrast with?",
+        "id": "person_event",
+        "question": "Has the person been:",
         "type": "choice",
         "choices": [
-            "immunity or a privilege under the law of the executing State",
-            "limitation of criminal liability relating to freedom of the press",
-            "limitation of criminal liability relating to freedom of the media"
+            "finally judged by a Member State in respect of the same acts",
+            "being prosecuted in the Executing Member State for the same act",
+            "been finally judged by a third State in respect of the same acts"
         ]
     },
     {
-        "id": "proceeding_danger",
-        "question": "Is the execution of the EIO dangerous for?",
+        "id": "issuing_proceeding_event",
+        "question": "Does any of the following apply to proceeding taking place in the issuing Mmeber State?",
         "type": "choice",
         "choices": [
-            "harm essential national security interests",
-            "jeopardise the source of the information",
-            "involve the use of classified information",
-            "incompatible with European obligations"
+            "the person has been made aware of the trial",
+            "was informed that a decision may be handed down if he or she does not appear for the trial"
+            "had given a mandate to a legal counsellor, who was either appointed by the person concerned or by the State, to defend him or her at the trial, and was indeed defended by that counsellor at the trial;"
+            "being expressly informed about the right to a retrial"
+            "expressly stated that he or she does not contest the decision"
+            "did not request a retrial or appeal within the applicable time frame"
+            "was not personally served with the decision"
+            "will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, in which the person has the right to participate and which allows the merits of the case, including fresh evidence, to be re-examined, and which may lead to the original decision being reversed"
+            "will be informed of the time frame within which he or she has to request such a retrial or appeal"
         ]
     },
     {
-        "id": "national_law_does_not_authorize",
-        "question": "Does the national law authorize the execution of the EIO?",
+        "id": "punishable_by_life_sentence",
+        "question": "the offence on the basis of which the European arrest warrant has been issued is punishable by custodial life sentence or life-time detention order",
         "type": "boolean"
     },
     {
