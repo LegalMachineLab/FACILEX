@@ -37,8 +37,8 @@ optional_refusal(article695_23, france, europeanArrestWarrant):-
 optional_refusal(article695_24_1, france, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, france, Offence),
     (
-        executing_proceeding_status(Offence, france, no_prosecution)
-    ;   executing_proceeding_status(Offence, france, halted)
+%        executing_proceeding_status(Offence, france, no_prosecution);
+        executing_proceeding_status(Offence, france, terminated)
     ;   person_event(PersonId, under_prosecution, Offence)
     ).
 
@@ -74,9 +74,9 @@ optional_refusal(article695_24_5, france, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, france, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
     (
-        sentence_served_in_third_state(PersonId)
-    ;   sentence_being_served_in_third_state(PersonId)
-    ;   sentence_execution_impossible_in_third_state(PersonId)
+        sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
     ).
 
 %% 6° If the offences for which the European arrest warrant was issued could be prosecuted and judged by the French courts and if the time limit for prosecution or punishment has expired.

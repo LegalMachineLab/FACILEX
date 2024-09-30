@@ -106,7 +106,10 @@ optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
     (
         executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
     ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
-    ;   person_event(PersonId, finally_judged, Offence)  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
+    ;   (
+        person_event(PersonId, finally_judged, Offence),
+        final_judgment_in_MS_prevents_proceeding(Offence, ExecutingMemberState)
+        )  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
     ).
 
 %4. where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State and the acts fall within the jurisdiction of that Member State under its own criminal law;
@@ -122,9 +125,9 @@ optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
     %ExecutingMemberState \= ThirdState,
     (
-        sentence_served_in_third_state(PersonId)
-    ;   sentence_being_served_in_third_state(PersonId)
-    ;   sentence_execution_impossible_in_third_state(PersonId)
+        sentence_served(PersonId)
+    ;   sentence_being_served(PersonId)
+    ;   sentence_execution_impossible(PersonId)
     ).
 
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
@@ -207,8 +210,8 @@ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWa
 
 exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii):-
     issuing_proceeding_event(PersonId, Offence, not_personally_served_decision),
-    issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
-    issuing_proceeding_event(PersonId, Offence, informed_of_timeframe_retrial_appeal).
+    issuing_proceeding_event(PersonId, Offence, will_informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId, Offence, will_informed_of_timeframe_retrial_appeal).
 
 %2. In case the European arrest warrant is issued for the purpose of executing a custodial sentence or detention order under the conditions of paragraph 1(d) and the person concerned has not previously received any official information about the existence of the criminal proceedings against him or her, he or she may, when being informed about the content of the European arrest warrant, request to receive a copy of the judgment before being surrendered. Immediately after having been informed about the request, the issuing authority shall provide the copy of the judgment via the executing authority to the person sought. The request of the person sought shall neither delay the surrender procedure nor delay the decision to execute the European arrest warrant. The provision of the judgment to the person concerned is for information purposes only; it shall neither be regarded as a formal service of the judgment nor actuate any time limits applicable for requesting a retrial or appeal.
 
