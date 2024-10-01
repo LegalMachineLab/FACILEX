@@ -1,21 +1,25 @@
     {
         "id": "contrast_with_eio",
-        "type": "predicate",
-        "result": {
-            "immunity or a privilege under the law of the executing State": "contrast_with(Measure, ExecutingMemberState, immunity_privilege)",
-            "limitation of criminal liability relating to freedom of the press": "contrast_with(Measure, ExecutingMemberState, freedom_press)",
-            "limitation of criminal liability relating to freedom of the media": "contrast_with(Measure, ExecutingMemberState, freedom_expression_media)"
-        }
+        "type": "variable",
+        "name": "Contrast",
+        "choices": {
+            "immunity or a privilege under the law of the executing State": "immunity_privilege",
+            "limitation of criminal liability relating to freedom of the press": "freedom_press",
+            "limitation of criminal liability relating to freedom of the media": "freedom_expression_media"
+        },
+        "result": "contrast_with(Measure, ExecutingMemberState, Contrast)"
     },
     {
         "id": "proceeding_danger_eio",
-        "type": "predicate",
-        "result": {
-            "harm essential national security interests": "proceeding_danger(Measure, ExecutingMemberState, national_security)",
-            "jeopardise the source of the information": " proceeding_danger(Measure, ExecutingMemberState, jeopardise_source_information)",
-            "involve the use of classified information": "proceeding_danger(Measure, ExecutingMemberState, classified_information)",
-            "incompatible with European obligations": "proceeding_danger(Measure, ExecutingMemberState, incompatible_EU_obligations)"
-        }
+        "type": "variable",
+        "name": "Danger",
+        "choices": {
+            "harm essential national security interests": "national_security",
+            "jeopardise the source of the information": "jeopardise_source_information",
+            "involve the use of classified information": "classified_information",
+            "incompatible with European obligations": "incompatible_EU_obligations"
+        },
+        "result": "proceeding_danger(Measure, ExecutingMemberState, Danger)"
     },
     {
         "id": "national_law_does_not_authorize_eio",
