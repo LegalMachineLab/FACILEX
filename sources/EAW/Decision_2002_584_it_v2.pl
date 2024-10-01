@@ -10,8 +10,10 @@
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
     issuing_proceeding(IssuingMemberState, _, PersonId),
-    offence_type(Offence),
-    offence_meets_criteria(Offence),
+    (
+        art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
     (
         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
@@ -33,17 +35,7 @@ executing_proceeding(ExecutingMemberState, PersonId, Purpose):-
 %Article 7(1-2-3-4) - Fully implemented
 %   1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
 
-offence_meets_criteria(Offence):-
-    national_law_offence(Offence).
 
-%Article 8 - Fully implemented
-%Compulsory delivery
-
-%1. By way of derogation from Article 7(1), the European arrest warrant shall be executed regardless of double criminality for offenses which, according to the law of the issuing Member State, fall under the categories referred to in Article 2(2) of the Framework Decision and are punishable by a custodial sentence or detention order of three years or more.
-
-
-offence_meets_criteria(Offence):-
-    art2_2applies(Offence).
 
 
 %% Article 18(1)(a) - Fully implemented
@@ -59,7 +51,7 @@ mandatory_refusal(article18_1_a, italy, europeanArrestWarrant):-
 mandatory_refusal(article18_1_b, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     (
-        person_event(PersonId, irrevocably_convicted_in_italy, Offence)
+        person_event(PersonId, finally_judged, Offence)
     ;   person_event(PersonId, decree_of_conviction, Offence)
     ;   person_event(PersonId, judgement_no_grounds_to_proceed, Offence)
     ).
@@ -87,9 +79,14 @@ person_status(PersonId, under_age, italy):-
 % 1. Italy shall execute the European arrest warrant only where the act constitutes a criminal offence under national law, irrespective of its legal classification and the single constituent elements of the offence.
 % 2. For the purposes of paragraph 1, for offences relating to taxes, customs and exchanges, it is not necessary that Italian law imposes the same kind of taxes or duties or contains the same kind of tax, duty, customs and exchange regulations as the law of the issuing Member State.
 
+%Article 8 - Fully implemented
+%Compulsory delivery
+%1. By way of derogation from Article 7(1), the European arrest warrant shall be executed regardless of double criminality for offenses which, according to the law of the issuing Member State, fall under the categories referred to in Article 2(2) of the Framework Decision and are punishable by a custodial sentence or detention order of three years or more.
+
 mandatory_refusal(article7_1, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
-    national_law_not_offence(Offence, italy).
+    national_law_not_offence(Offence, italy),
+    \+ exception(art2_2applies(Offence), article8).
 
 national_law_not_offence(driving_without_license, italy):-
     cassazione(numero_41102_2022, driving_without_license, italia).

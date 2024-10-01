@@ -73,7 +73,7 @@ optional_refusal(article12_1_b, portugal, europeanArrestWarrant):-
 
 optional_refusal(article12_1_c, portugal, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, portugal, Offence),
-    executing_proceeding_status(Offence, portugal, terminated).
+    executing_proceeding_status(Offence, portugal, non_prosecution_or_halted_proceeding).
 
 %% Article 12(1)(d) - Fully implemented
 % A final judgment has been passed upon the requested person in a Member State, in respect of the same acts, which prevents further proceedings, in cases other than those referred to in Article 11(b).

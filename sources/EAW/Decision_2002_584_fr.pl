@@ -1,3 +1,38 @@
+:- include('../utils.pl').
+
+
+eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
+    issuing_proceeding(IssuingMemberState, _, PersonId),
+    offence_type(Offence),
+    (
+        art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
+    (
+        executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
+    ).
+
+issuing_proceeding(IssuingMemberState, _, PersonId):-
+    issuing_member_state(IssuingMemberState),
+    person_role(PersonId, subject_eaw).
+
+executing_proceeding(ExecutingMemberState, PersonId, Purpose):-
+    executing_member_state(ExecutingMemberState),
+    executing_proceeding_purpose(PersonId, Purpose),
+    member(Purpose, [criminal_prosecution, execution_custodial_sentence, execution_detention_order]),
+    person_role(PersonId, subject_eaw).
+
+
+art2_4applies(Offence):-
+    \+ art2_2applies(Offence).
+
+crime_type(Offence, committed_in(CommIn)):-
+    offence_type(Offence),
+    offence_committed_in(CommIn).
+
+
 %% Article 695-22(1°) - Fully implemented
 % The execution of a European arrest warrant is refused in the following cases :
 % 1° If the offences for which the European Arrest Warrant was issued could have been prosecuted and judged by the French courts and the public prosecution is extinguished by amnesty;
@@ -38,7 +73,7 @@ optional_refusal(article695_24_1, france, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, france, Offence),
     (
 %        executing_proceeding_status(Offence, france, no_prosecution);
-        executing_proceeding_status(Offence, france, terminated)
+        executing_proceeding_status(Offence, france, non_prosecution_or_halted_proceeding)
     ;   person_event(PersonId, under_prosecution, Offence)
     ).
 

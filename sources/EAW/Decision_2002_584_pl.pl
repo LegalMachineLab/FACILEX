@@ -76,7 +76,7 @@ optional_refusal(article607r_1_2, poland, europeanArrestWarrant):-
 optional_refusal(article607r_1_3, poland, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, poland, Offence),
     (
-        executing_proceeding_status(Offence, poland, terminated)
+        executing_proceeding_status(Offence, poland, non_prosecution_or_halted_proceeding)
 %    ;   executing_proceeding_status(Offence, poland, halted)
     ;   person_event(PersonId, finally_judged, Offence)
     ).

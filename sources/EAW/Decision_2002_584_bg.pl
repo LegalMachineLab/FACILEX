@@ -50,7 +50,7 @@ optional_refusal(article40_1_1, bulgaria, europeanArrestWarrant):-
 
 optional_refusal(article40_1_1a, bulgaria, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, bulgaria, Offence),
-    executing_proceeding_status(Offence, bulgaria, terminated).
+    executing_proceeding_status(Offence, bulgaria, non_prosecution_or_halted_proceeding).
 
 %% Article 40(1)(2)
 % 2. the criminal prosecution or the execution of the punishment is statute-barred according to Bulgarian legislation and the offence is triable by a Bulgarian court;

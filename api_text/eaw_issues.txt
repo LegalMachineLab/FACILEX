@@ -12,3 +12,11 @@ France article695_24_1
 ho tolto una condizione, credo possa essere ricompresa in una sola
 
 ITALIA art 7_1 e 7_4
+
+
+
+
+
+- executing_proceeding_status: LLM capisce come procedimento di esecuzione o come proc nello stato di esecuzione?
+
+- Lista
