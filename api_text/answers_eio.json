@@ -1,0 +1,29 @@
+    {
+        "id": "contrast_with_eio",
+        "type": "predicate",
+        "result": {
+            "immunity or a privilege under the law of the executing State": "contrast_with(Measure, ExecutingMemberState, immunity_privilege)",
+            "limitation of criminal liability relating to freedom of the press": "contrast_with(Measure, ExecutingMemberState, freedom_press)",
+            "limitation of criminal liability relating to freedom of the media": "contrast_with(Measure, ExecutingMemberState, freedom_expression_media)"
+        }
+    },
+    {
+        "id": "proceeding_danger_eio",
+        "type": "predicate",
+        "result": {
+            "harm essential national security interests": "proceeding_danger(Measure, ExecutingMemberState, national_security)",
+            "jeopardise the source of the information": " proceeding_danger(Measure, ExecutingMemberState, jeopardise_source_information)",
+            "involve the use of classified information": "proceeding_danger(Measure, ExecutingMemberState, classified_information)",
+            "incompatible with European obligations": "proceeding_danger(Measure, ExecutingMemberState, incompatible_EU_obligations)"
+        }
+    },
+    {
+        "id": "national_law_does_not_authorize_eio",
+        "type": "predicate",
+        "result": "national_law_does_not_authorize(ExecutingMemberState, Measure)"
+    },
+    {
+        "id": "ne_bis_in_idem_eio",
+        "type": "predicate",
+        "result": "contrary_to_ne_bis_in_idem(ExecutingMemberState, Measure)"
+    },
