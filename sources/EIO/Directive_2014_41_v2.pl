@@ -81,9 +81,9 @@ optional_refusal(article11_1_d, MemberState, europeanInvestigationOrder):-
 
 optional_refusal(article11_1_e, MemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    committed_outside_issuing_state(Offence),
     crime_type(Offence, committed_in(ExecutingMemberState)),
-    not_offence(Offence, ExecutingMemberState).
+    not_offence(Offence, ExecutingMemberState),
+    \+ crime_type(Offence, committed_in(IssuingMemberState)).
 
 
 %% (f) there are substantial grounds to believe that the execution of the investigative measure indicated in the EIO would be incompatible with the executing State's obligations in accordance with Article 6 TEU and the Charter;

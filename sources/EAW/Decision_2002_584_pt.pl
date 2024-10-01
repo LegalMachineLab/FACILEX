@@ -23,9 +23,6 @@ executing_proceeding(portugal, PersonId, Purpose):-
     member(Purpose, [criminal_prosecution, execution_custodial_sentence, execution_detention_order]),
     person_role(PersonId, subject_eaw).
 
-
-
-
 %% Article 11(a) - Fully implemented
 % The offence on which the arrest warrant is based is covered by amnesty in Portugal, where the Portuguese courts have jurisdiction to prosecute the offence;
 

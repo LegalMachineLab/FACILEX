@@ -177,13 +177,18 @@ build_fact(crime_recognised, true) :-
     offence_type(Offence),
     assert(crime_constitutes_offence_national_law(Offence, italy)), !.
 
+build_fact(national_law_not_offence_eaw, true) :-
+    offence_type(Offence),
+    executing_member_state(ExecutingMemberState),
+    assert(national_law_not_offence(Offence, ExecutingMemberState)), !.
+
 build_fact(measure, Value) :-
     clean_string(Value, Clean),
     assert(measure_type(Clean, eio)), !.
 
 build_fact(exception_data_available, true) :-
     measure_type(Measure, eio),
-    assertz(measure_data(Measure, data_directly_accessible_by_executing_authority)).
+    assertz(measure_data(Measure, data_directly_accessible_by_executing_authority)), !.
 
 build_fact(certificate_status, true) :-
     issuing_member_state(IssuingMemberState),
@@ -192,7 +197,29 @@ build_fact(certificate_status, true) :-
 build_fact(proceeding_actor, Value) :-
     clean_string(Value, Clean),
     issuing_member_state(IssuingMemberState),
-    assertz(proceeding_actor(IssuingMemberState, Clean)).
+    assertz(proceeding_actor(IssuingMemberState, Clean)), !.
+
+build_fact(contrast_with_eio, Value) :-
+    clean_string(Value, Clean),
+    measure_type(Measure, eio),
+    executing_member_state(ExecutingMemberState),
+    assertz(contrast_with(Measure, ExecutingMemberState, Clean)), !.
+
+build_fact(proceeding_danger_eio, Value) :-
+    clean_string(Value, Clean),
+    measure_type(Measure, eio),
+    executing_member_state(ExecutingMemberState),
+    assertz(proceeding_danger(Measure, ExecutingMemberState, Clean)), !.
+
+build_fact(national_law_does_not_authorize_eio, true) :-
+    measure_type(Measure, eio),
+    executing_member_state(ExecutingMemberState),
+    assertz(national_law_does_not_authorize(ExecutingMemberState, Measure)), !.
+
+build_fact(ne_bis_in_idem_eio, true) :-
+    measure_type(Measure, eio),
+    executing_member_state(ExecutingMemberState),
+    assertz(contrary_to_ne_bis_in_idem(ExecutingMemberState, Measure)), !.
 
 % Skip unknown facts temporarily
 build_fact(_, _).
