@@ -37,8 +37,6 @@ crime_type(Offence, committed_in(CommIn)):-
     offence_type(Offence),
     offence_committed_in(CommIn).
 
-
-
 %%Article 3
 %Grounds for mandatory non-execution of the European arrest warrant
 
@@ -106,10 +104,7 @@ optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
     (
         executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
     ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
-    ;   (
-        person_event(PersonId, finally_judged, Offence),
-        final_judgment_in_MS_prevents_proceeding(Offence, ExecutingMemberState)
-        )  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
+    ;   person_event(PersonId, finally_judged, Offence)
     ).
 
 %4. where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State and the acts fall within the jurisdiction of that Member State under its own criminal law;
