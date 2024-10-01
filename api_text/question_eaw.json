@@ -1,11 +1,11 @@
     {
         "id": "person_event",
-        "question": "Has the person been:",
+        "question": "Does any of the following situations apply to the EAW subject, in respect of the same acts on which the EAW is based?",
         "type": "choice",
         "choices": [
-            "finally judged by a Member State in respect of the same acts",
-            "being prosecuted in the Executing Member State for the same act",
-            "been finally judged by a third State in respect of the same acts"
+            "The subject received a final judgement by a Member State",
+            "The subject is being prosecuted in the Executing Member State",
+            "The subject received a final judgement by a third State"
         ]
     },
     {
@@ -51,11 +51,37 @@
     },
     {
         "id": "person_residence",
-        "question": "Information regarding the residence of the requested person",
+        "question": "Is the subject a resident of the Executing Member State?",
+        "type": "boolean"
+    },
+    
+
+    {
+        "id": "person_nationality",
+        "question": "Information regarding the nationality of the requested person",
         "type": "freeText"
     },
     {
-        "id": "person_nationality",
-        "question": "Information regarding the residence of the requested person",
-        "type": "freeText"
+        "id": "prosecution_not_allowed",
+        "question": "Does the law of the executing Member State allow prosecution for the offence at issue when committed outside its territory?",
+        "type": "boolean"
+    },
+    {
+        "id": "non_prosecution_or_halted_proceeding",
+        "question": "Did the judicial authorities of the executing Member State decide either not to prosecute or to halt proceedings for the same offence on which the EAW is based?",
+        "type": "boolean"
+    },
+    {
+        "comment": "Only in Italy"
+    }
+    {
+        "id":"criminal_conviction_or_no_grounds_to_proceed",
+        "question": "Did the Italian authorities issue, for the same acts, a criminal decree of conviction, or a judgement of no grounds to proceed which is no longer subject to an appeal?",
+        "type": "boolean"
+    },
+    {
+        "state":"italy",
+        "id": "residence_time",
+        "question": "How long has the subject resided continuously in Italy (years)?",
+        "type": "integer"
     },

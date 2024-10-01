@@ -92,10 +92,7 @@ Possibile domanda: [*did the authorities of the executing state decided  not to 
 
 ## Eaw Italy
 
-- person_event(PersonId, _, Offence):
-    - irrevocably_convicted_in_italy [*in respect of the person sought, for the same acts, there has been, in Italy, an irrevocable judgement*]
-    - decree_of_conviction [*or a criminal decree of conviction*]
-    - judgement_no_grounds_to_proceed [*a judgement of no grounds to proceed which is no longer subject to an appeal*]
+
 
 - person_continuous_residence(PersonId, italy, Time) [* the Court of Appeal may refuse to surrender of the Italian citizen or of a person who lawfully and effectively resides continuously for at least five years on the Italian territory*]
 - residence_purpose(PersonId, italy, social_reintegration, article18_2bis) 

@@ -1,3 +1,28 @@
+:- include('../utils.pl').
+
+eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
+    issuing_proceeding(IssuingMemberState, _, PersonId),
+    (
+        art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
+    (
+        executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
+    ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
+    ).
+
+issuing_proceeding(IssuingMemberState, _, PersonId):-
+    issuing_member_state(IssuingMemberState),
+    person_role(PersonId, subject_eaw).
+
+executing_proceeding(ExecutingMemberState, PersonId, Purpose):-
+    executing_member_state(ExecutingMemberState),
+    executing_proceeding_purpose(PersonId, Purpose),
+    member(Purpose, [criminal_prosecution, execution_custodial_sentence, execution_detention_order]),
+    person_role(PersonId, subject_eaw).
+
+
 %% Article 39(1) - Fully implemented
 % Article 39
 % The District court shall refuse to execute a European arrest warrant, where:

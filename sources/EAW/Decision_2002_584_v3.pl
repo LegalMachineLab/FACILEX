@@ -102,8 +102,8 @@ optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant):-
 optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     (
-        executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
-    ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
+        executing_proceeding_status(Offence, ExecutingMemberState, non_prosecution_or_halted_proceeding)
+%    ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
     ;   person_event(PersonId, finally_judged, Offence)
     ).
 

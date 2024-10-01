@@ -52,8 +52,8 @@ mandatory_refusal(article18_1_b, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     (
         person_event(PersonId, finally_judged, Offence)
-    ;   person_event(PersonId, decree_of_conviction, Offence)
-    ;   person_event(PersonId, judgement_no_grounds_to_proceed, Offence)
+    ;   person_event(PersonId, criminal_conviction_or_no_grounds_to_proceed, Offence)
+%    ;   person_event(PersonId, judgement_no_grounds_to_proceed, Offence)
     ).
 
 mandatory_refusal(article18_1_b, italy, europeanArrestWarrant):-
@@ -97,12 +97,14 @@ national_law_not_offence(driving_without_license, italy):-
 
 optional_refusal(article18bis_1_a, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
-    executing_proceeding_status(Offence, italy, committed_inside_territory).
+    crime_type(Offence, committed_in(italy)).
+    
 
 optional_refusal(article18bis_1_a, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
-    issuing_proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
+    \+ crime_type(Offence, committed_in(IssuingMemberState)),
     prosecution_not_allowed(Offence, italy).
+
 
 %Article 18bis(1)(b) - Fully implemented
 % 1. When the European arrest warrant has been issued for the purpose of prosecution in criminal matters, the Court of Appeal may refuse surrender in the following cases
