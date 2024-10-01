@@ -49,7 +49,7 @@ not_offence(c'è crime_recognised dentro EAW)
 
 - person_age(PersonId, Age)
 - national_law_not_offence(Offence, ExecutingMemberState)[*the act on which the European arrest warrant is based does not constitute an offence under the law of the executing Member State*]
-- final_judgment_in_MS_prevents_proceeding(Offence, ExecutingMemberState) [*which prevents further proceedings*]
+
 
 - executing_proceeding_status(Offence, ExecutingMemberState, statute_barred) [*where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State*]
 

@@ -10,7 +10,7 @@
     },
     {
         "id": "issuing_proceeding_event",
-        "question": "Does any of the following apply to proceeding taking place in the issuing Mmeber State?",
+        "question": "Does any of the following apply to the proceeding taking place in the issuing Member State?",
         "type": "choice",
         "choices": [
             "the person has been made aware of the trial",
@@ -31,7 +31,7 @@
     },
     {
         "id": "sentence_served",
-        "question": "Has the the sentence has been served?",
+        "question": "Has the the sentence been served?",
         "type": "boolean"
     },
     {
@@ -48,9 +48,14 @@
         "id": "statute_barred",
         "question": "Is the criminal prosecution or punishment statute-barred according to the law of the executing Member State?",
         "type": "boolean"
-    }
+    },
     {
         "id": "person_residence",
+        "question": "Information regarding the residence of the requested person",
+        "type": "freeText"
+    },
+    {
+        "id": "person_nationality",
         "question": "Information regarding the residence of the requested person",
         "type": "freeText"
     },
