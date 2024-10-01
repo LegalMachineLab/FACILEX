@@ -81,9 +81,9 @@ optional_refusal(article22_1_e, MemberState, europeanInvestigationOrder):-
 
 optional_refusal(article22_1_f, MemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
-    issuing_proceeding_status(IssuingMemberState, Offence, committed_outside_territory),
-    issuing_proceeding_status(IssuingMemberState, Offence, committed_inside_executing_ms),
-    not_offence(Offence, ExecutingMemberState).
+    crime_type(Offence, committed_in(ExecutingMemberState)),
+    not_offence(Offence, ExecutingMemberState),
+    \+ crime_type(Offence, committed_in(IssuingMemberState)).
 
 % Article 22(1)(g)
 %There are substantial grounds to believe that the execution of the indicated investigative measure is incompatible with the executing State's obligations in accordance with Article 6 TEU and the Charter of Fundamental Rights of the European Union.
@@ -100,9 +100,18 @@ optional_refusal(article22_1_h, ExecutingMemberState, europeanInvestigationOrder
     issuing_proceeding(IssuingMemberState, _, Offence),
     national_law_does_not_authorize(ExecutingMemberState, Measure, Offence).
 
-optional_refusal(article188, ExecutingMemberState, europeanInvestigationOrder):-
+optional_refusal(article188_189, ExecutingMemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, interception_of_telecommunications),
     national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications).
 
 national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications):-
     \+ authority_decision(interception_of_telecommunications, investigating_magistrate, ExecutingMemberState).
+
+national_law_does_not_authorize(ExecutingMemberState, interception_of_telecommunications):-
+    eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
+    issuing_authority(interception_of_telecommunications, IssuingAut),
+    validating_authority(interception_of_telecommunications, ValidatingAut),
+    ValidatingAut \= judge_or_court.
+
+exception(optional_refusal(article188_189, ExecutingMemberState, europeanInvestigationOrder), article10_2_b):-
+    measure_data(Measure, data_directly_accessible_by_executing_authority).

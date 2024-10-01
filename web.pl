@@ -86,6 +86,7 @@ question(17, exception_data_available).
 question(18, personIdFreezing).
 question(19, certificate_status).
 question(20, proceeding_actor).
+%ADD new questions?
 
 clean_string(String, Clean) :-
     atomic_list_concat(Words, ' ', String),
