@@ -20,19 +20,9 @@
         "result": "executing_proceeding_status(Offence, ExecutingMemberState, Status)"
     },
     {
-        "id": "sentence_served",
+        "id": "sentence_served_being_served_or_execution_impossible",
         "type": "predicate",
-        "result": "sentence_served(Offence)"
-    },
-    {
-        "id": "sentence_execution_impossible",
-        "type": "predicate",
-        "result": "sentence_execution_impossible(Offence)"
-    },
-    {
-        "id": "sentence_being_served",
-        "type": "predicate",
-        "result": "sentence_being_served(Offence)"
+        "result": "sentence_served_being_served_or_execution_impossible(PersonId)"
     },
     {
         "id": "person_residence",
@@ -43,7 +33,7 @@
     {
         "id": "prosecution_not_allowed",
         "type": "predicate",
-        "result": "prosecution_not_allowed(Offence, MemberState)"
+        "result": "prosecution_not_allowed(Offence, ExecutingMemberState)"
     },   
     {
         "id": "punishable_by_life_sentence",

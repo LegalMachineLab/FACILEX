@@ -46,11 +46,7 @@ mandatory_refusal(article695_22_1, france, europeanArrestWarrant):-
 mandatory_refusal(article695_22_2, france, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, france, Offence),
     person_event(PersonId, finally_judged, Offence),
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %% 3° If the requested person was aged under thirteen at the time of the offences for which the European arrest warrant was issued;
 
@@ -108,11 +104,7 @@ optional_refusal(article695_24_4, france, europeanArrestWarrant):-
 optional_refusal(article695_24_5, france, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, france, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %% 6° If the offences for which the European arrest warrant was issued could be prosecuted and judged by the French courts and if the time limit for prosecution or punishment has expired.
 

@@ -36,11 +36,7 @@ mandatory_refusal(article11_a, portugal, europeanArrestWarrant):-
 mandatory_refusal(article11_b, portugal, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, portugal, Offence),
     person_event(PersonId, finally_judged, Offence),
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %% Article 11(c) - Fully implemented
 % Under Portuguese law, the requested person may not, owing to his/her age, be held criminally responsible for the acts on which the European arrest warrant is based.
@@ -95,11 +91,7 @@ optional_refusal(article12_1_e, portugal, europeanArrestWarrant):-
 optional_refusal(article12_1_f, portugal, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, portugal, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %% Article 12(1)(g) - Fully implemented
 % The arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in the national territory, has the Portuguese nationality or resides in Portugal and the Portuguese State undertakes to execute the sentence or detention order in accordance with the Portuguese law;

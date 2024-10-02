@@ -119,11 +119,7 @@ optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
     %ExecutingMemberState \= ThirdState,
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
 

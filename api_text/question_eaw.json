@@ -39,18 +39,8 @@
         "type": "boolean"
     },
     {
-        "id": "sentence_served",
-        "question": "Has the the sentence been served?",
-        "type": "boolean"
-    },
-    {
-        "id": "sentence_execution_impossible",
-        "question": "Is the sentence currently being served",
-        "type": "boolean"
-    },
-    {
-        "id": "sentence_being_served",
-        "question": "May the sentence no longer be executed under the law of the sentencing Member State",
+        "id": "sentence_served_being_served_or_execution_impossible",
+        "question": "The proceedings related to the offence have come to a sentence that has been execute, is being executed, or that may no longer be executed under the law of the sentencing country?",
         "type": "boolean"
     },
     {

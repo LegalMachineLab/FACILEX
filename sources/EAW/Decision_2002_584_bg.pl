@@ -39,11 +39,7 @@ mandatory_refusal(article39_1, bulgaria, europeanArrestWarrant):-
 mandatory_refusal(article39_2, bulgaria, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, bulgaria, Offence),
     person_event(PersonId, finally_judged, Offence),
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %% Article 39
 % The District court shall refuse to execute a European arrest warrant, where:
@@ -90,11 +86,7 @@ optional_refusal(article40_1_2, bulgaria, europeanArrestWarrant):-
 optional_refusal(article40_1_3, bulgaria, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, bulgaria, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
-    (
-        sentence_served(PersonId)
-    ;   sentence_being_served(PersonId)
-    ;   sentence_execution_impossible(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %% Article 40(1)(4)
 % 4. (amended, SG No. 52/2008, supplemented, SG No. 45/2019, effective 1.01.2020) the person claimed resides or is permanently resident in the Republic of Bulgaria, or is a Bulgarian national and the Bulgarian court undertakes that the prosecutor will execute the custodial sentence or the detention order imposed by the court of the issuing Member State; Article 29(2) of the Recognition, Execution and Transmission of Judicial Instruments to Impose a Custodial Sentence or Measures involving Deprivation of Liberty Act shall apply in such cases;
