@@ -25,6 +25,15 @@
         ]
     },
     {
+        "id": "executing_proceeding_status",
+        "question": "Where the Executing Member State had jurisdiction to start a proceeding in regard of the same acts on which the EAW is based, did any of the following situations occur to the related proceeding?",
+        "type": "choice",
+        "choices": [
+            "The judicial authorities of the executing Member State have decided either not to prosecute or to halt proceedings",
+            "The prosecution or punishment of the subject is statute-barred according to the law of the Executing Member State"
+        ]
+    },
+    {
         "id": "punishable_by_life_sentence",
         "question": "the offence on the basis of which the European arrest warrant has been issued is punishable by custodial life sentence or life-time detention order",
         "type": "boolean"
@@ -45,17 +54,10 @@
         "type": "boolean"
     },
     {
-        "id": "statute_barred",
-        "question": "Is the criminal prosecution or punishment statute-barred according to the law of the executing Member State?",
-        "type": "boolean"
-    },
-    {
         "id": "person_residence",
         "question": "Is the subject a resident of the Executing Member State?",
         "type": "boolean"
     },
-    
-
     {
         "id": "person_nationality",
         "question": "Information regarding the nationality of the requested person",
@@ -67,11 +69,6 @@
         "type": "boolean"
     },
     {
-        "id": "non_prosecution_or_halted_proceeding",
-        "question": "Did the judicial authorities of the executing Member State decide either not to prosecute or to halt proceedings for the same offence on which the EAW is based?",
-        "type": "boolean"
-    },
-    {
         "comment": "Only in Italy"
     }
     {
@@ -80,7 +77,6 @@
         "type": "boolean"
     },
     {
-        "state":"italy",
         "id": "residence_time",
         "question": "How long has the subject resided continuously in Italy (years)?",
         "type": "integer"

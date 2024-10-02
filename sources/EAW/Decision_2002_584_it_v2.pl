@@ -52,7 +52,7 @@ mandatory_refusal(article18_1_b, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
     (
         person_event(PersonId, finally_judged, Offence)
-    ;   person_event(PersonId, criminal_conviction_or_no_grounds_to_proceed, Offence)
+    ;   executing_proceeding_status(Offence, italy, criminal_conviction_or_no_grounds_to_proceed)
 %    ;   person_event(PersonId, judgement_no_grounds_to_proceed, Offence)
     ).
 
