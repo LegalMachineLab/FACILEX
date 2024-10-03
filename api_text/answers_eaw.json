@@ -1,3 +1,4 @@
+[
     {
         "id": "person_event",
         "type": "variable",
@@ -15,7 +16,7 @@
         "name": "Status",
         "choices": {
             "The judicial authorities of the executing Member State have decided either not to prosecute or to halt proceedings": "non_prosecution_or_halted_proceeding",
-            "The prosecution or punishment of the subject is statute-barred according to the law of the Executing Member State": "statute_barred",
+            "The prosecution or punishment of the subject is statute-barred according to the law of the Executing Member State": "statute_barred"
         },
         "result": "executing_proceeding_status(Offence, ExecutingMemberState, Status)"
     },
@@ -34,15 +35,56 @@
         "id": "prosecution_not_allowed",
         "type": "predicate",
         "result": "prosecution_not_allowed(Offence, ExecutingMemberState)"
-    },   
+    },
     {
         "id": "punishable_by_life_sentence",
         "type": "predicate",
         "result": "punishable_by_life_sentence(Offence, IssuingMemberState)"
     },
     {
+        "id": "trial_in_absentia",
+        "type": "predicate",
+        "result": "issuing_proceeding_status(Offence, IssuingMemberState, trial_in_absentia)"
+    },
+    {
+        "id": "exception4a",
+        "type": "variable",
+        "name": "Fact",
+        "choices": {
+            "In due time, the subject was made unequivocally aware of the scheduled trial": "aware_trial",
+            "In due time, the subject was informed that a decision may have been handed down in his or her absence": "informed_of_potential_decision",
+            "The subject had given a mandate to a legal counsellor and was indeed defended by that counsellor at the trial": "mandated_legal_defence"
+        },
+        "result": "issuing_proceeding_event(PersonId, Offence, Fact)"
+    },
+    {
+        "id": "informed_of_right_retrial_appeal",
+        "type": "predicate",
+        "result": "issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal)"
+    },
+    {
+        "id": "issuing_proceeding_event1",
+        "type": "variable",
+        "name": "Fact",
+        "choices": {
+            "He or she expressly stated not to contest the decision":"does_not_contest_decision",
+            "He or she did not request a retrial or appeal within the applicable time frame":"does_not_request_retrial_appeal"
+        },
+        "result": "issuing_proceeding_event(PersonId, Offence, Fact)"
+    },
+    {
+        "id": "issuing_proceeding_event2",
+        "type": "variable",
+        "name": "Fact",
+        "choices": {
+            "will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, which may lead to the original decision being reversed":"will_informed_of_right_retrial_appeal",
+            "will be informed of the time frame within which he or she has to request such a retrial or appeal":"will_informed_of_timeframe_retrial_appeal"
+        },
+        "result": "issuing_proceeding_event(PersonId, Offence, Fact)"
+    },
+    {
         "comment": "Only in Italy"
-    }
+    },
     {
         "id": "criminal_conviction_or_no_grounds_to_proceed",
         "type": "predicate",
@@ -52,6 +94,7 @@
         "id": "residence_time",
         "type": "Variable",
         "name": "Time",
-        "result": "person_continuous_residence(PersonId, italy, Time)",
-    },
+        "result": "person_continuous_residence(PersonId, italy, Time)"
+    }
+]
 

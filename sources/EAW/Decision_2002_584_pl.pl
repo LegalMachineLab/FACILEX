@@ -136,6 +136,6 @@ exception(optional_refusal(article607r_3, poland, europeanArrestWarrant), articl
 %% c) European Warrant issuing authority ensures that, immediately after transferring the wanted person to the warrant issuing state, the copy of the relevant ruling shall be delivered to that person together with the advice of the right, time frame and manner of submission of a motion for new court proceedings to be conducted with their in relation to the same case.
 
 exception(optional_refusal(article607r_3, poland, europeanArrestWarrant), article607r_3_c):-
-    issuing_proceeding_event(PersonId, Offence, not_personally_served_decision),
+    \+ issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, will_informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, will_informed_of_timeframe_retrial_appeal).

@@ -200,7 +200,7 @@ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWa
 %(ii) will be informed of the time frame within which he or she has to request such a retrial or appeal, as mentioned in the relevant European arrest warrant.
 
 exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii):-
-    issuing_proceeding_event(PersonId, Offence, not_personally_served_decision),
+    \+ issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, will_informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, will_informed_of_timeframe_retrial_appeal).
 

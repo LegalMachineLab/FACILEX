@@ -175,7 +175,7 @@ exception(optional_refusal(article61bis, italy, europeanArrestWarrant), article6
 %(d) the person concerned has not been personally served with the decision, but will receive it personally and without delay after the surrender in the issuing Member State and will be expressly informed either of the right to a retrial or to lodge an appeal, in which he or she has the right to participate and which allows a review on the merits, as well as, including by through the bringing of new evidence, the possibility of a reform of that decision, and of the time-limits within which he may request a new trial or lodge an appeal for the appeal.
 
 exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis_d):-
-    issuing_proceeding_event(PersonId, Offence, not_personally_served_decision),
+    \+ issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, will_informed_of_right_retrial_appeal),
     issuing_proceeding_event(PersonId, Offence, will_informed_of_timeframe_retrial_appeal).
 

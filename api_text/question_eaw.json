@@ -1,4 +1,5 @@
-    {
+    [
+        {
         "id": "person_event",
         "question": "Does any of the following situations apply to the EAW subject, in respect of the same acts on which the EAW is based?",
         "type": "choice",
@@ -6,22 +7,6 @@
             "The subject received a final judgement by a Member State",
             "The subject is being prosecuted in the Executing Member State",
             "The subject received a final judgement by a third State"
-        ]
-    },
-    {
-        "id": "issuing_proceeding_event",
-        "question": "Does any of the following apply to the proceeding taking place in the issuing Member State?",
-        "type": "choice",
-        "choices": [
-            "the person has been made aware of the trial",
-            "was informed that a decision may be handed down if he or she does not appear for the trial"
-            "had given a mandate to a legal counsellor, who was either appointed by the person concerned or by the State, to defend him or her at the trial, and was indeed defended by that counsellor at the trial;"
-            "being expressly informed about the right to a retrial"
-            "expressly stated that he or she does not contest the decision"
-            "did not request a retrial or appeal within the applicable time frame"
-            "was not personally served with the decision"
-            "will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, in which the person has the right to participate and which allows the merits of the case, including fresh evidence, to be re-examined, and which may lead to the original decision being reversed"
-            "will be informed of the time frame within which he or she has to request such a retrial or appeal"
         ]
     },
     {
@@ -59,8 +44,55 @@
         "type": "boolean"
     },
     {
+        "id": "trial_in_absentia",
+        "question": "Did the EAW subject appear in person at the trial resulting in the decision whose execution is requested under the EAW?",
+        "type": "boolean"
+    },
+    {
+        "id": "exception4a",
+        "question": "Where the subject did not appear in person at the trial resulting in the decision, did any of the following situation apply to the proceeding held in the issuing Member State?",
+        "type": "choice",
+        "choices": [
+            "In due time, the subject was made unequivocally aware of the scheduled trial",
+            "In due time, the subject was informed that a decision may have been handed down in his or her absence",
+            "The subject had given a mandate to a legal counsellor and was indeed defended by that counsellor at the trial"
+        ]
+    },
+    {
+        "id": "informed_of_right_retrial_appeal",
+        "question": "Was the subject personally served with the decision and expressly informed about the right to a retrial, or an appeal",
+        "type": "boolean"
+    },
+    {
+        "id":"comment",
+        "value": "If informed_of_right_retrial_appeal result is YES, then open the following multiple choice question"
+    },
+    {
+
+        "id": "issuing_proceeding_event1",
+        "question": "Being informed of the right to a retrial, did he or she declare any of the follwoing?",
+        "type": "choice",
+        "choices": [
+            "He or she expressly stated not to contest the decision",
+            "He or she did not request a retrial or appeal within the applicable time frame"
+        ]
+    },
+    {
+        "id":"comment",
+        "value": "If informed_of_right_retrial_appeal result is NO, then open the following multiple choice question"
+    },
+    {
+        "id": "issuing_proceeding_event2",
+        "question": "If the was not personally served with the decision, any of the following apply?",
+        "type": "choice",
+        "choices": [
+            "will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, which may lead to the original decision being reversed",
+            "will be informed of the time frame within which he or she has to request such a retrial or appeal"
+        ]
+    },
+    {
         "comment": "Only in Italy"
-    }
+    },
     {
         "id":"criminal_conviction_or_no_grounds_to_proceed",
         "question": "Did the Italian authorities issue, for the same acts, a criminal decree of conviction, or a judgement of no grounds to proceed which is no longer subject to an appeal?",
@@ -70,4 +102,5 @@
         "id": "residence_time",
         "question": "How long has the subject resided continuously in Italy (years)?",
         "type": "integer"
-    },
+    }
+]
