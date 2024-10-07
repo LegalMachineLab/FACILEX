@@ -70,11 +70,11 @@
     {
 
         "id": "issuing_proceeding_event1",
-        "question": "Being informed of the right to a retrial, did he or she declare any of the follwoing?",
+        "question": "Being informed of the right to a retrial, did the person declare any of the follwoing?",
         "type": "choice",
         "choices": [
-            "He or she expressly stated not to contest the decision",
-            "He or she did not request a retrial or appeal within the applicable time frame"
+            "the person expressly stated not to contest the decision",
+            "the person did not request a retrial or appeal within the applicable time frame"
         ]
     },
     {
@@ -83,11 +83,11 @@
     },
     {
         "id": "issuing_proceeding_event2",
-        "question": "If the was not personally served with the decision, any of the following apply?",
+        "question": "If the person was not personally served with the decision, any of the following apply?",
         "type": "choice",
         "choices": [
             "will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, which may lead to the original decision being reversed",
-            "will be informed of the time frame within which he or she has to request such a retrial or appeal"
+            "will be informed of the time frame within which the person has to request such a retrial or appeal"
         ]
     },
     {
