@@ -109,6 +109,110 @@
         "type": "boolean"
     },
     {
+        "id": "person_event",
+        "question": "Does any of the following situations apply to the EAW subject, in respect of the same acts on which the EAW is based?",
+        "type": "choice",
+        "choices": {
+            "The subject received a final judgement by a Member State":"finally_judged",
+            "The subject is being prosecuted in the Executing Member State":"under_prosecution",
+            "The subject received a final judgement by a third State":"irrevocably_convicted_in_third_state"
+        }
+    },
+    {
+        "id": "executing_proceeding_status",
+        "question": "Where the Executing Member State had jurisdiction to start a proceeding in regard of the same acts on which the EAW is based, did any of the following situations occur to the related proceeding?",
+        "type": "choice",
+        "choices": {
+            "The judicial authorities of the executing Member State have decided either not to prosecute or to halt proceedings":"non_prosecution_or_halted_proceeding",
+            "The prosecution or punishment of the subject is statute-barred according to the law of the Executing Member State":"statute_barred"
+        }
+    },
+    {
+        "id": "punishable_by_life_sentence",
+        "question": "the offence on the basis of which the European arrest warrant has been issued is punishable by custodial life sentence or life-time detention order",
+        "type": "boolean"
+    },
+    {
+        "id": "sentence_served_being_served_or_execution_impossible",
+        "question": "The proceedings related to the offence have come to a sentence that has been execute, is being executed, or that may no longer be executed under the law of the sentencing country?",
+        "type": "boolean"
+    },
+    {
+        "id": "person_residence",
+        "question": "Is the subject a resident of the Executing Member State?",
+        "type": "boolean"
+    },
+    {
+        "id": "person_nationality",
+        "question": "Information regarding the nationality of the requested person",
+        "type": "freeText"
+    },
+    {
+        "id": "prosecution_not_allowed",
+        "question": "Does the law of the executing Member State allow prosecution for the offence at issue when committed outside its territory?",
+        "type": "boolean"
+    },
+    {
+        "id": "trial_in_absentia",
+        "question": "Did the EAW subject appear in person at the trial resulting in the decision whose execution is requested under the EAW?",
+        "type": "boolean"
+    },
+    {
+        "id": "exception4a",
+        "question": "Where the subject did not appear in person at the trial resulting in the decision, did any of the following situation apply to the proceeding held in the issuing Member State?",
+        "type": "choice",
+        "choices": [
+            "In due time, the subject was made unequivocally aware of the scheduled trial",
+            "In due time, the subject was informed that a decision may have been handed down in his or her absence",
+            "The subject had given a mandate to a legal counsellor and was indeed defended by that counsellor at the trial"
+        ]
+    },
+    {
+        "id": "informed_of_right_retrial_appeal",
+        "question": "Was the subject personally served with the decision and expressly informed about the right to a retrial, or an appeal",
+        "type": "boolean"
+    },
+    {
+        "id":"comment",
+        "value": "If informed_of_right_retrial_appeal result is YES, then open the following multiple choice question"
+    },
+    {
+
+        "id": "issuing_proceeding_event1",
+        "question": "Being informed of the right to a retrial, did the person declare any of the follwoing?",
+        "type": "choice",
+        "choices": [
+            "the person expressly stated not to contest the decision",
+            "the person did not request a retrial or appeal within the applicable time frame"
+        ]
+    },
+    {
+        "id":"comment",
+        "value": "If informed_of_right_retrial_appeal result is NO, then open the following multiple choice question"
+    },
+    {
+        "id": "issuing_proceeding_event2",
+        "question": "If the person was not personally served with the decision, any of the following apply?",
+        "type": "choice",
+        "choices": [
+            "will be personally served with it without delay after the surrender and will be expressly informed of his or her right to a retrial, or an appeal, which may lead to the original decision being reversed",
+            "will be informed of the time frame within which the person has to request such a retrial or appeal"
+        ]
+    },
+    {
+        "comment": "Only in Italy"
+    },
+    {
+        "id":"criminal_conviction_or_no_grounds_to_proceed",
+        "question": "Did the Italian authorities issue, for the same acts, a criminal decree of conviction, or a judgement of no grounds to proceed which is no longer subject to an appeal?",
+        "type": "boolean"
+    },
+    {
+        "id": "residence_time",
+        "question": "How long has the subject resided continuously in Italy (years)?",
+        "type": "integer"
+    }
+    {
         "comment": "Following are EIO questions"
     },
     {
@@ -156,6 +260,37 @@
             "investigating judge",
             "public prosecutor"
         ]
+    },
+    {
+        "id": "contrast_with_eio",
+        "question": "Is the execution of the EIO in constrast with?",
+        "type": "choice",
+        "choices": {
+            "immunity or a privilege under the law of the executing State": "immunity_privilege",
+            "limitation of criminal liability relating to freedom of the press":"freedom_press",
+            "limitation of criminal liability relating to freedom of the media":"freedom_expression_media"
+        }
+    },
+    {
+        "id": "proceeding_danger_eio",
+        "question": "Is the execution of the EIO dangerous for?",
+        "type": "choice",
+        "choices": {
+            "harm essential national security interests":"national_security",
+            "jeopardise the source of the information":"jeopardise_source_information",
+            "involve the use of classified information":"classified_information",
+            "incompatible with European obligations":"incompatible_EU_obligations"
+        }
+    },
+    {
+        "id": "national_law_does_not_authorize_eio",
+        "question": "Does the national law authorize the execution of the EIO?",
+        "type": "boolean"
+    },
+    {
+        "id": "ne_bis_in_idem_eio",
+        "question": "Is the execution of the EIO contrary to the principle of ne bis in idem?",
+        "type": "boolean"
     },
     {
         "comment": "Following are Regulation questions:"
