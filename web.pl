@@ -17,6 +17,8 @@
 
 :- dynamic person_event/3.
 :- dynamic person_age/2.
+:- dynamic crime_constitutes_offence_national_law/2.
+:- dynamic art2_2applies/1.
 
 server(Port) :-
     http_server(http_dispatch, [port(Port)]),
@@ -42,8 +44,9 @@ facilex(Request) :-
         reply_json_dict(Dict)
     )).
 
-parse_test(A, B) :-
-    open('api_text/case1.json', read, In),
+parse_test(TestNum, A, B) :-
+    atomics_to_string(['api_text/case', TestNum, '.json'], File),
+    open(File, read, In),
     json_read_dict(In, Test),
     close(In),
     parse_answers(Test, 0),
@@ -96,14 +99,24 @@ clean_string(String, Clean) :-
 
 % To run locally remove /app/ from the three links
 
+load_server("/app/") :-
+    getenv('KUBERNETES_SERVICE_HOST', _), !.
+load_server('').
+
 build_fact(matter, "European Arrest Warrant") :-
-    consult('/app/sources/EAW/case_study_1.pl').
+    load_server(A),
+    atomics_to_string([A, 'sources/EAW/case_study_1.pl'], File),
+    consult(File).
 
 build_fact(matter, "European Investigation Order") :-
-    consult('/app/sources/EIO/case_study_2.pl').
+    load_server(A),
+    atomics_to_string([A, 'sources/EIO/case_study_2.pl'], File),
+    consult(File).
 
 build_fact(matter, "European Freezing or Confiscation Order") :-
-    consult('/app/sources/Regulation/case_study_3.pl').
+    load_server(A),
+    atomics_to_string([A, 'sources/Regulation/case_study_3.pl'], File),
+    consult(File).
 
 build_fact(personId, Value) :-
     clean_string(Value, Clean),
