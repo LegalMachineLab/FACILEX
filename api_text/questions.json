@@ -211,7 +211,7 @@
         "id": "residence_time",
         "question": "How long has the subject resided continuously in Italy (years)?",
         "type": "integer"
-    }
+    },
     {
         "comment": "Following are EIO questions"
     },
