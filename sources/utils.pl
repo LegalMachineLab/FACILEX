@@ -6,6 +6,10 @@
 :- multifile optional_refusal/3.
 :- multifile proceeding_status/3.
 :- multifile exception/2.
+:- multifile crime_type/2.
+
+:- dynamic issuing_proceeding/3.
+:- dynamic executing_proceeding/3.
 
 
 crime_type(Offence, committed_in(CommIn)):-
