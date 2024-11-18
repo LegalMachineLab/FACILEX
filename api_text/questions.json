@@ -301,6 +301,11 @@
         "type": "freeText"
     },
     {
+        "id": "personIdConfiscation",
+        "question": "Information regarding the identity of the person subject to confiscation order: Name and Forename",
+        "type": "freeText"
+    },
+    {
         "id": "certificate_status",
         "question": "Has the freezing order been incorrectly transmitted?",
         "type": "boolean"
