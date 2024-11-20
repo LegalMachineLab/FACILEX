@@ -1,0 +1,32 @@
+    {
+        "id": "contrast_with_eio",
+        "question": "Is the execution of the EIO in constrast with?",
+        "type": "choice",
+        "choices": [
+            "immunity or a privilege under the law of the executing State",
+            "limitation of criminal liability relating to freedom of the press",
+            "limitation of criminal liability relating to freedom of the media"
+        ]
+    },
+    {
+        "id": "proceeding_danger_eio",
+        "question": "Is the execution of the EIO dangerous for?",
+        "type": "choice",
+        "choices": [
+            "harm essential national security interests",
+            "jeopardise the source of the information",
+            "involve the use of classified information",
+            "incompatible with European obligations"
+        ]
+    },
+    {
+        "id": "national_law_does_not_authorize_eio",
+        "question": "Does the national law authorize the execution of the EIO?",
+        "type": "boolean"
+    },
+    {
+        "id": "ne_bis_in_idem_eio",
+        "question": "Is the execution of the EIO contrary to the principle of ne bis in idem?",
+        "type": "boolean"
+    },
+

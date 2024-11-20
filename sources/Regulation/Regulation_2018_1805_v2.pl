@@ -6,11 +6,21 @@
 
 regulation_matter(IssuingMemberState, ExecutingMemberState, europeanConfiscationOrder):-
     issuing_proceeding(IssuingMemberState, europeanConfiscationOrder, Offence),
-    executing_proceeding(ExecutingMemberState, europeanConfiscationOrder, Offence).
+    executing_proceeding(ExecutingMemberState, europeanConfiscationOrder, Offence),
+    person_role(PersonId, subject_confiscationOrder).
 
 regulation_matter(IssuingMemberState, ExecutingMemberState, europeanFreezingOrder):-
     issuing_proceeding(IssuingMemberState, europeanFreezingOrder, Offence),
-    executing_proceeding(ExecutingMemberState, europeanFreezingOrder, Offence).
+    executing_proceeding(ExecutingMemberState, europeanFreezingOrder, Offence),
+    person_role(PersonId, subject_freezingOrder).
+
+issuing_proceeding(IssuingMemberState, europeanFreezingOrder, Offence):-
+    issuing_member_state(IssuingMemberState),
+    offence_type(Offence).
+    
+executing_proceeding(ExecutingMemberState, europeanFreezingOrder, Offence):-
+    executing_member_state(ExecutingMemberState),
+    offence_type(Offence).
 
 %% Article 8 
 % Grounds for non-recognition and non-execution of freezing orders 

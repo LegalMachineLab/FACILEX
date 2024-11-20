@@ -48,7 +48,7 @@ eio_execution_impossible(Measure, ExecutingMemberState):-
     contrast_with(Measure, ExecutingMemberState, immunity_privilege).
 
 eio_execution_impossible(Measure, ExecutingMemberState):-
-    contrast_with(Measure, ExecutingMemberState freedom_press)
+    contrast_with(Measure, ExecutingMemberState, freedom_press)
 ;   contrast_with(Measure, ExecutingMemberState, freedom_expression_media).
 
 %%(b) in a specific case the execution of the EIO would harm essential national security interests, jeopardise the source of the information or involve the use of classified information relating to specific intelligence activities;
@@ -58,7 +58,7 @@ optional_refusal(article11_1_b, ExecutingMemberState, europeanInvestigationOrder
     (
     proceeding_danger(Measure, ExecutingMemberState, national_security);
     proceeding_danger(Measure, ExecutingMemberState, jeopardise_source_information);
-    proceeding_danger(Measure, ExecutingMemberState, classified_information_intelligence)
+    proceeding_danger(Measure, ExecutingMemberState, classified_information)
     ).
 
 %%(c) the EIO has been issued in proceedings referred to in Article 4(b) and (c) and the investigative measure would not be authorised under the law of the executing State in a similar domestic case;
@@ -81,9 +81,15 @@ optional_refusal(article11_1_d, MemberState, europeanInvestigationOrder):-
 
 optional_refusal(article11_1_e, MemberState, europeanInvestigationOrder):-
     eio_matter(IssuingMemberState, ExecutingMemberState, Measure),
+<<<<<<< HEAD
     committed_outside_issuing_state(Offence),
     crime_type(Offence, committed_in(ExecutingMemberState)),
     not_offence(Offence, ExecutingMemberState).
+=======
+    crime_type(Offence, committed_in(ExecutingMemberState)),
+    not_offence(Offence, ExecutingMemberState),
+    \+ crime_type(Offence, committed_in(IssuingMemberState)).
+>>>>>>> develop
 
 
 %% (f) there are substantial grounds to believe that the execution of the investigative measure indicated in the EIO would be incompatible with the executing State's obligations in accordance with Article 6 TEU and the Charter;

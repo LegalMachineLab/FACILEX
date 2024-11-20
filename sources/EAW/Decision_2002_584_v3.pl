@@ -7,17 +7,35 @@
 %1. The European arrest warrant is a judicial decision issued by a Member State with a view to the arrest and surrender by another Member State of a requested person, for the purposes of conducting a criminal prosecution or executing a custodial sentence or detention order.
 
 eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence):-
-    issuing_proceeding(IssuingMemberState, PersonId, Offence),
-    art2applies(Offence),
-    %(
-    %    art2_2applies(Offence)
-    %;   art2_4applies(Offence)
-    %),
+    issuing_proceeding(IssuingMemberState, _, PersonId),
+    offence_type(Offence),
+    (
+        art2_2applies(Offence)
+    ;   art2_4applies(Offence)
+    ),
     (
         executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_custodial_sentence)
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
     ).
+
+issuing_proceeding(IssuingMemberState, _, PersonId):-
+    issuing_member_state(IssuingMemberState),
+    person_role(PersonId, subject_eaw).
+
+executing_proceeding(ExecutingMemberState, PersonId, Purpose):-
+    executing_member_state(ExecutingMemberState),
+    executing_proceeding_purpose(PersonId, Purpose),
+    member(Purpose, [criminal_prosecution, execution_custodial_sentence, execution_detention_order]),
+    person_role(PersonId, subject_eaw).
+
+
+art2_4applies(Offence):-
+    \+ art2_2applies(Offence).
+
+crime_type(Offence, committed_in(CommIn)):-
+    offence_type(Offence),
+    offence_committed_in(CommIn).
 
 %%Article 3
 %Grounds for mandatory non-execution of the European arrest warrant
@@ -77,16 +95,16 @@ optional_refusal(article4_1, ExecutingMemberState, europeanArrestWarrant):-
 
 optional_refusal(article4_2, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    person_event(PersonId, under_prosecution_by_executing_state, Offence). %proceeding_status(Offence, ExecutingMemberState, ongoing)
+    person_event(PersonId, under_prosecution, Offence). 
 
 %3. where the judicial authorities of the executing Member State have decided either not to prosecute for the offence on which the European arrest warrant is based or to halt proceedings, or where a final judgment has been passed upon the requested person in a Member State, in respect of the same acts, which prevents further proceedings;
 
 optional_refusal(article4_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     (
-        executing_proceeding_status(Offence, ExecutingMemberState, no_prosecution)
-    ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
-    ;   person_event(PersonId, irrevocably_convicted_in_ms, Offence)  %proceeding_status(Offence, ExecutingMemberState, final_judgement),
+        executing_proceeding_status(Offence, ExecutingMemberState, non_prosecution_or_halted_proceeding)
+%    ;   executing_proceeding_status(Offence, ExecutingMemberState, halted)
+    ;   person_event(PersonId, finally_judged, Offence)
     ).
 
 %4. where the criminal prosecution or punishment of the requested person is statute-barred according to the law of the executing Member State and the acts fall within the jurisdiction of that Member State under its own criminal law;
@@ -101,11 +119,7 @@ optional_refusal(article4_5, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     person_event(PersonId, irrevocably_convicted_in_third_state, Offence),
     %ExecutingMemberState \= ThirdState,
-    (
-        sentence_served_in_third_state(PersonId)
-    ;   sentence_being_served_in_third_state(PersonId)
-    ;   sentence_execution_impossible_in_third_state(PersonId)
-    ).
+    sentence_served_being_served_or_execution_impossible(PersonId).
 
 %6. if the European arrest warrant has been issued for the purposes of execution of a custodial sentence or detention order, where the requested person is staying in, or is a national or a resident of the executing Member State and that State undertakes to execute the sentence or detention order in accordance with its domestic law;
 
@@ -118,7 +132,7 @@ optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant):-
     (   
 %        person_staying_in(PersonId, ExecutingMemberState)
         person_nationality(PersonId, ExecutingMemberState)
-    ;   person_residence(PersonId, _, ExecutingMemberState, _)
+    ;   person_residence(PersonId, ExecutingMemberState)
     ).
 
 
@@ -126,15 +140,15 @@ optional_refusal(article4_6, ExecutingMemberState, europeanArrestWarrant):-
 %(a) are regarded by the law of the executing Member State as having been committed in whole or in part in the territory of the executing Member State or in a place treated as such; or
 
 optional_refusal(article4_7_a, ExecutingMemberState, europeanArrestWarrant):-
-    eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    executing_proceeding_status(Offence, ExecutingMemberState, committed_inside_territory).
+    eaw_matter(PersonId, _, ExecutingMemberState, Offence),
+    crime_type(Offence, committed_in(ExecutingMemberState)).
 
 
 %(b) have been committed outside the territory of the issuing Member State and the law of the executing Member State does not allow prosecution for the same offences when committed outside its territory.
 
 optional_refusal(article4_7_b, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    issuing_proceeding_status(Offence, IssuingMemberState, committed_outside_territory),
+    \+ crime_type(Offence, committed_in(IssuingMemberState)),
     prosecution_not_allowed(Offence, ExecutingMemberState).
 
 
@@ -150,13 +164,13 @@ optional_refusal(article4a_1, ExecutingMemberState, europeanArrestWarrant):-
     ;   executing_proceeding(ExecutingMemberState, PersonId, execution_detention_order)
     ),
     issuing_proceeding_status(Offence, IssuingMemberState, trial_in_absentia),
-    \+ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), _)
+    \+ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), _).
 
 
 %(a) in due time:
 %(i) either was summoned in person and thereby informed of the scheduled date and place of the trial which resulted in the decision, or by other means actually received official information of the scheduled date and place of that trial in such a manner that it was unequivocally established that he or she was aware of the scheduled trial;
 %(ii) was informed that a decision may be handed down if he or she does not appear for the trial;
-    
+
 exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_a):-
     issuing_proceeding_event(PersonId, Offence, aware_trial),
     issuing_proceeding_event(PersonId, Offence, informed_of_potential_decision).
@@ -186,9 +200,9 @@ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWa
 %(ii) will be informed of the time frame within which he or she has to request such a retrial or appeal, as mentioned in the relevant European arrest warrant.
 
 exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWarrant), article4a_1_c_ii):-
-    issuing_proceeding_event(PersonId, Offence, not_personally_served_decision),
-    issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
-    issuing_proceeding_event(PersonId, Offence, informed_of_timeframe_retrial_appeal).
+    \+ issuing_proceeding_event(PersonId, Offence, informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId, Offence, will_informed_of_right_retrial_appeal),
+    issuing_proceeding_event(PersonId, Offence, will_informed_of_timeframe_retrial_appeal).
 
 %2. In case the European arrest warrant is issued for the purpose of executing a custodial sentence or detention order under the conditions of paragraph 1(d) and the person concerned has not previously received any official information about the existence of the criminal proceedings against him or her, he or she may, when being informed about the content of the European arrest warrant, request to receive a copy of the judgment before being surrendered. Immediately after having been informed about the request, the issuing authority shall provide the copy of the judgment via the executing authority to the person sought. The request of the person sought shall neither delay the surrender procedure nor delay the decision to execute the European arrest warrant. The provision of the judgment to the person concerned is for information purposes only; it shall neither be regarded as a formal service of the judgment nor actuate any time limits applicable for requesting a retrial or appeal.
 
@@ -202,7 +216,7 @@ exception(optional_refusal(article4a_1_a, ExecutingMemberState, europeanArrestWa
 
 optional_refusal(article5_2, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
-    punishable_by_life_sentence(Offence, IssuingMemberState)
+    punishable_by_life_sentence(Offence, IssuingMemberState),
     \+ guarantee(IssuingMemberState, review_clemency_right).
 
 
@@ -212,7 +226,7 @@ optional_refusal(article5_3, ExecutingMemberState, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, ExecutingMemberState, Offence),
     executing_proceeding(ExecutingMemberState, PersonId, criminal_prosecution),
     (   
-    ;   person_nationality(PersonId, ExecutingMemberState)
+        person_nationality(PersonId, ExecutingMemberState)
     ;   person_residence(PersonId, ExecutingMemberState)
     ),
     \+ guarantee(PersonId, Offence, return_to_executing_state).
