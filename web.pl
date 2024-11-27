@@ -13,12 +13,6 @@
 :- http_handler(root(facilex_facts), facilex_facts, []).
 
 :- include('meta_interpreter.pl').
-% :- include('EAW/Decision_2002_584.pl').
-
-:- dynamic person_event/3.
-:- dynamic person_age/2.
-:- dynamic crime_constitutes_offence_national_law/2.
-:- dynamic art2_2applies/1.
 
 server(Port) :-
     http_server(http_dispatch, [port(Port)]),
@@ -30,19 +24,32 @@ facilex_facts(Request) :-
     format('Content-type: text/plain~n~n'),
     term_string(Facts, FactsInput),
     snapshot((
-        forall(member(X, Facts), assert(X)),
+        forall(member(X, Facts), assertz(X)),
         get_answers(Dict)
     )),
     json_write_dict(current_output, Dict, [null('')]).
 
 facilex(Request) :-
     http_read_data(Request, JSONIn, [json_object(dict)]),
-    snapshot((
-        parse_answers(JSONIn, 0),
-        get_answers(Dict),
-        print_message(informational, Dict),
-        reply_json_dict(Dict)
-    )).
+    % listing(personId(A, B)),
+    % snapshot((
+    setup_call_cleanup(
+        (
+            parse_answers(JSONIn, 0)
+        ),
+        (
+            get_answers(Dict),
+            % print_message(informational, Dict),
+            reply_json_dict(Dict)
+        ),
+        cleanup).
+    
+    % parse_answers(JSONIn, 0),
+    % get_answers(Dict),
+    % print_message(informational, Dict),
+    % reply_json_dict(Dict),
+    % cleanup.
+    % )).
 
 parse_test(TestNum, A, B) :-
     atomics_to_string(['api_text/case', TestNum, '.json'], File),
@@ -58,8 +65,6 @@ parse_answers(_, X) :-
 parse_answers(JSONIn, X) :-
     Y is X+1,
     question(X, Key),
-    % print_message(informational, X),
-    % print_message(informational, Key),
     get_dict(Key, JSONIn, Value),
     build_fact(Key, Value),
     parse_answers(JSONIn, Y), !.
@@ -106,16 +111,19 @@ load_server('').
 build_fact(matter, "European Arrest Warrant") :-
     load_server(A),
     atomics_to_string([A, 'sources/EAW/case_study_1.pl'], File),
+    % atomics_to_string([A, 'sources/EAW/Decision_2002_584_v3.pl'], File),
     consult(File).
 
 build_fact(matter, "European Investigation Order") :-
     load_server(A),
     atomics_to_string([A, 'sources/EIO/case_study_2.pl'], File),
+    % atomics_to_string([A, 'sources/EIO/Directive_2014_41_v2.pl'], File),
     consult(File).
 
 build_fact(matter, "European Freezing or Confiscation Order") :-
     load_server(A),
     atomics_to_string([A, 'sources/Regulation/case_study_3.pl'], File),
+    % atomics_to_string([A, 'sources/Regulation/Regulation_2018_1805_v2.pl'], File),
     consult(File).
 
 build_fact(personId, Value) :-
@@ -130,37 +138,37 @@ build_fact(personIdFreezing, Value) :-
     
 build_fact(issuing_state, Value) :-
     clean_string(Value, Clean),
-    assert(issuing_member_state(Clean)), !.
+    assertz(issuing_member_state(Clean)), !.
 
 build_fact(executing_state, Value) :-
     clean_string(Value, Clean),
-    assert(executing_member_state(Clean)), !.
+    assertz(executing_member_state(Clean)), !.
 
 build_fact(art2_eaw, true) :-
     offence_type(Offence),
-    assert(art2_2applies(Offence)), !.
+    assertz(art2_2applies(Offence)), !.
 
 build_fact(executing_proceeding_purpose, Value) :-
     clean_string(Value, Clean),
     personId(PersonId),
     % print_message(informational, R),
-    assert(executing_proceeding_purpose(PersonId, Clean)), !.
+    assertz(executing_proceeding_purpose(PersonId, Clean)), !.
 
 build_fact(amnesty, true) :-
     offence_type(Offence),
     executing_member_state(Value),
-    assert(amnesty(Offence, Value)), !.
+    assertz(amnesty(Offence, Value)), !.
 
 build_fact(art4_eio, Value) :-
     clean_string(Value, Clean),
-    assert(Clean).
+    assertz(Clean).
 
 build_fact(art694_29_eio, true) :-
-    assert(art694_29_applies(interception_of_telecommunications)).
+    assertz(art694_29_applies(interception_of_telecommunications)).
 
 build_fact(issuing_authority, Value) :-
     clean_string(Value, Clean),
-    assert(issuing_authority(interception_of_telecommunications, Clean)).
+    assertz(issuing_authority(interception_of_telecommunications, Clean)).
 
 build_fact(validating_authority, Value) :-
     clean_string(Value, Clean),
@@ -173,32 +181,32 @@ build_fact(validating_authority, Value) :-
 build_fact(person_nationality, Value) :-
     clean_string(Value, Clean),
     personId(PersonId),
-    assert(person_nationality(PersonId, Clean)), !.
+    assertz(person_nationality(PersonId, Clean)), !.
 
 build_fact(person_age, Value) :-
     personId(PersonId),
-    assert(person_age(PersonId, Value)), !.
+    assertz(person_age(PersonId, Value)), !.
 
 build_fact(offence, Value) :-
     clean_string(Value, Clean),
-    assert(offence_type(Clean)), !.
+    assertz(offence_type(Clean)), !.
 
 build_fact(offence_committed_in, Value) :-
     clean_string(Value, Clean),
-    assert(offence_committed_in(Clean)), !.
+    assertz(offence_committed_in(Clean)), !.
 
 build_fact(crime_recognised, true) :-
     offence_type(Offence),
-    assert(crime_constitutes_offence_national_law(Offence, italy)), !.
+    assertz(crime_constitutes_offence_national_law(Offence, italy)), !.
 
 build_fact(national_law_not_offence_eaw, true) :-
     offence_type(Offence),
     executing_member_state(ExecutingMemberState),
-    assert(national_law_not_offence(Offence, ExecutingMemberState)), !.
+    assertz(national_law_not_offence(Offence, ExecutingMemberState)), !.
 
 build_fact(measure, Value) :-
     clean_string(Value, Clean),
-    assert(measure_type(Clean, eio)), !.
+    assertz(measure_type(Clean, eio)), !.
 
 build_fact(exception_data_available, true) :-
     measure_type(Measure, eio),
@@ -237,6 +245,47 @@ build_fact(ne_bis_in_idem_eio, true) :-
 
 % Skip unknown facts temporarily
 build_fact(_, _).
+
+cleanup :-
+    retractall(amnesty(_, _)),
+    retractall(art2_2applies(_)),
+    retractall(art4_a_applies),
+    retractall(art4_b_applies),
+    retractall(art4_c_applies),
+    retractall(art4_d_applies),
+    retractall(art694_29_applies(_)),
+    retractall(certificate_status(_, _)),
+    retractall(contrary_to_ne_bis_in_idem(_, _)),
+    retractall(contrast_with(_, _, _)),
+    retractall(crime_constitutes_offence_national_law(_, _)),
+    retractall(executing_member_state(_)),
+    retractall(executing_proceeding_purpose(_, _)),
+    retractall(issuing_authority(_, _)),
+    retractall(issuing_member_state(_)),
+    retractall(issuing_proceeding(_, _, _)),    
+    retractall(measure_data(_, _)),
+    retractall(measure_type(_, _)),
+    retractall(national_law_does_not_authorize(_, _)),
+    retractall(national_law_not_offence(_, _)),
+    retractall(offence_committed_in(_)),
+    retractall(offence_type(_)),
+    retractall(personId(_)),
+    retractall(person_age(_, _)),
+    retractall(person_event(_, _, _)),    
+    retractall(person_nationality(_, _)),
+    retractall(person_role(_, _)),
+    retractall(proceeding_actor(_, _)),
+    retractall(proceeding_danger(_, _, _)),
+    retractall(validating_authority(_, _)),
+    % print_message(informational, L),    
+    % forall(
+    %     predicate_property(A,dynamic),
+    %     member(A, L) -> ! ; 
+    %     retractall(A)
+    % ),
+    unload_file('sources/EAW/case_study_1.pl'),
+    unload_file('sources/EIO/case_study_2.pl'),
+    unload_file('sources/Regulation/case_study_3.pl').
     
 get_answer(mandatory, _{article: Article, memberstate: MemberState, regulation: Regulation, tree: Tree}) :-
     solve(mandatory_refusal(Article, MemberState, Regulation), TreeList),
@@ -253,11 +302,11 @@ get_answers(_{mandatory: MDictList, optional: ODictList}) :-
 
 strip_results([], _, []):- !.
 % strip_results([A|Rest], [A.Article|Arts], [A|Dest]) :- Arts = [], !.
-strip_results([A|Rest], _Arts, [A|Dest]) :-
-    \+ member(A.article, _Arts),
-    append(_Arts, [A.article], Arts),
+strip_results([A|Rest], TArts, [A|Dest]) :-
+    \+ member(A.article, TArts),
+    append(TArts, [A.article], Arts),
     strip_results(Rest, Arts, Dest), !.
-strip_results([A|Rest], Arts, Dest) :-
+strip_results([_|Rest], Arts, Dest) :-
     strip_results(Rest, Arts, Dest).
 % strip_results([A|Rest], Arts, TDest) :-
 %     member(A.article, Arts),
