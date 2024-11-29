@@ -89,7 +89,7 @@ mandatory_refusal(article7_1, italy, europeanArrestWarrant):-
     \+ exception(art2_2applies(Offence), article8).
 
 national_law_not_offence(driving_without_license, italy).
-    % cassazione(numero_41102_2022, driving_without_license, italia).
+    cassazione(numero_41102_2022, driving_without_license, italia).
 
 %% Article 18bis - Fully implemented
 % 1. When the European arrest warrant has been issued for the purpose of prosecution in criminal matters, the Court of Appeal may refuse surrender in the following cases
