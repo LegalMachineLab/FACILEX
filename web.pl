@@ -13,6 +13,7 @@
 :- http_handler(root(facilex_facts), facilex_facts, []).
 
 :- include('meta_interpreter.pl').
+% :- include('sources/utils.pl').
 
 server(Port) :-
     http_server(http_dispatch, [port(Port)]),
@@ -39,7 +40,6 @@ facilex(Request) :-
         ),
         (
             get_answers(Dict),
-            % print_message(informational, Dict),
             reply_json_dict(Dict)
         ),
         cleanup).
@@ -102,7 +102,47 @@ clean_string(String, Clean) :-
     string_lower(ValueUnd, ValueLower),
     atom_string(Clean, ValueLower).
 
-% To run locally remove /app/ from the three links
+load_state_file(eaw, italy) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EAW/Decision_2002_584_it_v2.pl'], File),
+    consult(File).
+load_state_file(eaw, france) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EAW/Decision_2002_584_fr.pl'], File),
+    consult(File).
+load_state_file(eaw, bulgaria) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EAW/Decision_2002_584_bg.pl'], File),
+    consult(File).
+load_state_file(eaw, portugal) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EAW/Decision_2002_584_pt.pl'], File),
+    consult(File).
+load_state_file(eaw, poland) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EAW/Decision_2002_584_pl.pl'], File),
+    consult(File).
+
+load_state_file(eio, italy) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EIO/Directive_2041_41_it.pl'], File),
+    consult(File).
+load_state_file(eio, france) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EIO/Directive_2041_41_fr.pl'], File),
+    consult(File).
+load_state_file(eio, bulgaria) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EIO/Directive_2041_41_bg.pl'], File),
+    consult(File).
+load_state_file(eio, portugal) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EIO/Directive_2041_41_pt.pl'], File),
+    consult(File).
+load_state_file(eio, poland) :-
+    load_server(A),
+    atomics_to_string([A, 'sources/EIO/Directive_2041_41_pl.pl'], File),
+    consult(File).
 
 load_server("/app/") :-
     getenv('KUBERNETES_SERVICE_HOST', _), !.
@@ -110,20 +150,23 @@ load_server('').
 
 build_fact(matter, "European Arrest Warrant") :-
     load_server(A),
-    atomics_to_string([A, 'sources/EAW/case_study_1.pl'], File),
-    % atomics_to_string([A, 'sources/EAW/Decision_2002_584_v3.pl'], File),
+    % atomics_to_string([A, 'sources/EAW/case_study_1.pl'], File),
+    assert(matter(eaw)),
+    atomics_to_string([A, 'sources/EAW/Decision_2002_584_v3.pl'], File),
     consult(File).
 
 build_fact(matter, "European Investigation Order") :-
     load_server(A),
-    atomics_to_string([A, 'sources/EIO/case_study_2.pl'], File),
-    % atomics_to_string([A, 'sources/EIO/Directive_2014_41_v2.pl'], File),
+    assert(matter(eio)),
+    % atomics_to_string([A, 'sources/EIO/case_study_2.pl'], File),
+    atomics_to_string([A, 'sources/EIO/Directive_2014_41_v2.pl'], File),
     consult(File).
 
 build_fact(matter, "European Freezing or Confiscation Order") :-
     load_server(A),
-    atomics_to_string([A, 'sources/Regulation/case_study_3.pl'], File),
-    % atomics_to_string([A, 'sources/Regulation/Regulation_2018_1805_v2.pl'], File),
+    assert(matter(efco)),
+    % atomics_to_string([A, 'sources/Regulation/case_study_3.pl'], File),
+    atomics_to_string([A, 'sources/Regulation/Regulation_2018_1805_v2.pl'], File),
     consult(File).
 
 build_fact(personId, Value) :-
@@ -142,7 +185,9 @@ build_fact(issuing_state, Value) :-
 
 build_fact(executing_state, Value) :-
     clean_string(Value, Clean),
-    assertz(executing_member_state(Clean)), !.
+    matter(M),
+    assertz(executing_member_state(Clean)), 
+    load_state_file(M, Clean), !.
 
 build_fact(art2_eaw, true) :-
     offence_type(Offence),
@@ -243,12 +288,19 @@ build_fact(ne_bis_in_idem_eio, true) :-
     executing_member_state(ExecutingMemberState),
     assertz(contrary_to_ne_bis_in_idem(ExecutingMemberState, Measure)), !.
 
+build_fact(executing_proceeding_status, Value) :-
+    offence_type(Offence),
+    clean_string(Value, Clean),
+    executing_member_state(ExecutingMemberState),
+    assertz(executing_proceeding_status(Offence, ExecutingMemberState, Clean)), !.
+
 % Skip unknown facts temporarily
 build_fact(_, _).
 
 cleanup :-
     retractall(amnesty(_, _)),
     retractall(art2_2applies(_)),
+    retractall(art2_4applies(_)),
     retractall(art4_a_applies),
     retractall(art4_b_applies),
     retractall(art4_c_applies),
@@ -259,7 +311,10 @@ cleanup :-
     retractall(contrast_with(_, _, _)),
     retractall(crime_constitutes_offence_national_law(_, _)),
     retractall(executing_member_state(_)),
+    retractall(eaw_matter(_, _, _, _)),
+    retractall(executing_proceeding(_, _, _)),
     retractall(executing_proceeding_purpose(_, _)),
+    retractall(executing_proceeding_status(_, _, _)),
     retractall(issuing_authority(_, _)),
     retractall(issuing_member_state(_)),
     retractall(issuing_proceeding(_, _, _)),    
@@ -277,15 +332,20 @@ cleanup :-
     retractall(proceeding_actor(_, _)),
     retractall(proceeding_danger(_, _, _)),
     retractall(validating_authority(_, _)),
+    retractall(matter(_)),
     % print_message(informational, L),    
     % forall(
     %     predicate_property(A,dynamic),
     %     member(A, L) -> ! ; 
     %     retractall(A)
     % ),
-    unload_file('sources/EAW/case_study_1.pl'),
-    unload_file('sources/EIO/case_study_2.pl'),
-    unload_file('sources/Regulation/case_study_3.pl').
+    % unload_file('sources/EAW/case_study_1.pl'),
+    % unload_file('sources/EIO/case_study_2.pl'),
+    % unload_file('sources/Regulation/case_study_3.pl'),
+    % unload_file('sources/EAW/Decision_2002_584_v3.pl'),
+    % unload_file('sources/EIO/Directive_2014_41_v2.pl'),
+    % unload_file('sources/Regulation/Regulation_2018_1805_v2.pl').
+    unload_all.
     
 get_answer(mandatory, _{article: Article, memberstate: MemberState, regulation: Regulation, tree: Tree}) :-
     solve(mandatory_refusal(Article, MemberState, Regulation), TreeList),
@@ -322,6 +382,10 @@ all_sources(Directory, Files) :-
 consult_all :-
     all_sources(sources, Files),
     forall(member(File, Files), (writeln(File), consult(File))).
+
+unload_all :-
+    all_sources(sources, Files),
+    forall(member(File, Files), (unload_file(File))).
 
 main:-
     % consult_all,

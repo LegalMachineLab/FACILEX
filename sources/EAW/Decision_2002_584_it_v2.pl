@@ -88,8 +88,8 @@ mandatory_refusal(article7_1, italy, europeanArrestWarrant):-
     national_law_not_offence(Offence, italy),
     \+ exception(art2_2applies(Offence), article8).
 
-national_law_not_offence(driving_without_license, italy):-
-    cassazione(numero_41102_2022, driving_without_license, italia).
+national_law_not_offence(driving_without_license, italy).
+    % cassazione(numero_41102_2022, driving_without_license, italia).
 
 %% Article 18bis - Fully implemented
 % 1. When the European arrest warrant has been issued for the purpose of prosecution in criminal matters, the Court of Appeal may refuse surrender in the following cases
@@ -130,7 +130,7 @@ optional_refusal(article18bis_2, italy, europeanArrestWarrant):-
     
 person_residence(PersonId, italy):-
     person_continuous_residence(PersonId, italy, Time),
-    Time >= 5
+    Time >= 5,
     residence_status(PersonId, italy, lawful_effective).
 
 
@@ -191,7 +191,7 @@ exception(optional_refusal(article61bis, _, europeanArrestWarrant), article61bis
 
 optional_refusal(article19_1, italy, europeanArrestWarrant):-
     eaw_matter(PersonId, IssuingMemberState, italy, Offence),
-    punishable_by_life_sentence(Offence, IssuingMemberState)
+    punishable_by_life_sentence(Offence, IssuingMemberState),
     \+ guarantee(IssuingMemberState, review_clemency_right).
 
 %% Article 19(2) - Fully implemented
