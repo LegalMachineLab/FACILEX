@@ -88,7 +88,7 @@ mandatory_refusal(article7_1, italy, europeanArrestWarrant):-
     national_law_not_offence(Offence, italy),
     \+ exception(art2_2applies(Offence), article8).
 
-national_law_not_offence(driving_without_license, italy).
+national_law_not_offence(driving_without_license, italy):-
     cassazione(numero_41102_2022, driving_without_license, italia).
 
 %% Article 18bis - Fully implemented
